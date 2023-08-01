@@ -25,6 +25,7 @@ public class CalorieController {
 
     @PostMapping("/")
     public void addNewMeal(@RequestBody NewCalorieDTO meal) {
+        System.out.println("request arrived");
         calorieService.addNewMeal(meal);
     }
 }
