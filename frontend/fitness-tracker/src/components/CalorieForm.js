@@ -11,7 +11,7 @@ const CaloriesForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch('/calories', {
+      const response = await fetch('/calories/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
