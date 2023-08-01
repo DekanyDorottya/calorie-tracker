@@ -4,6 +4,8 @@ import org.codecool.fitnesstracker.fitnesstracker.controller.dto.CalorieDTO;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.NewCalorieDTO;
 import org.codecool.fitnesstracker.fitnesstracker.service.CalorieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,8 +26,10 @@ public class CalorieController {
     }
 
     @PostMapping("/")
-    public void addNewMeal(@RequestBody NewCalorieDTO meal) {
+    public ResponseEntity<NewCalorieDTO> addNewMeal(@RequestBody NewCalorieDTO meal) {
         System.out.println("request arrived");
         calorieService.addNewMeal(meal);
+        NewCalorieDTO createdMeal = calorieService.addNewMeal(meal);
+        return new ResponseEntity<>(createdMeal, HttpStatus.CREATED);
     }
 }

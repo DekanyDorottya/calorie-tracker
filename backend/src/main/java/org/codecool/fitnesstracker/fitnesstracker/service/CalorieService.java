@@ -18,10 +18,11 @@ public class CalorieService {
         return userCalories;
     }
 
-    public void addNewMeal(NewCalorieDTO meal) {
+    public NewCalorieDTO addNewMeal(NewCalorieDTO meal) {
         LocalDateTime localDateTime = LocalDateTime.now();
         CalorieDTO calorieDTO = new CalorieDTO(meal.calories(), localDateTime);
         userCalories.add(calorieDTO);
+        return meal;
     }
 
 
