@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 
-const CaloriesForm = () => {
+const CalorieForm = () => {
     const [calories, setCalories] = useState(0);
     const [foodType, setFoodType] = useState('');
 
@@ -61,4 +61,4 @@ const CaloriesForm = () => {
     );
 };
 
-export default CaloriesForm;
+export default CalorieForm;

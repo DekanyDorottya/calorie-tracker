@@ -22,6 +22,8 @@ public class CalorieController {
 
     @GetMapping("/all")
     public List<CalorieDTO> getAllCalories() {
+        System.out.println("get request arrived");
+
         return calorieService.getAllCalories();
     }
 
