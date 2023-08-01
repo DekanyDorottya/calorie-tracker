@@ -31,7 +31,6 @@ public class CalorieController {
     public ResponseEntity<NewCalorieDTO> addNewMeal(@RequestBody NewCalorieDTO meal) {
         System.out.println("request arrived");
         calorieService.addNewMeal(meal);
-        NewCalorieDTO createdMeal = calorieService.addNewMeal(meal);
-        return new ResponseEntity<>(createdMeal, HttpStatus.CREATED);
+        return new ResponseEntity<>(meal, HttpStatus.CREATED);
     }
 }

@@ -5,6 +5,7 @@ import About from './components/About';
 import CalorieForm from './components/CalorieForm';
 import CalorieDailyList from './components/CalorieDailyList';
 import Button from '@mui/material/Button';
+import ActivityForm from './components/ActivityForm';
 
 
 const App = () => {
@@ -25,10 +26,12 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/calorie" element={<CalorieForm />} />
           <Route path="/yourDailyCalorie" element={<CalorieDailyList />} />
+          <Route path="/activity" element={<ActivityForm />} />
 
         </Routes>
         <Link to="/calorie"> <Button variant="contained">Add Meal</Button></Link>
         <Link to="/yourDailyCalorie"> <Button variant="outlined">Your Daily Calorie</Button></Link>
+        <Link to="/activity"> <Button variant="contained">Activity</Button></Link>
 
       </div>
 
