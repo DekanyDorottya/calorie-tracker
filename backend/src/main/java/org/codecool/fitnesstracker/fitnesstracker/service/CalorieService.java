@@ -20,7 +20,7 @@ public class CalorieService {
 
     public NewCalorieDTO addNewMeal(NewCalorieDTO meal) {
         LocalDateTime localDateTime = LocalDateTime.now();
-        CalorieDTO calorieDTO = new CalorieDTO(meal.calories(), localDateTime);
+        CalorieDTO calorieDTO = new CalorieDTO(meal.foodType(),meal.calories(), localDateTime);
         userCalories.add(calorieDTO);
         return meal;
     }
