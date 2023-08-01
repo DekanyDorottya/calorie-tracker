@@ -11,6 +11,7 @@ import java.util.List;
 @Service
 public class ActivityService {
     private List<ActivityDTO> userActivity = new ArrayList<>();
+
     public List<ActivityDTO> getAllActivities() {
         return userActivity;
     }
