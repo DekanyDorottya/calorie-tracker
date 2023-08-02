@@ -1,17 +1,10 @@
 import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
-import Home from './components/Home';
-import About from './components/About';
-import CalorieForm from './components/CalorieForm';
-import CalorieDailyList from './components/CalorieDailyList';
 import Button from '@mui/material/Button';
-import ActivityForm from './components/ActivityForm';
 import './App.css';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import LoginForm from './components/LoginForm';
-import ActivityDailyList from './components/ActivityDailyList';
 
 const App = () => {
     return (
