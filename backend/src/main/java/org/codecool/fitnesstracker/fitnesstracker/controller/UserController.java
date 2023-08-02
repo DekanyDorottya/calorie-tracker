@@ -28,9 +28,8 @@ public class UserController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<NewUserDTO> addNewUser(@RequestBody NewUserDTO user) {
+    public boolean addNewUser(@RequestBody NewUserDTO user) {
         System.out.println("new user registration");
-        userService.addNewUser(user);
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+        return userService.addNewUser(user);
     }
 }
