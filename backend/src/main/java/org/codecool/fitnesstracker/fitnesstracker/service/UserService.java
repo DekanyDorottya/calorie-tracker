@@ -7,16 +7,24 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
 @Service
 public class UserService {
     List<UserDTO> users = new ArrayList<>();
 
-    public List<UserDTO> getAllUsers () {return users;}
+    public List<UserDTO> getAllUsers() {
+        return users;
+    }
 
-    public void addNewUser(NewUserDTO newUser) {
+    public boolean addNewUser(NewUserDTO newUser) {
         LocalDateTime localDateTime = LocalDateTime.now();
-        UserDTO userDTO = new UserDTO(newUser.userName(), newUser.email(), newUser.password(), localDateTime);
-        users.add(userDTO);
+        boolean check = users.stream().noneMatch(userDTO -> userDTO.userName().equals(newUser.userName()));
+        if (check) {
+            UserDTO userDTO = new UserDTO(newUser.userName(), newUser.email(), newUser.password(), localDateTime);
+            users.add(userDTO);
+            return true;
+        }
+        return false;
     }
 
 
