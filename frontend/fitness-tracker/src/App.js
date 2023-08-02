@@ -21,7 +21,6 @@ const App = () => {
                     <ul className='nav-links'>
                         <li>
                             <Link to='/'>
-                                {' '}
                                 <Button variant='contained'>Home</Button>
                             </Link>
                         </li>
@@ -39,7 +38,7 @@ const App = () => {
                        
                             <Link to='/yourDailyCalorie'>
                                 <Button variant='outlined'>
-                                    Your Daily Calorie
+                                    Check Your Daily Calorie
                                 </Button>
                             </Link>
                         <li>
@@ -50,7 +49,7 @@ const App = () => {
 
                         <Link to='/yourDailyActivitiy'>
                             <Button variant='outlined'>
-                                Your Daily Activity
+                            Check Your Daily Activity
                             </Button>
                         </Link>
                     </ul>

@@ -1,23 +1,102 @@
+
+body,
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+}
+
 .navbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+  background-color: #333;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
 
 .nav-links {
-    list-style: none;
-    display: flex;
+  list-style: none;
+  display: flex;
+  align-items: center;
+}
+
+.nav-links li {
+  margin-left: 1rem;
+}
+
+.nav-links li:first-child {
+  margin-left: 0;
+}
+
+.nav-links a {
+  text-decoration: none;
+}
+
+.nav-links button {
+  color: #fff;
+  font-size: 1rem;
+}
+
+.mb-2 .btn-primary {
+  margin-right: 1rem;
+}
+
+hr {
+  border: none;
+  border-bottom: 1px solid #ccc;
+  margin: 1rem 0;
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1rem;
+  background-color: #fff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+
+.home-section {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.about-section {
+  padding: 1rem;
+}
+
+.calorie-section {
+  padding: 1rem;
+}
+
+.activity-section {
+  padding: 1rem;
+}
+
+.login-form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 1rem;
+  background-color: #fff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
   }
 
-  .nav-links li {
-    margin-left: 20px;
+  .nav-links {
+    margin-top: 1rem;
   }
 
-  .nav-links li:first-child {
-    margin-left: 0;
+  .mb-2 .btn-primary {
+    margin-right: 0;
+    margin-top: 1rem;
   }
-  
-  .nav-links li a {
-    text-decoration: none;
-    color: #ffffff; /* White text */
-  }
+}
