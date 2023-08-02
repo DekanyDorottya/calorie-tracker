@@ -1,0 +1,19 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .image {
+    flex: 1;
+    max-width: 500px; 
+    max-height: auto; 
+    margin-right: 200px; 
+  }
+  .homeTitle{
+    display: flex;
+  justify-content: center;
+  align-items: center;
+
+  }
+  
