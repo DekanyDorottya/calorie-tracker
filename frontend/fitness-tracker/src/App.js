@@ -17,8 +17,8 @@ const App = () => {
   return (
     <Router>
       <div>
-        <nav class="navbar">
-          <ul class="nav-links">
+        <nav className="navbar">
+          <ul className="nav-links">
             <li>
               <Link to="/">
                 {" "}
