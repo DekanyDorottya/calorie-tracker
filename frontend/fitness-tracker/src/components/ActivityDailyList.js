@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import "./ActivityDailyList.css"
 
 export default function ActivityDailyList() {
     const [listedMeals, setListedMeals] = useState([]);
@@ -16,10 +17,24 @@ export default function ActivityDailyList() {
 
     return (
         <div>
-            {listedMeals.map((data) => (
-                <td>{data.calories}</td>
-            ))}
-            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Activity</th>
+                        <th>Calories</th>
+                        <th>Date & Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {listedMeals.map((data, index) => (
+                        <tr key={index}>
+                            <td>{data.activity}</td>
+                            <td>{data.calories}</td>
+                            <td>{new Date(data.activityDateTime).toLocaleDateString()}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 }

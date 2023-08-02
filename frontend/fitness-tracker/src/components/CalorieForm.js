@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Button from '@mui/material/Button';
-import './CalorieForm.css'; // Import external CSS file
+import './CalorieForm.css'; 
 
 const CalorieForm = () => {
     const [calories, setCalories] = useState(0);
