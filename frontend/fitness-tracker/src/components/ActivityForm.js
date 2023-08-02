@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Button from '@mui/material/Button';
-
+import './ActivityForm.css';
 const ActivityForm = () => {
     const [calories, setCalories] = useState(0);
     const [activity, setActivity] = useState('');
@@ -38,13 +38,15 @@ const ActivityForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className="calorie-form" onSubmit={handleSubmit}>
             <label htmlFor='calories'>Enter Calories:</label>
             <input
                 type='number'
                 id='calories'
                 value={calories}
                 onChange={handleCaloriesChange}
+                className="input"
+
             />
             
             <label htmlFor='activity'>Enter your activity:</label>
@@ -53,8 +55,10 @@ const ActivityForm = () => {
                 id='activity'
                 value={activity}
                 onChange={handleActivityTypeChange}
+                className="input"
+
             />
-            <Button variant='contained' type='submit'>
+            <Button variant='contained' type='submit' className="submit-button">
                 Post Activity
             </Button>
         </form>

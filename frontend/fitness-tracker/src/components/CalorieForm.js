@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Button from '@mui/material/Button';
+import './CalorieForm.css'; 
 
 const CalorieForm = () => {
     const [calories, setCalories] = useState(0);
@@ -38,23 +39,25 @@ const CalorieForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className="calorie-form" onSubmit={handleSubmit}>
             <label htmlFor='calories'>Enter Calories:</label>
             <input
                 type='number'
                 id='calories'
                 value={calories}
                 onChange={handleCaloriesChange}
+                className="calorie-input"
             />
             
             <label htmlFor='foodType'>Enter food:</label>
             <input
-                type='string'
+                type='text'
                 id='foodType'
                 value={foodType}
                 onChange={handleFoodTypeChange}
+                className="food-input"
             />
-            <Button variant='contained' type='submit'>
+            <Button variant='contained' type='submit' className="submit-button">
                 Post Calories
             </Button>
         </form>
