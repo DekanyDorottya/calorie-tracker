@@ -10,7 +10,8 @@ import "./App.css";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import "bootstrap/dist/css/bootstrap.min.css";
-import LoginForm from "./components/LoginForm";
+import LoginForm from "./components/LoginForm";import ActivityDailyList from './components/ActivityDailyList';
+
 
 const App = () => {
   return (
@@ -52,6 +53,8 @@ const App = () => {
           <Route path="/calorie" element={<CalorieForm />} />
           <Route path="/yourDailyCalorie" element={<CalorieDailyList />} />
           <Route path="/activity" element={<ActivityForm />} />
+          <Route path="/yourDailyActivitiy" element={<ActivityDailyList />} />
+
           <Route path="/login" element={<LoginForm />} />
         </Routes>
         <Link to="/calorie">
@@ -66,6 +69,7 @@ const App = () => {
           {" "}
           <Button variant="contained">Activity</Button>
         </Link>
+        <Link to="/yourDailyActivitiy"> <Button variant="outlined">Your Daily Activity</Button></Link>
       </div>
     </Router>
   );

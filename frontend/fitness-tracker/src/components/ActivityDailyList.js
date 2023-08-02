@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
 
-export default function CalorieDailyList() {
+export default function ActivityDailyList() {
     const [listedMeals, setListedMeals] = useState([]);
 
 
     const fetchMeals = () => {
-        return fetch('/calories/all').then((res) => res.json());
+        return fetch('/activities/all').then((res) => res.json());
     };
 
     useEffect(() => {
-        fetchMeals().then((listedMeals) => {
-            setListedMeals(listedMeals);
-            console.log(listedMeals);
+        fetchMeals().then((listedActivities) => {
+            setListedMeals(listedActivities);
+            console.log(listedActivities);
         });
     }, []);
 
