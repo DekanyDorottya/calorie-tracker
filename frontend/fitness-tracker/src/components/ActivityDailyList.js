@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 export default function ActivityDailyList() {
     const [listedMeals, setListedMeals] = useState([]);
 
-
     const fetchMeals = () => {
         return fetch('/activities/all').then((res) => res.json());
     };
@@ -15,7 +14,12 @@ export default function ActivityDailyList() {
         });
     }, []);
 
-    
-
-    return <div>{listedMeals.map((data) => (<td>{data.calories}</td>))}</div>;
+    return (
+        <div>
+            {listedMeals.map((data) => (
+                <td>{data.calories}</td>
+            ))}
+            
+        </div>
+    );
 }
