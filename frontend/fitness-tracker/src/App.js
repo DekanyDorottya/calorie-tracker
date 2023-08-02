@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import Home from './components/Home';
 import About from './components/About';
 import CalorieForm from './components/CalorieForm';
@@ -15,7 +15,7 @@ import ActivityDailyList from './components/ActivityDailyList';
 
 const App = () => {
     return (
-        <Router>
+        
             <div>
                 <nav className='navbar'>
                     <ul className='nav-links'>
@@ -70,25 +70,10 @@ const App = () => {
                 </nav>
 
                 <hr />
-
-                <Routes>
-                    <Route path='/' element={<Home />} />
-                    <Route path='/about' element={<About />} />
-                    <Route path='/calorie' element={<CalorieForm />} />
-                    <Route
-                        path='/yourDailyCalorie'
-                        element={<CalorieDailyList />}
-                    />
-                    <Route path='/activity' element={<ActivityForm />} />
-                    <Route
-                        path='/yourDailyActivitiy'
-                        element={<ActivityDailyList />}
-                    />
-
-                    <Route path='/login' element={<LoginForm />} />
-                </Routes>
+                <Outlet />
+                
             </div>
-        </Router>
+            
     );
 };
 
