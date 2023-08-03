@@ -10,6 +10,7 @@ import CalorieDailyList from './components/CalorieDailyList';
 import ActivityForm from './components/ActivityForm';
 import ActivityDailyList from './components/ActivityDailyList';
 import LoginForm from './components/LoginForm';
+import SignupForm from './components/SigninForm/SignupForm';
 //import reportWebVitals from './reportWebVitals';
 
 const router = createBrowserRouter([
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <LoginForm />,
+      },
+      {
+        path: "/signup",
+        element: <SignupForm />,
       },
       
   ],

@@ -57,7 +57,7 @@ const App = () => {
                             <Dropdown.Item as={Link} to='/login'>
                                 Login
                             </Dropdown.Item>
-                            <Dropdown.Item eventKey='2'>Sign in</Dropdown.Item>
+                            <Dropdown.Item as={Link} to='/signup'>Sign up</Dropdown.Item>
                         </DropdownButton>
                     </div>
                 </nav>

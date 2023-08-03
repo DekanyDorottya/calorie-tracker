@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./LoginForm.css"
+import "./SignupForm.css"
 
 const createNewUser = (userName, userEmail, userPassword) => {
     return fetch("/users/", {
@@ -12,7 +12,7 @@ const createNewUser = (userName, userEmail, userPassword) => {
     }).then((res) => res.json());
   };
 
-const LoginForm = () => {
+const SignupForm = () => {
     const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 //   const [userName, setUserName] = useState(null);
@@ -34,11 +34,17 @@ const LoginForm = () => {
     };
 
     return (
-        <form className="LoginForm" onSubmit={onSubmit}>
+        <form className="SignupForm" onSubmit={onSubmit}>
       {/* {(
         <input type="hidden" name="name"  />
       )} */}
-      
+      <div className="control">
+        <label htmlFor="userName">Your name:</label>
+        <input
+          name="userName"
+          id="userName"
+        />
+      </div>
 
       <div className="control">
         <label htmlFor="email">email address:</label>
@@ -68,4 +74,4 @@ const LoginForm = () => {
     )
 }
 
-export default LoginForm;
+export default SignupForm;
