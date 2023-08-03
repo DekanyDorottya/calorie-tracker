@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import './ActivityForm.css';
+
 const ActivityForm = () => {
     const [calories, setCalories] = useState(0);
     const [activity, setActivity] = useState('');

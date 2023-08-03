@@ -6,6 +6,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import ErrorPage from "./Pages/ErrorPage"
 import About from './components/About';
 import CalorieForm from './components/CalorieForm';
+import Home from './components/Home';
 import CalorieDailyList from './components/CalorieDailyList';
 import ActivityForm from './components/ActivityForm';
 import ActivityDailyList from './components/ActivityDailyList';
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
       {
         path: "/about",
         element: <About />,
+      },
+      {
+        path: "/",
+        element: <Home />,
       },
       {
         path: "/calorie",
