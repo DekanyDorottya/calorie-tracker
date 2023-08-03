@@ -4,7 +4,7 @@ import './Home.css';
 const Home = () => {
   return (
     <div>
-        <div className="homeTitle"><h1>Welcome to the Home page!</h1></div>
+        <div className="homeTitle"><h1>Welcome to TrackFit!</h1></div>
       <div className="container">
         <img
           src="https://media.istockphoto.com/id/908165344/photo/pasta-with-meat-and-vegetables-on-white-background.jpg?s=612x612&w=0&k=20&c=zLxnClBbX6Azrd7Lud42pvQEQTjngPfIe5ElDCMroog="
@@ -12,7 +12,7 @@ const Home = () => {
           className="image"
           />
         <p>Good health starts with what you eat.
-Want to eat more mindfully? Track meals, learn about your habits, and reach your goals with MyFitnessPal..</p>
+Want to eat more mindfully? Track meals, learn about your habits, and reach your goals with TrackFit..</p>
       </div>
     </div>
   );
