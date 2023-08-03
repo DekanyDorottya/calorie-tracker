@@ -2,14 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./LoginForm.css"
 
-const createNewUser = (userName, userEmail, userPassword) => {
-    return fetch("/users/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userName, userEmail, userPassword),
-    }).then((res) => res.json());
+const loginWithUser = (userEmail, userPassword) => {
+    
   };
 
 const LoginForm = () => {
@@ -30,7 +24,8 @@ const LoginForm = () => {
       return acc;
     }, {});
     console.log(userData);
-        return createNewUser(userData);  
+        navigate("/");
+        return loginWithUser(userData);  
     };
 
     return (
@@ -61,7 +56,7 @@ const LoginForm = () => {
 
       <div className="buttons">
         <button type="submit" >
-            Register
+            Log in
         </button>
       </div>
     </form>

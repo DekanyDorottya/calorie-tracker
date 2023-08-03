@@ -30,6 +30,7 @@ const SignupForm = () => {
       return acc;
     }, {});
     console.log(userData);
+    navigate("/");
         return createNewUser(userData);  
     };
 
