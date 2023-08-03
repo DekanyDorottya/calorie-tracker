@@ -7,6 +7,7 @@ import CloseIcon from '@mui/icons-material/Close';
 const CalorieForm = () => {
     const [calories, setCalories] = useState(0);
     const [foodType, setFoodType] = useState('');
+    const [open, setOpen] = React.useState(false);
 
     const handleCaloriesChange = (event) => {
         setCalories(event.target.value);
@@ -15,8 +16,7 @@ const CalorieForm = () => {
         setFoodType(event.target.value);
     };
 
-    const [open, setOpen] = React.useState(false);
-
+    //Notify parts
     const handleClick = () => {
         setOpen(true);
     };
@@ -44,6 +44,7 @@ const CalorieForm = () => {
             </IconButton>
         </React.Fragment>
     );
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
@@ -81,6 +82,7 @@ const CalorieForm = () => {
             />
 
             <label htmlFor='foodType'>Enter food:</label>
+
             <input
                 type='text'
                 id='foodType'
@@ -88,6 +90,7 @@ const CalorieForm = () => {
                 onChange={handleFoodTypeChange}
                 className='food-input'
             />
+
             <Button
                 variant='contained'
                 type='submit'
@@ -96,13 +99,15 @@ const CalorieForm = () => {
             >
                 Post Calories
             </Button>
+
             <Snackbar
                 open={open}
                 autoHideDuration={4000}
                 onClose={handleClose}
-                message='Note archived'
+                message='Posted a meal'
                 action={action}
             />
+            
         </form>
     );
 };
