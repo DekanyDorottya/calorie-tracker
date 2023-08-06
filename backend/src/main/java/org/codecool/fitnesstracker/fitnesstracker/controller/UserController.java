@@ -32,4 +32,17 @@ public class UserController {
         System.out.println("new user registration");
         return userService.addNewUser(user);
     }
+
+    @GetMapping("/login")
+    public String loginUser(@RequestParam String email, @RequestParam String password) {
+        System.out.println(email + " " + password);
+        UserDTO user = userService.authenticateUser(email, password);
+
+        if (user != null) {
+            String jwtToken = userService.generateJwtToken(email);
+            return jwtToken;
+        } else {
+            return "Invalid credentials.";
+        }
+    }
 }
