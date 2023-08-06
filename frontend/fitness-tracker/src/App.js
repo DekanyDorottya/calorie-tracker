@@ -14,7 +14,7 @@ const App = () => {
   useEffect(() => {
     const jwtToken = Cookies.get("jwtToken");
     setIsLoggedIn(!!jwtToken);
-    console.log(jwt(jwtToken));
+    //console.log(jwt(jwtToken));
   }, []);
 
   const handleLogout = () => {

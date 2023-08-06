@@ -26,7 +26,7 @@ public class UserService {
 
     public boolean addNewUser(NewUserDTO newUser) {
         LocalDateTime localDateTime = LocalDateTime.now();
-        boolean check = users.stream().noneMatch(userDTO -> userDTO.userName().equals(newUser.userName()));
+        boolean check = users.stream().noneMatch(userDTO -> userDTO.email().equals(newUser.email()));
         if (check) {
             UserDTO userDTO = new UserDTO(newUser.userName(), newUser.email(), newUser.password(), localDateTime);
             users.add(userDTO);
