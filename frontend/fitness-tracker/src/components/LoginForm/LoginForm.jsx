@@ -64,7 +64,8 @@ const LoginForm = () => {
         setTimeout(() => {
             setSnackbarOpen(false);
             setIsSuccessSnackbar(false);
-            navigate(0);
+            navigate('/');
+            window.location.reload();
             }, 3000); // Adjust the delay as needed
         }
       })
