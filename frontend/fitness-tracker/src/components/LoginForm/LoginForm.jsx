@@ -60,12 +60,11 @@ const LoginForm = () => {
         setSnackbarOpen(true);
         setSnackbarMessage("Login successful.");
         setIsSuccessSnackbar(true);
-
-        // Navigate to the home page after the Snackbar disappears
+        //Navigate to the home page after the Snackbar disappears
         setTimeout(() => {
             setSnackbarOpen(false);
             setIsSuccessSnackbar(false);
-            navigate("/");
+            navigate(0);
             }, 3000); // Adjust the delay as needed
         }
       })

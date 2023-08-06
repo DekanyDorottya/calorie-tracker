@@ -42,6 +42,7 @@ public class UserService {
 
         return Jwts.builder()
                 .setSubject(email)
+                .claim("email", email)
                 .setIssuedAt(issuedAt)
                 .setExpiration(expiration)
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
