@@ -4,6 +4,8 @@ import './ActivityForm.css';
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import Notification from './Notification';
+import { Box, Stack, Skeleton } from '@mui/material';
 
 const ActivityForm = () => {
     const [calories, setCalories] = useState(0);
@@ -23,21 +25,6 @@ const ActivityForm = () => {
         setOpen(false);
     };
 
-    const action = (
-        <React.Fragment>
-            <Button color='secondary' size='small' onClick={handleClose}>
-                UNDO
-            </Button>
-            <IconButton
-                size='small'
-                aria-label='close'
-                color='inherit'
-                onClick={handleClose}
-            >
-                <CloseIcon fontSize='small' />
-            </IconButton>
-        </React.Fragment>
-    );
     const handleCaloriesChange = (event) => {
         setCalories(event.target.value);
     };
@@ -71,41 +58,41 @@ const ActivityForm = () => {
     };
 
     return (
-        <form className='calorie-form' onSubmit={handleSubmit}>
-            <label htmlFor='calories'>Enter Calories:</label>
-            <input
-                type='number'
-                id='calories'
-                value={calories}
-                onChange={handleCaloriesChange}
-                className='input'
-            />
+        <Box flex={9} p={{ xs: 0, md: 2 }}>
+            <form className='calorie-form' onSubmit={handleSubmit}>
+                <label htmlFor='calories'>Enter Calories:</label>
+                <input
+                    type='number'
+                    id='calories'
+                    value={calories}
+                    onChange={handleCaloriesChange}
+                    className='input'
+                />
 
-            <label htmlFor='activity'>Enter your activity:</label>
-            <input
-                type='string'
-                id='activity'
-                value={activity}
-                onChange={handleActivityTypeChange}
-                className='input'
-            />
-            <Button
-                variant='contained'
-                type='submit'
-                className='submit-button'
-                onClick={handleClick}
-            >
-                Post Activity
-            </Button>
+                <label htmlFor='activity'>Enter your activity:</label>
+                <input
+                    type='string'
+                    id='activity'
+                    value={activity}
+                    onChange={handleActivityTypeChange}
+                    className='input'
+                />
+                <Button
+                    variant='contained'
+                    type='submit'
+                    className='submit-button'
+                    onClick={handleClick}
+                >
+                    Post Activity
+                </Button>
 
-            <Snackbar
-                open={open}
-                autoHideDuration={4000}
-                onClose={handleClose}
-                message='Posted an activity'
-                action={action}
-            />
-        </form>
+                <Notification
+                    open={open}
+                    onClose={handleClose}
+                    message='Posted an activity'
+                />
+            </form>
+        </Box>
     );
 };
 
