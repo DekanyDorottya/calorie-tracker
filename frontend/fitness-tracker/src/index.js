@@ -42,7 +42,7 @@ const router = createBrowserRouter([
         element: <ActivityForm />,
       },
       {
-        path: "/yourDailyActivitiy",
+        path: "/yourDailyActivity",
         element: <ActivityDailyList />,
       },
       {

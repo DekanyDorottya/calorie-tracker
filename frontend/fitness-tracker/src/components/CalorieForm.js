@@ -4,6 +4,7 @@ import './CalorieForm.css';
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import Notification from './Notification';
 const CalorieForm = () => {
     const [calories, setCalories] = useState(0);
     const [foodType, setFoodType] = useState('');
@@ -29,22 +30,7 @@ const CalorieForm = () => {
         setOpen(false);
     };
 
-    const action = (
-        <React.Fragment>
-            <Button color='secondary' size='small' onClick={handleClose}>
-                UNDO
-            </Button>
-            <IconButton
-                size='small'
-                aria-label='close'
-                color='inherit'
-                onClick={handleClose}
-            >
-                <CloseIcon fontSize='small' />
-            </IconButton>
-        </React.Fragment>
-    );
-
+    
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
@@ -99,14 +85,9 @@ const CalorieForm = () => {
             >
                 Post Calories
             </Button>
+            
 
-            <Snackbar
-                open={open}
-                autoHideDuration={4000}
-                onClose={handleClose}
-                message='Posted a meal'
-                action={action}
-            />
+            <Notification open={open} onClose={handleClose} message='Posted a meal' />
             
         </form>
     );
