@@ -10,7 +10,7 @@ const About = () => {
             <h1 className='titleAbout'>About Us</h1>
             <video src={videoBg} autoPlay loop muted className='videoAbout' />
 
-            <p>Welcome to our Fitness Tracker Application!</p>
+            <p>Welcome to our Fitness Tracker!</p>
             <p>
                 We are passionate about health and fitness, and our goal is to
                 help you achieve your fitness goals by providing a powerful and
