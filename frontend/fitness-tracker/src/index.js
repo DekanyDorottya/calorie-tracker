@@ -8,8 +8,8 @@ import About from './components/About';
 import CalorieForm from './components/CalorieForm';
 import Home from './components/Home';
 import CalorieDailyList from './components/CalorieDailyList';
-import ActivityForm from './components/ActivityForm';
-import ActivityDailyList from './components/ActivityDailyList';
+import ActivityForm from './components/Activity/ActivityForm';
+import ActivityDailyList from './components/Activity/ActivityDailyList';
 import LoginForm from './components/LoginForm';
 import SignupForm from './components/SignupForm';
 
