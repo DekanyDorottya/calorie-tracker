@@ -1,0 +1,7 @@
+.videoAbout{width: 100%; /* Adjust this width as needed */
+    max-width: 1500px; /* Maximum width for the video */
+    height: auto; /* Maintain aspect ratio */}
+
+    .titleAbout{
+        text-align: center; /* Center the text horizontally */
+        margin: 20px;     }
