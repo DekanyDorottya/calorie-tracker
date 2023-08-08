@@ -5,6 +5,8 @@ import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Notification from './Notification';
+import { Box, Stack, Skeleton } from '@mui/material';
+
 const CalorieForm = () => {
     const [calories, setCalories] = useState(0);
     const [foodType, setFoodType] = useState('');
@@ -30,7 +32,6 @@ const CalorieForm = () => {
         setOpen(false);
     };
 
-    
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
@@ -57,39 +58,43 @@ const CalorieForm = () => {
     };
 
     return (
-        <form className='calorie-form' onSubmit={handleSubmit}>
-            <label htmlFor='calories'>Enter Calories:</label>
-            <input
-                type='number'
-                id='calories'
-                value={calories}
-                onChange={handleCaloriesChange}
-                className='calorie-input'
-            />
+        <Box flex={9} p={{ xs: 0, md: 2 }}>
+            <form className='calorie-form' onSubmit={handleSubmit}>
+                <label htmlFor='calories'>Enter Calories:</label>
+                <input
+                    type='number'
+                    id='calories'
+                    value={calories}
+                    onChange={handleCaloriesChange}
+                    className='calorie-input'
+                />
 
-            <label htmlFor='foodType'>Enter food:</label>
+                <label htmlFor='foodType'>Enter food:</label>
 
-            <input
-                type='text'
-                id='foodType'
-                value={foodType}
-                onChange={handleFoodTypeChange}
-                className='food-input'
-            />
+                <input
+                    type='text'
+                    id='foodType'
+                    value={foodType}
+                    onChange={handleFoodTypeChange}
+                    className='food-input'
+                />
 
-            <Button
-                variant='contained'
-                type='submit'
-                className='submit-button'
-                onClick={handleClick}
-            >
-                Post Calories
-            </Button>
-            
+                <Button
+                    variant='contained'
+                    type='submit'
+                    className='submit-button'
+                    onClick={handleClick}
+                >
+                    Post Calories
+                </Button>
 
-            <Notification open={open} onClose={handleClose} message='Posted a meal' />
-            
-        </form>
+                <Notification
+                    open={open}
+                    onClose={handleClose}
+                    message='Posted a meal'
+                />
+            </form>
+        </Box>
     );
 };
 
