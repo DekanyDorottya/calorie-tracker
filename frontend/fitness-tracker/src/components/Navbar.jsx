@@ -7,7 +7,7 @@ import Cookies from 'js-cookie';
 import jwt from 'jwt-decode';
 import { Mail, Notifications, Pets } from '@mui/icons-material';
 import {
-  AccountBox,
+  PlaylistAdd,
   Article,
   Checklist,
   Home,
@@ -72,12 +72,27 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
             <StyledToolbar>
                 <Typography
                     variant='h4'
-                    sx={{ display: { xs: 'none', sm: 'block' } }}
+                    sx={{  display: { xs: 'none', sm: 'block' } }}
                 >
                     TrackFit
                 </Typography>
-                <Pets sx={{ display: { xs: 'block', sm: 'none' } }} />
-                
+                <PlaylistAdd sx={{ display: { xs: 'block', sm: 'none' } }} />
+                <ListItem disablePadding sx={{ marginTop: 1, width: 60, height: 60 }}>
+                        <ListItemButton component='a' href='/'>
+                            <ListItemIcon>
+                                <Home />
+                            </ListItemIcon>
+                            <ListItemText primary='Homepage' />
+                        </ListItemButton>
+                    </ListItem>
+                    <ListItem disablePadding sx={{ marginTop: 1, width: 60, height: 60 }}>
+                        <ListItemButton component='a' href='/about'>
+                            <ListItemIcon>
+                                <Article />
+                            </ListItemIcon>
+                            <ListItemText primary='About' />
+                        </ListItemButton>
+                    </ListItem>
                 
                 <div className='mb-2'>
                     {isLoggedIn ? (

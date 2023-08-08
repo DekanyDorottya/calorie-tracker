@@ -21,24 +21,9 @@ import React from 'react';
 const Sidebar = ({ mode, setMode, isLoggedIn, handleLogout }) => {
     return (
         <Box flex={1} p={2} sx={{ display: { xs: 'none', sm: 'block' } }}>
-            <Box position='fixed'>
+            <Box position='-webkit-sticky'>
                 <List>
-                    <ListItem disablePadding>
-                        <ListItemButton component='a' href='/'>
-                            <ListItemIcon>
-                                <Home />
-                            </ListItemIcon>
-                            <ListItemText primary='Homepage' />
-                        </ListItemButton>
-                    </ListItem>
-                    <ListItem disablePadding>
-                        <ListItemButton component='a' href='/about'>
-                            <ListItemIcon>
-                                <Article />
-                            </ListItemIcon>
-                            <ListItemText primary='About' />
-                        </ListItemButton>
-                    </ListItem>
+                    {/* I could not decide if the home and about part is better here or in Navbar */}
                     {isLoggedIn && (
                         <List>
                             <ListItem disablePadding>
@@ -117,6 +102,7 @@ const Sidebar = ({ mode, setMode, isLoggedIn, handleLogout }) => {
                     </ListItem>
                 </List>
             </Box>
+            
         </Box>
     );
 };
