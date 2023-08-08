@@ -6,7 +6,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 const Notification = ({ open, onClose, message }) => {
     const action = (
-        <React.Fragment>
+        <>
             <Button color='secondary' size='small' onClick={onClose}>
                 UNDO
             </Button>
@@ -18,7 +18,7 @@ const Notification = ({ open, onClose, message }) => {
             >
                 <CloseIcon fontSize='small' />
             </IconButton>
-        </React.Fragment>
+        </>
     );
 
     return (

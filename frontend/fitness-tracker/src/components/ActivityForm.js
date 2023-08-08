@@ -86,7 +86,7 @@ const ActivityForm = () => {
                 Post Activity
             </Button>
 
-            <Notification open={open} onClose={handleClose} message='Posted a meal' />
+            <Notification open={open} onClose={handleClose} message='Posted an activity' />
 
         </form>
     );
