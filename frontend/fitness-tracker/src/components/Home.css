@@ -1,19 +1,27 @@
 .container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-  
-  .homeImage {
-    flex: 1;
-    max-width: 500px; 
-    max-height: auto; 
-    margin-right: 200px; 
-  }
-  .homeTitle{
-    display: flex;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.homeImage {
+  flex: 1;
+  max-width: 500px;
+  max-height: auto;
+
+}
+
+.homeVideo {
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+  margin-right: 50px;
+}
+
+
+.homeTitle {
+  display: flex;
   justify-content: center;
   align-items: center;
 
-  }
-  
+}

@@ -1,6 +1,8 @@
 import React from 'react';
 import './Home.css';
-import { Box, Stack, Skeleton } from '@mui/material';
+import { Box } from '@mui/material';
+import videoBg from '../assets/videos/homeVideo.mp4';
+
 
 const Home = () => {
     return (
@@ -10,11 +12,8 @@ const Home = () => {
                     <h1>Welcome to TrackFit!</h1>
                 </div>
                 <div className='container'>
-                    <img
-                        src='https://media.istockphoto.com/id/908165344/photo/pasta-with-meat-and-vegetables-on-white-background.jpg?s=612x612&w=0&k=20&c=zLxnClBbX6Azrd7Lud42pvQEQTjngPfIe5ElDCMroog='
-                        alt='Your Image'
-                        className='homeImage'
-                    />
+                                <video src={videoBg} autoPlay loop muted className='homeVideo' />
+
                     <p>
                         Good health starts with what you eat. Want to eat more
                         mindfully? Track meals, learn about your habits, and
