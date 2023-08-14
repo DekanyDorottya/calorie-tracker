@@ -2,12 +2,25 @@ import { useEffect, useState } from 'react';
 import { BarChart } from '@mui/x-charts/BarChart';
 import './CalorieDailyList.css';
 import { Box, Stack, Skeleton } from '@mui/material';
+import Cookies from 'js-cookie';
 
 export default function CalorieDailyList() {
     const [listedMeals, setListedMeals] = useState([]);
 
+    // A JWT token, amit kaptál a bejelentkezés vagy az autentikáció során
+    const jwtToken = Cookies.get('jwtToken');
+
+
+    
+    const requestOptions = {
+        method: 'GET',
+        headers: {
+            Authorization: `Bearer ${jwtToken}`,
+        },
+    };
+
     const fetchMeals = () => {
-        return fetch('/calories/all').then((res) => res.json());
+        return fetch('/calories/all', requestOptions).then((res) => res.json());
     };
 
     useEffect(() => {

@@ -1,5 +1,6 @@
 package org.codecool.fitnesstracker.fitnesstracker.service;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.NewUserDTO;
@@ -57,6 +58,9 @@ public class UserService {
 
         return user;
     }
-
+    public String getEmailFromJwtToken(String token) {
+        Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
+        return claims.getSubject();
+    }
 
 }
