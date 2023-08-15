@@ -14,7 +14,6 @@ import java.util.List;
 
 @Service
 public class CalorieService {
-    private List<CalorieDTO> userCalories = new ArrayList<>();
     private final CalorieRepository calorieRepository;
     private final UserService userService;
 
@@ -25,13 +24,16 @@ public class CalorieService {
     }
 
     public List<CalorieDTO> getAllCalories() {
-        return userCalories;
+        return null;
     }
 
-    public void addNewMeal(NewCalorieDTO meal) {
+    public void addNewMeal(NewCalorieDTO meal, String jwtToken) {
         LocalDateTime localDateTime = LocalDateTime.now();
+        String userEmail = userService.getEmailFromJwtToken(jwtToken);
+        User user = userService.findUserByEmail(userEmail);
         CalorieDTO calorieDTO = new CalorieDTO(meal.foodType(), meal.calories(), localDateTime);
-        userCalories.add(calorieDTO);
+        Calorie newCalorie = new Calorie(calorieDTO.foodType(), calorieDTO.calories(), localDateTime, user);
+        calorieRepository.save(newCalorie);
     }
 
     /*public List<Calorie> getCaloriesByUserEmail() {

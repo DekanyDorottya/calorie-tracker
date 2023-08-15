@@ -28,9 +28,12 @@ public class CalorieController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<NewCalorieDTO> addNewMeal(@RequestBody NewCalorieDTO meal) {
+    public ResponseEntity<NewCalorieDTO> addNewMeal(
+            @RequestBody NewCalorieDTO meal,
+            @RequestHeader("Authorization") String authorizationHeader) {
         System.out.println("request arrived");
-        calorieService.addNewMeal(meal);
+        String token = authorizationHeader.replace("Bearer ", "");
+        calorieService.addNewMeal(meal, token);
         return new ResponseEntity<>(meal, HttpStatus.CREATED);
     }
 }

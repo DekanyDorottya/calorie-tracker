@@ -6,7 +6,4 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface CalorieRepository extends JpaRepository<Calorie, Long> {
-/*
-        List<Calorie> findByUserId(Long userId);
-*/
 }

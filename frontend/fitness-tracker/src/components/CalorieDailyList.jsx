@@ -7,7 +7,6 @@ import Cookies from 'js-cookie';
 export default function CalorieDailyList() {
     const [listedMeals, setListedMeals] = useState([]);
 
-    // A JWT token, amit kaptál a bejelentkezés vagy az autentikáció során
     const jwtToken = Cookies.get('jwtToken');
 
 

@@ -8,6 +8,7 @@ import org.codecool.fitnesstracker.fitnesstracker.controller.dto.UserDTO;
 import org.codecool.fitnesstracker.fitnesstracker.dao.model.User;
 import org.codecool.fitnesstracker.fitnesstracker.dao.model.UserRepository;
 import org.codecool.fitnesstracker.fitnesstracker.exceptions.EmailNotFoundException;
+import org.codecool.fitnesstracker.fitnesstracker.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -73,5 +74,14 @@ public class UserService {
         Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
         return claims.getSubject();
     }
+
+    public User findUserByEmail(String userEmail) {
+        Optional<User> optionalUser = userRepository.findUserByEmail(userEmail);
+        if(!optionalUser.isPresent()) {
+            throw new UserNotFoundException("User with this email does not exist" + userEmail);
+        }
+        return optionalUser.get();
+    }
+
 
 }
