@@ -21,10 +21,11 @@ public class CalorieController {
     }
 
     @GetMapping("/all")
-    public List<CalorieDTO> getAllCalories() {
+    public List<CalorieDTO> getAllCalories(
+            @RequestHeader("Authorization") String authorizationHeader) {
         System.out.println("get request arrived");
-
-        return calorieService.getAllCalories();
+        String token = authorizationHeader.replace("Bearer ", "");
+        return calorieService.getAllCalories(token);
     }
 
     @PostMapping("/")

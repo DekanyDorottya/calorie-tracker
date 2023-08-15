@@ -23,8 +23,15 @@ public class CalorieService {
         this.userService = userService;
     }
 
-    public List<CalorieDTO> getAllCalories() {
-        return null;
+    public List<CalorieDTO> getAllCalories(String jwtToken) {
+        String userEmail = userService.getEmailFromJwtToken(jwtToken);
+        List<Calorie> calorieList = calorieRepository.findByUserEmail(userEmail);
+        List<CalorieDTO> calorieDTOS = new ArrayList<>();
+
+        for (Calorie calorie : calorieList) {
+            calorieDTOS.add(new CalorieDTO(calorie.getFoodType(),calorie.getCalories(), calorie.getMealDateTime()));
+        }
+        return calorieDTOS;
     }
 
     public void addNewMeal(NewCalorieDTO meal, String jwtToken) {
