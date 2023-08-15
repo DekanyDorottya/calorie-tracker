@@ -33,7 +33,7 @@ public class User {
     private String password;
     private LocalDateTime registrationTime;
 
-    @OneToMany(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "calorie_id", referencedColumnName = "id")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
+    //@JoinColumn(name = "calorie_id", referencedColumnName = "id")
     private List<Calorie> calories = new ArrayList<>();
 }
