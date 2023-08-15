@@ -14,6 +14,14 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "users")
 public class User {
+
+    public User(String username, String email, String password, LocalDateTime registrationTime) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.registrationTime = registrationTime;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

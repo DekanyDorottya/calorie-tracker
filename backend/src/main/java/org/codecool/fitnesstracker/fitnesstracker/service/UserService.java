@@ -5,6 +5,9 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.NewUserDTO;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.UserDTO;
+import org.codecool.fitnesstracker.fitnesstracker.dao.model.User;
+import org.codecool.fitnesstracker.fitnesstracker.dao.model.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +15,17 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
+
+    UserRepository userRepository;
+    @Autowired
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     List<UserDTO> users = new ArrayList<>();
     @Value("${jwt.secret}")
     private String jwtSecret;
@@ -27,13 +38,13 @@ public class UserService {
 
     public boolean addNewUser(NewUserDTO newUser) {
         LocalDateTime localDateTime = LocalDateTime.now();
-        boolean check = users.stream().noneMatch(userDTO -> userDTO.email().equals(newUser.email()));
-        if (check) {
-            UserDTO userDTO = new UserDTO(newUser.userName(), newUser.email(), newUser.password(), localDateTime);
-            users.add(userDTO);
-            return true;
+        //boolean check = users.stream().noneMatch(userDTO -> userDTO.email().equals(newUser.email()));
+        Optional<User> optionalUser = userRepository.findUserByEmail(newUser.email());
+        if(optionalUser.isPresent()) {
+            return false;
         }
-        return false;
+        userRepository.save(new User(newUser.userName(), newUser.email(), newUser.password(), LocalDateTime.now()));
+        return true;
     }
 
     public String generateJwtToken(String email) {
