@@ -7,6 +7,7 @@ import org.codecool.fitnesstracker.fitnesstracker.controller.dto.NewUserDTO;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.UserDTO;
 import org.codecool.fitnesstracker.fitnesstracker.dao.model.User;
 import org.codecool.fitnesstracker.fitnesstracker.dao.model.UserRepository;
+import org.codecool.fitnesstracker.fitnesstracker.exceptions.EmailNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -38,7 +39,6 @@ public class UserService {
 
     public boolean addNewUser(NewUserDTO newUser) {
         LocalDateTime localDateTime = LocalDateTime.now();
-        //boolean check = users.stream().noneMatch(userDTO -> userDTO.email().equals(newUser.email()));
         Optional<User> optionalUser = userRepository.findUserByEmail(newUser.email());
         if(optionalUser.isPresent()) {
             return false;
@@ -62,12 +62,12 @@ public class UserService {
     }
 
     public UserDTO authenticateUser(String email, String password) {
-        UserDTO user = users.stream()
-                .filter(u -> u.email().equals(email) && u.password().equals(password))
-                .findFirst()
-                .orElse(null);
+        Optional<User> optionalUser = userRepository.findUserByEmailAndPassword(email, password);
+        if(!optionalUser.isPresent()) {
+            throw new EmailNotFoundException("Invalid password");
+        }
 
-        return user;
+        return new UserDTO(optionalUser.get().getUsername(), optionalUser.get().getEmail(), optionalUser.get().getPassword(), optionalUser.get().getRegistrationTime());
     }
     public String getEmailFromJwtToken(String token) {
         Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
