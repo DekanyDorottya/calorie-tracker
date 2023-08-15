@@ -1,9 +1,15 @@
 package org.codecool.fitnesstracker.fitnesstracker.service;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.NewUserDTO;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.UserDTO;
+import org.codecool.fitnesstracker.fitnesstracker.dao.model.User;
+import org.codecool.fitnesstracker.fitnesstracker.dao.model.UserRepository;
+import org.codecool.fitnesstracker.fitnesstracker.exceptions.EmailNotFoundException;
+import org.codecool.fitnesstracker.fitnesstracker.exceptions.UserNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +17,17 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
+
+    UserRepository userRepository;
+    @Autowired
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     List<UserDTO> users = new ArrayList<>();
     @Value("${jwt.secret}")
     private String jwtSecret;
@@ -26,13 +40,12 @@ public class UserService {
 
     public boolean addNewUser(NewUserDTO newUser) {
         LocalDateTime localDateTime = LocalDateTime.now();
-        boolean check = users.stream().noneMatch(userDTO -> userDTO.email().equals(newUser.email()));
-        if (check) {
-            UserDTO userDTO = new UserDTO(newUser.userName(), newUser.email(), newUser.password(), localDateTime);
-            users.add(userDTO);
-            return true;
+        Optional<User> optionalUser = userRepository.findUserByEmail(newUser.email());
+        if(optionalUser.isPresent()) {
+            return false;
         }
-        return false;
+        userRepository.save(new User(newUser.userName(), newUser.email(), newUser.password(), LocalDateTime.now()));
+        return true;
     }
 
     public String generateJwtToken(String email) {
@@ -50,12 +63,24 @@ public class UserService {
     }
 
     public UserDTO authenticateUser(String email, String password) {
-        UserDTO user = users.stream()
-                .filter(u -> u.email().equals(email) && u.password().equals(password))
-                .findFirst()
-                .orElse(null);
+        Optional<User> optionalUser = userRepository.findUserByEmailAndPassword(email, password);
+        if(!optionalUser.isPresent()) {
+            throw new EmailNotFoundException("Invalid password");
+        }
 
-        return user;
+        return new UserDTO(optionalUser.get().getUsername(), optionalUser.get().getEmail(), optionalUser.get().getPassword(), optionalUser.get().getRegistrationTime());
+    }
+    public String getEmailFromJwtToken(String token) {
+        Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
+        return claims.getSubject();
+    }
+
+    public User findUserByEmail(String userEmail) {
+        Optional<User> optionalUser = userRepository.findUserByEmail(userEmail);
+        if(!optionalUser.isPresent()) {
+            throw new UserNotFoundException("User with this email does not exist" + userEmail);
+        }
+        return optionalUser.get();
     }
 
 

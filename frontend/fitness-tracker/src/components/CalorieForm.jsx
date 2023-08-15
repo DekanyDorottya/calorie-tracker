@@ -6,11 +6,14 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Notification from './Notification';
 import { Box, Stack, Skeleton } from '@mui/material';
+import Cookies from 'js-cookie';
 
 const CalorieForm = () => {
     const [calories, setCalories] = useState(0);
     const [foodType, setFoodType] = useState('');
     const [open, setOpen] = React.useState(false);
+
+    const jwtToken = Cookies.get('jwtToken');
 
     const handleCaloriesChange = (event) => {
         setCalories(event.target.value);
@@ -39,6 +42,7 @@ const CalorieForm = () => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    Authorization: `Bearer ${jwtToken}`
                 },
                 body: JSON.stringify({
                     foodType: foodType,

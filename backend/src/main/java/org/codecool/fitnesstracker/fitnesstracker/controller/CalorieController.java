@@ -21,16 +21,20 @@ public class CalorieController {
     }
 
     @GetMapping("/all")
-    public List<CalorieDTO> getAllCalories() {
+    public List<CalorieDTO> getAllCalories(
+            @RequestHeader("Authorization") String authorizationHeader) {
         System.out.println("get request arrived");
-
-        return calorieService.getAllCalories();
+        String token = authorizationHeader.replace("Bearer ", "");
+        return calorieService.getAllCalories(token);
     }
 
     @PostMapping("/")
-    public ResponseEntity<NewCalorieDTO> addNewMeal(@RequestBody NewCalorieDTO meal) {
+    public ResponseEntity<NewCalorieDTO> addNewMeal(
+            @RequestBody NewCalorieDTO meal,
+            @RequestHeader("Authorization") String authorizationHeader) {
         System.out.println("request arrived");
-        calorieService.addNewMeal(meal);
+        String token = authorizationHeader.replace("Bearer ", "");
+        calorieService.addNewMeal(meal, token);
         return new ResponseEntity<>(meal, HttpStatus.CREATED);
     }
 }
