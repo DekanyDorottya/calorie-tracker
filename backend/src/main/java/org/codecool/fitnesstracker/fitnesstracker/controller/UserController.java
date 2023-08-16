@@ -2,6 +2,8 @@ package org.codecool.fitnesstracker.fitnesstracker.controller;
 
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.NewUserDTO;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.UserDTO;
+import org.codecool.fitnesstracker.fitnesstracker.controller.dto.UserInfoDTO;
+import org.codecool.fitnesstracker.fitnesstracker.dao.model.User;
 import org.codecool.fitnesstracker.fitnesstracker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -44,5 +46,13 @@ public class UserController {
         } else {
             return "Invalid credentials.";
         }
+    }
+
+    @PutMapping("/info")
+    public void getUserInfo(@RequestHeader("Authorization") String authorizationHeader,
+                            @RequestBody UserInfoDTO userInfo
+                           )  {
+        String token = authorizationHeader.replace("Bearer ", "");
+        userService.addUserInfo(token, userInfo);
     }
 }

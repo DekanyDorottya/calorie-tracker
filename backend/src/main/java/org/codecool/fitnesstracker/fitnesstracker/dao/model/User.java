@@ -3,6 +3,7 @@ package org.codecool.fitnesstracker.fitnesstracker.dao.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,10 @@ public class User {
     @Column(nullable = false)
     private String password;
     private LocalDateTime registrationTime;
+    private String gender;
+    private int weight;
+    private LocalDate birthDate;
+    private int height;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
     //@JoinColumn(name = "calorie_id", referencedColumnName = "id")

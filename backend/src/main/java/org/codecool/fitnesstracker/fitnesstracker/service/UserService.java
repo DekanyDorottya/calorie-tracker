@@ -5,13 +5,15 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.NewUserDTO;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.UserDTO;
+import org.codecool.fitnesstracker.fitnesstracker.controller.dto.UserInfoDTO;
 import org.codecool.fitnesstracker.fitnesstracker.dao.model.User;
-import org.codecool.fitnesstracker.fitnesstracker.dao.model.UserRepository;
+import org.codecool.fitnesstracker.fitnesstracker.repositories.UserRepository;
 import org.codecool.fitnesstracker.fitnesstracker.exceptions.EmailNotFoundException;
 import org.codecool.fitnesstracker.fitnesstracker.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -84,4 +86,18 @@ public class UserService {
     }
 
 
+//    public UserInfoDTO userInfo(String jwtToken) {
+//        String userEmail = getEmailFromJwtToken(jwtToken);
+//        User user = findUserByEmail(jwtToken);
+//
+//    }
+    @Transactional
+    public void addUserInfo(String jwtToken, UserInfoDTO userInfo) {
+        String userEmail = getEmailFromJwtToken(jwtToken);
+        User user = findUserByEmail(userEmail);
+        user.setGender(userInfo.gender());
+        user.setHeight(userInfo.height());
+        user.setWeight(userInfo.weight());
+        user.setBirthDate(userInfo.birthDate());
+    }
 }

@@ -1,5 +1,6 @@
-package org.codecool.fitnesstracker.fitnesstracker.dao.model;
+package org.codecool.fitnesstracker.fitnesstracker.repositories;
 
+import org.codecool.fitnesstracker.fitnesstracker.dao.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
