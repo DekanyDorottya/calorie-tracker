@@ -23,6 +23,5 @@ public class Activity {
     private LocalDateTime activityDateTime;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
     private User user;
 }

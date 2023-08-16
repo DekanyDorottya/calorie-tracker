@@ -1,6 +1,7 @@
 package org.codecool.fitnesstracker.fitnesstracker.service;
 
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.AnalyticDailyDTO;
+import org.codecool.fitnesstracker.fitnesstracker.dao.model.Activity;
 import org.codecool.fitnesstracker.fitnesstracker.dao.model.Calorie;
 import org.codecool.fitnesstracker.fitnesstracker.dao.model.User;
 import org.codecool.fitnesstracker.fitnesstracker.service.analytics.AnalyticDuration;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -42,6 +44,19 @@ public class AnalyzeService {
                 .getStartingDate();
 
         List<Calorie> calorieList = calorieService.getCaloriesFromDate(startingDate);
-        List<Activit>
+        List<Activity> activityList = activityService.getActivityFromDate(startingDate);
+
+        int userBaseLineCalorieRequirement = getUserBaseLineCalorieRequirement(user);
+
+
+    }
+
+    private int getUserBaseLineCalorieRequirement(User user) {
+        int age = Period.between(user.getBirthDate(), LocalDate.now()).getYears();
+        if (user.getGender().equals("women")) {
+            return (int) Math.round(655 + (9.6 * user.getWeight()) + (1.8 * user.getHeight()) - (4.7 * age));
+        } else {
+            return (int) Math.round(66 + (13.7 * user.getWeight()) + (5 * user.getHeight()) - (6.8 * age));
+        }
     }
 }
