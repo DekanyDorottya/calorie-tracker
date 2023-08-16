@@ -12,6 +12,8 @@ import ActivityForm from './components/Activity/ActivityForm';
 import ActivityDailyList from './components/Activity/ActivityDailyList';
 import LoginForm from './components/LoginForm';
 import SignupForm from './components/SignupForm';
+import Profile from './components/Profile';
+import Analyze from './components/Analyze';
 
 //import reportWebVitals from './reportWebVitals';
 
@@ -34,6 +36,10 @@ const router = createBrowserRouter([
         element: <CalorieForm />,
       },
       {
+        path: "/profile",
+        element: <Profile />,
+      },
+      {
         path: "/yourDailyCalorie",
         element: <CalorieDailyList />,
       },
@@ -52,6 +58,10 @@ const router = createBrowserRouter([
       {
         path: "/signup",
         element: <SignupForm />,
+      },
+      {
+        path: "/analyze",
+        element: <Analyze />,
       },
       
   ],
