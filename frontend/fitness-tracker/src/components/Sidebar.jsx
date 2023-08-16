@@ -67,7 +67,7 @@ const Sidebar = ({ mode, setMode, isLoggedIn, handleLogout }) => {
                             <ListItem disablePadding>
                                 <ListItemButton
                                     component='a'
-                                    href='#simple-list'
+                                    href='analyze'
                                 >
                                     <ListItemIcon>
                                         <Settings />
@@ -78,7 +78,7 @@ const Sidebar = ({ mode, setMode, isLoggedIn, handleLogout }) => {
                             <ListItem disablePadding>
                                 <ListItemButton
                                     component='a'
-                                    href='#simple-list'
+                                    href='profile'
                                 >
                                     <ListItemIcon>
                                         <AccountBox />
