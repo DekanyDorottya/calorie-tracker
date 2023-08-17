@@ -1,6 +1,5 @@
 package org.codecool.fitnesstracker.fitnesstracker.service;
 
-import org.codecool.fitnesstracker.fitnesstracker.controller.dto.AnalyticDailyDTO;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.CalorieDTO;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.CalorieForAnalyticsDTO;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.NewCalorieDTO;

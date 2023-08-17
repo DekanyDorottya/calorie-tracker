@@ -46,7 +46,7 @@ public class UserService {
         if(optionalUser.isPresent()) {
             return false;
         }
-        userRepository.save(new User(newUser.userName(), newUser.email(), newUser.password(), LocalDateTime.now()));
+        userRepository.save(new User(newUser.userName(), newUser.email(), newUser.password(), localDateTime));
         return true;
     }
 
@@ -66,7 +66,7 @@ public class UserService {
 
     public UserDTO authenticateUser(String email, String password) {
         Optional<User> optionalUser = userRepository.findUserByEmailAndPassword(email, password);
-        if(!optionalUser.isPresent()) {
+        if(optionalUser.isEmpty()) {
             throw new EmailNotFoundException("Invalid password");
         }
 
@@ -79,7 +79,7 @@ public class UserService {
 
     public User findUserByEmail(String userEmail) {
         Optional<User> optionalUser = userRepository.findUserByEmail(userEmail);
-        if(!optionalUser.isPresent()) {
+        if(optionalUser.isEmpty()) {
             throw new UserNotFoundException("User with this email does not exist" + userEmail);
         }
         return optionalUser.get();
