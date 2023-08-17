@@ -14,7 +14,7 @@ export default function DailyBarchart({ listedMeals }) {
                             p={{ tickFontSize: 30 }}
                             series={[
                                 {
-                                    data: [listedMeals.requiedCalorie],
+                                    data: [listedMeals[0].requiredCalorie],
                                     stack: 'A',
                                     label: 'optimal',
                                 },
@@ -25,7 +25,7 @@ export default function DailyBarchart({ listedMeals }) {
                                 },
 
                                 {
-                                    data: [listedMeals.calorieDay],
+                                    data: [listedMeals[0].dailyCalorieConsumption],
                                     label: 'calories in',
                                     color: 'red',
                                 },

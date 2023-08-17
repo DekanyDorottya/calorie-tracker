@@ -9,10 +9,10 @@ const CalorieForm = () => {
     const [calories, setCalories] = useState(0);
     const [foodType, setFoodType] = useState('');
     const [open, setOpen] = useState(false);
-    const [dailyCalorieInfos, setDailyCalorieInfos] = useState({
+    const [dailyCalorieInfos, setDailyCalorieInfos] = useState([{
         requiedCalorie: 2000,
-        calorieDay: 1500,
-    });
+        dailyCalorieConsumption: 1500,
+    }]);
     const [duration, setDuration] = useState('daily');
     const jwtToken = Cookies.get('jwtToken');
 
@@ -36,10 +36,16 @@ const CalorieForm = () => {
         setOpen(false);
     };
 
+    const handleRefresh=()=>{
+        console.log(fetchDailyCalories());
+        const dailyCaloriesData = fetchDailyCalories();
+            setDailyCalorieInfos(dailyCaloriesData);
+
+    }
 
     const fetchDailyCalories = async () => {
         try {
-            const response = await fetch(`/dailyCalorie?duration=${duration}`, {
+            const response = await fetch(`/analyze?duration=${duration}`, {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${jwtToken}`,
@@ -79,8 +85,7 @@ const CalorieForm = () => {
                 throw new Error('Failed to post calories.');
             }
 
-            const dailyCaloriesData = await fetchDailyCalories();
-            setDailyCalorieInfos(dailyCaloriesData);
+            
 
             const data = await response.json();
             console.log(data);
@@ -127,6 +132,14 @@ const CalorieForm = () => {
                         message='Posted a meal'
                     />
                 </form>
+                <Button
+                        variant='contained'
+                        type='submit'
+                        className='submit-button'
+                        onClick={handleRefresh}
+                    >
+                        refresh
+                    </Button>
             </Box>
             <DailyBarchart listedMeals={dailyCalorieInfos} />
         </>
