@@ -13,7 +13,7 @@ export default function Profile() {
     const [birthDate, setBirthDate] = useState(0);
     const [height, setHeight] = useState(0);
     const [duration, setDuration] = useState("week");
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
 
     const jwtToken = Cookies.get('jwtToken');
 

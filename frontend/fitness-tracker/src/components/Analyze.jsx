@@ -1,10 +1,23 @@
 import { useEffect, useState } from 'react';
+import { LinePlot } from '@mui/x-charts/LineChart';
+import { ChartContainer } from '@mui/x-charts/ChartContainer';
+
 import { BarChart } from '@mui/x-charts/BarChart';
 import './CalorieDailyList.css';
 import { Box, Stack, Skeleton } from '@mui/material';
 import Cookies from 'js-cookie';
+import { Opacity } from '@mui/icons-material';
+import Combining from './Combining';
 export default function Analyze() {
-    const [listedMeals, setListedMeals] = useState([]);
+    const [listedMeals, setListedMeals] = useState([
+        { caloriesIn: 3000, caloriesOut: 400, optimalCalories: 2000 },
+        { caloriesIn: 2000, caloriesOut: 400, optimalCalories: 2000 },
+        { caloriesIn: 2500, caloriesOut: 300, optimalCalories: 2000 },
+        { caloriesIn: 1000, caloriesOut: 400, optimalCalories: 2000 },
+        { caloriesIn: 3200, caloriesOut: 400, optimalCalories: 2000 },
+        { caloriesIn: 3100, caloriesOut: 400, optimalCalories: 2000 },
+        { caloriesIn: 3300, caloriesOut: 400, optimalCalories: 2000 },
+    ]);
 
     const jwtToken = Cookies.get('jwtToken');
 
@@ -16,7 +29,7 @@ export default function Analyze() {
     };
 
     const fetchMeals = () => {
-        return fetch('/analyze', requestOptions).then((res) => res.json());
+        return fetch('/dailyCalorie', requestOptions).then((res) => res.json());
     };
 
     /* useEffect(() => {
@@ -26,8 +39,8 @@ export default function Analyze() {
         });
     }, []); */
 
-    const xAxisLabels = listedMeals.map((data) => data.foodType);
-    const caloriesData = listedMeals.map((data) => data.calories);
+    const caloriesIns = listedMeals.map((data) => data.caloriesIn);
+    const caloriesOutList = listedMeals.map((data) => data.caloriesOut);
 
     return (
         <Box flex={9} p={{ xs: 0, md: 2 }}>
@@ -51,22 +64,25 @@ export default function Analyze() {
                             </tbody>
                         </table>
                         <div className='calorie-bar-chart'>
+                            
                             <BarChart
+                                p={{ tickFontSize: 30 }}
                                 series={[
                                     {
-                                        data: [3000, 1000, 2, 6, 5, 2, 3],
+                                        data: caloriesIns,
                                         stack: 'A',
-                                        label: 'calorie in',
+                                        label: 'optimal',
                                     },
                                     {
-                                        data: [4, 3, 1, 5, 8, 2, 3],
+                                        data: caloriesOutList,
                                         stack: 'A',
                                         label: 'calorie out',
                                     },
 
                                     {
-                                        data: [10, 6, 5, 8, 9, 2, 3],
-                                        label: 'series C1',
+                                        data: caloriesIns,
+                                        label: 'calories in',
+                                        color: 'red',
                                     },
                                 ]}
                                 width={600}

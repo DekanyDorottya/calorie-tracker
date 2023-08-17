@@ -1,18 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
-import './CalorieForm.css';
-import Snackbar from '@mui/material/Snackbar';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
 import Notification from './Notification';
-import { Box, Stack, Skeleton } from '@mui/material';
+import { Box } from '@mui/material';
 import Cookies from 'js-cookie';
+import DailyBarchart from './DailyBarchart';
 
 const CalorieForm = () => {
     const [calories, setCalories] = useState(0);
     const [foodType, setFoodType] = useState('');
-    const [open, setOpen] = React.useState(false);
-
+    const [open, setOpen] = useState(false);
+    const [dailyCalorieInfos, setDailyCalorieInfos] = useState([
+        {
+            requiedCalorie: 2000,
+            dailyCalorieConsumption: 1500,
+        },
+    ]);
+    const [duration, setDuration] = useState('daily');
     const jwtToken = Cookies.get('jwtToken');
 
     const handleCaloriesChange = (event) => {
@@ -35,6 +38,29 @@ const CalorieForm = () => {
         setOpen(false);
     };
 
+    const fetchDailyCalories = () => {
+        return fetch(`/analyze?duration=${duration}`, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${jwtToken}`,
+            },
+        }).then((res) => res.json());
+    };
+
+    /* useEffect(() => {
+        fetchDailyCalories().then((listedMeals) => {
+            setDailyCalorieInfos(listedMeals);
+            console.log(listedMeals);
+        });
+    }, []); */
+
+    const handleRefresh = () => {
+        fetchDailyCalories().then((listedMeals) => {
+            setDailyCalorieInfos(listedMeals);
+            console.log(listedMeals);
+        });
+    };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
@@ -42,7 +68,7 @@ const CalorieForm = () => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${jwtToken}`
+                    Authorization: `Bearer ${jwtToken}`,
                 },
                 body: JSON.stringify({
                     foodType: foodType,
@@ -62,43 +88,54 @@ const CalorieForm = () => {
     };
 
     return (
-        <Box flex={9} p={{ xs: 0, md: 2 }}>
-            <form className='calorie-form' onSubmit={handleSubmit}>
-                <label htmlFor='calories'>Enter Calories:</label>
-                <input
-                    type='number'
-                    id='calories'
-                    value={calories}
-                    onChange={handleCaloriesChange}
-                    className='calorie-input'
-                />
+        <>
+            <Box flex={5} p={{ xs: 0, md: 2 }}>
+                <form className='calorie-form' onSubmit={handleSubmit}>
+                    <label htmlFor='calories'>Enter Calories:</label>
+                    <input
+                        type='number'
+                        id='calories'
+                        value={calories}
+                        onChange={handleCaloriesChange}
+                        className='calorie-input'
+                    />
 
-                <label htmlFor='foodType'>Enter food:</label>
+                    <label htmlFor='foodType'>Enter food:</label>
 
-                <input
-                    type='text'
-                    id='foodType'
-                    value={foodType}
-                    onChange={handleFoodTypeChange}
-                    className='food-input'
-                />
+                    <input
+                        type='text'
+                        id='foodType'
+                        value={foodType}
+                        onChange={handleFoodTypeChange}
+                        className='food-input'
+                    />
 
+                    <Button
+                        variant='contained'
+                        type='submit'
+                        className='submit-button'
+                        onClick={handleClick}
+                    >
+                        Post Calories
+                    </Button>
+
+                    <Notification
+                        open={open}
+                        onClose={handleClose}
+                        message='Posted a meal'
+                    />
+                </form>
                 <Button
                     variant='contained'
                     type='submit'
                     className='submit-button'
-                    onClick={handleClick}
+                    onClick={handleRefresh}
                 >
-                    Post Calories
+                    refresh
                 </Button>
-
-                <Notification
-                    open={open}
-                    onClose={handleClose}
-                    message='Posted a meal'
-                />
-            </form>
-        </Box>
+            </Box>
+            <DailyBarchart listedMeals={dailyCalorieInfos} />
+        </>
     );
 };
 
