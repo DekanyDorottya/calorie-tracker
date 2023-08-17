@@ -22,14 +22,17 @@ public class ActivityController {
     }
 
     @GetMapping("/all")
-    public List<ActivityDTO> getAllActivities() {
-        return activityService.getAllActivities();
+    public List<ActivityDTO> getAllActivities( @RequestHeader("Authorization") String authorizationHeader) {
+        String token = authorizationHeader.replace("Bearer ", "");
+        return activityService.getAllActivities(token);
     }
 
     @PostMapping("/")
-    public ResponseEntity<NewActivityDTO> addNewActivity(@RequestBody NewActivityDTO activity) {
+    public ResponseEntity<NewActivityDTO> addNewActivity(@RequestBody NewActivityDTO activity,
+                                                         @RequestHeader("Authorization") String authorizationHeader) {
+        String token = authorizationHeader.replace("Bearer ", "");
         System.out.println("Activity request arrived");
-        activityService.addNewActivity(activity);
+        activityService.addNewActivity(activity, token);
         return new ResponseEntity<>(activity, HttpStatus.CREATED);
     }
 
