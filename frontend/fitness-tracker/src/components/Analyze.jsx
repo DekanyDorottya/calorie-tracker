@@ -29,7 +29,7 @@ export default function Analyze() {
     };
 
     const fetchMeals = () => {
-        return fetch('/analyze', requestOptions).then((res) => res.json());
+        return fetch('/dailyCalorie', requestOptions).then((res) => res.json());
     };
 
     /* useEffect(() => {
@@ -64,7 +64,7 @@ export default function Analyze() {
                             </tbody>
                         </table>
                         <div className='calorie-bar-chart'>
-                            <Combining listedMeals={listedMeals} />
+                            
                             <BarChart
                                 p={{ tickFontSize: 30 }}
                                 series={[

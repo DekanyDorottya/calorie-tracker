@@ -13,20 +13,20 @@ export default function Combining({ listedMeals }) {
             type: 'bar',
             stack: '',
             yAxisKey: 'eco',
-            data: xAxisLabels,
+            data: 1000,
         },
         {
             type: 'bar',
             stack: '',
             yAxisKey: 'eco',
-            data: [0, 0, 0, 0, 0, 0, 0],
+            data: 0,
             
         },
         {
             type: 'line',
             yAxisKey: 'eco',
             color: 'red',
-            data: [2000, 2500, 2600, 2400, 3000, 2100, 2300],
+            data: 2000,
             
         },
     ];
@@ -39,13 +39,7 @@ export default function Combining({ listedMeals }) {
                 {
                     id: 'years',
                     data: [
-                        'Monday',
-                        'Tuesday',
-                        'Wednesday',
-                        'Thursday',
-                        'Friday',
-                        'Saturday',
-                        'Sunday',
+                        'Today'
                     ],
                     scaleType: 'band',
                     valueFormatter: (value) => value.toString(),

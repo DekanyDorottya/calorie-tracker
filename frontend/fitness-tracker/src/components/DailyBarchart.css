@@ -1,0 +1,7 @@
+.calorie-bar-chart {
+    /* Add any necessary styling for your chart */
+    /* For example, you can set width, margin, padding, etc. */
+    /* Adjust these styles based on your layout needs */
+    margin: 20px;
+    max-width: calc(100% - 300px); /* Adjust the width based on the form's max-width */
+}

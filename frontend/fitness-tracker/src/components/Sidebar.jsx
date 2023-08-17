@@ -1,8 +1,6 @@
 import {
     AccountBox,
-    Article,
     Checklist,
-    Home,
     ModeNight,
     Settings,
     ControlPoint,
@@ -20,10 +18,10 @@ import React from 'react';
 
 const Sidebar = ({ mode, setMode, isLoggedIn, handleLogout }) => {
     return (
-        <Box flex={1} p={2} sx={{ display: { xs: 'none', sm: 'block' } }}>
+        <Box flex={2} p={2} sx={{ display: { xs: 'none', sm: 'block' } }}>
             <Box position='-webkit-sticky'>
                 <List>
-                    {/* I could not decide if the home and about part is better here or in Navbar */}
+                    
                     {isLoggedIn && (
                         <List>
                             <ListItem disablePadding>
