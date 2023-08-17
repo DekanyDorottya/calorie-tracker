@@ -57,9 +57,4 @@ public class CalorieService {
                 .toList();
     }
 
-    /*public List<Calorie> getCaloriesByUserEmail() {
-        String dummyEmail = "";
-        Long userId = userService.findByEmail(dummyEmail);
-        return calorieRepository.findByUserId(userId);
-    }*/
 }

@@ -85,12 +85,6 @@ public class UserService {
         return optionalUser.get();
     }
 
-
-//    public UserInfoDTO userInfo(String jwtToken) {
-//        String userEmail = getEmailFromJwtToken(jwtToken);
-//        User user = findUserByEmail(jwtToken);
-//
-//    }
     @Transactional
     public void addUserInfo(String jwtToken, UserInfoDTO userInfo) {
         String userEmail = getEmailFromJwtToken(jwtToken);

@@ -45,13 +45,6 @@ public class AnalyzeService {
                 .orElseThrow(() -> new NoSuchElementException(duration))
                 .getAnalytics(calorieService, userBaseLineCalorieRequirement, user);
 
-
-        //List<Calorie> calorieList = calorieService.getCaloriesFromDate(startingDate);
-        //List<Activity> activityList = activityService.getActivityFromDate(startingDate);
-
-        //int userBaseLineCalorieRequirement = getUserBaseLineCalorieRequirement(user);
-
-
     }
 
     private int getUserBaseLineCalorieRequirement(User user) {
