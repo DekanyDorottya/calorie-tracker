@@ -101,6 +101,9 @@ const SignupForm = () => {
                     setUser('');
                     setPwd('');
                     setMatchPwd('');
+                    setTimeout(() => {
+                        navigate('/login');
+                    }, 2000);
                 }
             })
             .catch((err) => {
@@ -110,15 +113,23 @@ const SignupForm = () => {
 
     return (
         <>
-            {success ? (
-                <section>
-                    <h1>
-                        You have sucessfully registered! Please check your email
-                        and login!
-                    </h1>
-                </section>
-            ) : (
-                <Box flex={9} p={{ xs: 0, md: 2 }}>
+            <Box flex={9} p={{ xs: 0, md: 2 }}>
+                {success ? (
+                    <section>
+                        {/* <Box
+                            justifyContent='center'
+                            alignItems='center'
+                            flex={90}
+                            p={{ xs: 0, md: 2 }}
+                        >
+                            <img
+                                src='https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExbjg3NXM0bGY2aTk5eHM4cGRvZXAwbm53MWprMGE2anNhbGxhdzNxMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/5AtXMjjrTMwvK/giphy.gif'
+                                alt='Your Image'
+                                className='imageSignup'
+                            />
+                        </Box> */}
+                    </section>
+                ) : (
                     <section>
                         <p
                             ref={errRef}
@@ -278,8 +289,8 @@ const SignupForm = () => {
                             </button>
                         </form>
                     </section>
-                </Box>
-            )}
+                )}
+            </Box>
         </>
     );
 };

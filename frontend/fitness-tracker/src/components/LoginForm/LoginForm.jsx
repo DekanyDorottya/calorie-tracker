@@ -39,7 +39,7 @@ const LoginForm = () => {
         const userEmail = formData.get('email');
         const userPassword = formData.get('password');
 
-        // Reset states before login attempt
+        
         setSnackbarOpen(false);
         setSnackbarMessage('');
         setIsSuccessSnackbar(false);
@@ -47,30 +47,28 @@ const LoginForm = () => {
         loginWithUser(userEmail, userPassword)
             .then((result) => {
                 if (result === 'Invalid credentials.') {
-                    setSnackbarOpen(true); // Show the error Snackbar
+                    setSnackbarOpen(true); 
                     setSnackbarMessage(
                         'Invalid credentials. Please check your email and password.'
                     );
                     setSendButtonDisabled(false);
                 } else {
-                    // Successful login logic
                     console.log(result);
 
                     Cookies.set('jwtToken', result, { expires: 7 });
                     setSnackbarOpen(true);
                     setSnackbarMessage('Login successful.');
                     setIsSuccessSnackbar(true);
-                    //Navigate to the home page after the Snackbar disappears
                     setTimeout(() => {
                         setSnackbarOpen(false);
                         setIsSuccessSnackbar(false);
                         navigate('/');
                         window.location.reload();
-                    }, 3000); // Adjust the delay as needed
+                    }, 3000); 
                 }
             })
             .catch((err) => {
-                setSnackbarOpen(true); // Show the error Snackbar
+                setSnackbarOpen(true); 
                 setSnackbarMessage(
                     'An error occurred during login. Please try again.'
                 );
@@ -79,11 +77,9 @@ const LoginForm = () => {
     };
 
     return (
-        <Box flex={9} p={{ xs: 0, md: 2 }}>
+        <Box flex={20} p={{ xs: 0, md: 2 }}>
             <form className='LoginForm' onSubmit={onSubmit}>
-                {/* {(
-        <input type="hidden" name="name"  />
-      )} */}
+                
 
                 <div className='control'>
                     <label htmlFor='email'>email address:</label>
@@ -102,7 +98,7 @@ const LoginForm = () => {
                 {snackbarMessage && (
                     <Snackbar
                         open={snackbarOpen && !isSuccessSnackbar}
-                        autoHideDuration={5000} // Duration in milliseconds
+                        autoHideDuration={5000} 
                         onClose={() => setSnackbarOpen(false)}
                     >
                         <MuiAlert
@@ -118,7 +114,7 @@ const LoginForm = () => {
                 {isSuccessSnackbar && (
                     <Snackbar
                         open={snackbarOpen && isSuccessSnackbar}
-                        autoHideDuration={3000} // Duration in milliseconds
+                        autoHideDuration={3000} 
                         onClose={() => setSnackbarOpen(false)}
                     >
                         <MuiAlert
