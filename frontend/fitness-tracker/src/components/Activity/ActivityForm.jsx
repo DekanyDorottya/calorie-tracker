@@ -4,11 +4,13 @@ import './ActivityForm.css';
 
 import Notification from '../Notification';
 import { Box, Stack, Skeleton } from '@mui/material';
+import Cookies from 'js-cookie';
 
 const ActivityForm = () => {
     const [calories, setCalories] = useState(0);
     const [activity, setActivity] = useState('');
     const [open, setOpen] = React.useState(false);
+    const jwtToken = Cookies.get('jwtToken');
 
     //Notify parts
     const handleClick = () => {
@@ -37,6 +39,7 @@ const ActivityForm = () => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    Authorization: `Bearer ${jwtToken}`,
                 },
                 body: JSON.stringify({
                     activity: activity,

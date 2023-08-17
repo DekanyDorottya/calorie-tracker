@@ -1,13 +1,25 @@
 import { useEffect, useState } from 'react';
 import './ActivityDailyList.css';
 import { Box, Stack, Skeleton } from '@mui/material';
+import Cookies from 'js-cookie';
 
 
 export default function ActivityDailyList() {
     const [listedMeals, setListedMeals] = useState([]);
 
+    const jwtToken = Cookies.get('jwtToken');
+
+
+    
+    const requestOptions = {
+        method: 'GET',
+        headers: {
+            Authorization: `Bearer ${jwtToken}`,
+        },
+    };
+
     const fetchMeals = () => {
-        return fetch('/activities/all').then((res) => res.json());
+        return fetch('/activities/all', requestOptions).then((res) => res.json());
     };
 
     useEffect(() => {
