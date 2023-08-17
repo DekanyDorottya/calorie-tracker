@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import Notification from './Notification';
 import { Box } from '@mui/material';
@@ -9,10 +9,12 @@ const CalorieForm = () => {
     const [calories, setCalories] = useState(0);
     const [foodType, setFoodType] = useState('');
     const [open, setOpen] = useState(false);
-    const [dailyCalorieInfos, setDailyCalorieInfos] = useState([{
-        requiedCalorie: 2000,
-        dailyCalorieConsumption: 1500,
-    }]);
+    const [dailyCalorieInfos, setDailyCalorieInfos] = useState([
+        {
+            requiedCalorie: 2000,
+            dailyCalorieConsumption: 1500,
+        },
+    ]);
     const [duration, setDuration] = useState('daily');
     const jwtToken = Cookies.get('jwtToken');
 
@@ -36,35 +38,28 @@ const CalorieForm = () => {
         setOpen(false);
     };
 
-    const handleRefresh=()=>{
-        console.log(fetchDailyCalories());
-        const dailyCaloriesData = fetchDailyCalories();
-            setDailyCalorieInfos(dailyCaloriesData);
-
-    }
-
-    const fetchDailyCalories = async () => {
-        try {
-            const response = await fetch(`/analyze?duration=${duration}`, {
-                method: 'GET',
-                headers: {
-                    Authorization: `Bearer ${jwtToken}`,
-                },
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to fetch daily calories.');
-            }
-
-            const data = await response.json();
-            return data;
-        } catch (error) {
-            console.error('Error fetching daily calories:', error);
-            return [];
-        }
+    const fetchDailyCalories = () => {
+        return fetch(`/analyze?duration=${duration}`, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${jwtToken}`,
+            },
+        }).then((res) => res.json());
     };
 
-    
+    /* useEffect(() => {
+        fetchDailyCalories().then((listedMeals) => {
+            setDailyCalorieInfos(listedMeals);
+            console.log(listedMeals);
+        });
+    }, []); */
+
+    const handleRefresh = () => {
+        fetchDailyCalories().then((listedMeals) => {
+            setDailyCalorieInfos(listedMeals);
+            console.log(listedMeals);
+        });
+    };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -85,8 +80,6 @@ const CalorieForm = () => {
                 throw new Error('Failed to post calories.');
             }
 
-            
-
             const data = await response.json();
             console.log(data);
         } catch (error) {
@@ -96,7 +89,7 @@ const CalorieForm = () => {
 
     return (
         <>
-            <Box  flex={5} p={{ xs: 0, md: 2 }}>
+            <Box flex={5} p={{ xs: 0, md: 2 }}>
                 <form className='calorie-form' onSubmit={handleSubmit}>
                     <label htmlFor='calories'>Enter Calories:</label>
                     <input
@@ -133,13 +126,13 @@ const CalorieForm = () => {
                     />
                 </form>
                 <Button
-                        variant='contained'
-                        type='submit'
-                        className='submit-button'
-                        onClick={handleRefresh}
-                    >
-                        refresh
-                    </Button>
+                    variant='contained'
+                    type='submit'
+                    className='submit-button'
+                    onClick={handleRefresh}
+                >
+                    refresh
+                </Button>
             </Box>
             <DailyBarchart listedMeals={dailyCalorieInfos} />
         </>
