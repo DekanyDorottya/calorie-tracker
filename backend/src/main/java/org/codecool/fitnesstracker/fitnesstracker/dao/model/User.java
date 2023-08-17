@@ -39,7 +39,6 @@ public class User {
     private int height;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
-    //@JoinColumn(name = "calorie_id", referencedColumnName = "id")
     private List<Calorie> calories = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
