@@ -3,6 +3,7 @@ package org.codecool.fitnesstracker.fitnesstracker.service;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.ActivityDTO;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.NewActivityDTO;
 import org.codecool.fitnesstracker.fitnesstracker.dao.model.Activity;
+import org.codecool.fitnesstracker.fitnesstracker.dao.model.Calorie;
 import org.codecool.fitnesstracker.fitnesstracker.dao.model.User;
 import org.codecool.fitnesstracker.fitnesstracker.repositories.ActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +34,12 @@ public class ActivityService {
         return activityDTOS;
     }
 
-    public void addNewActivity(NewActivityDTO activity) {
+    public void addNewActivity(NewActivityDTO activity, String jwtToken) {
         LocalDateTime localDateTime = LocalDateTime.now();
+        String userEmail = userService.getEmailFromJwtToken(jwtToken);
+        User user = userService.findUserByEmail(userEmail);
         ActivityDTO addedActivity = new ActivityDTO(activity.activity(), activity.calories(), localDateTime);
-        userActivity.add(addedActivity);
+        Activity newActivity = new Activity(addedActivity.activity(), addedActivity.calories(), localDateTime, user);
+        activityRepository.save(newActivity);
     }
 }

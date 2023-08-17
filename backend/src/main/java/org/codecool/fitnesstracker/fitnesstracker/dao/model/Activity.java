@@ -13,6 +13,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Activity {
 
+    public Activity(String activityType, int calories, LocalDateTime activityDateTime, User user) {
+        this.activityType = activityType;
+        this.calories = calories;
+        this.activityDateTime = activityDateTime;
+        this.user = user;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
