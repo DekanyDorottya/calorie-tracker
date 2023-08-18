@@ -9,19 +9,23 @@ import { Box } from '@mui/material';
 
 const loginWithUser = (userEmail, userPassword) => {
     return fetch(`/users/login?email=${userEmail}&password=${userPassword}`)
-        .then((response) => {
-            if (!response.ok) {
+    .then((response) => {
+        if (!response.ok) {
+            if (response.status === 401) {
+                throw new Error('Invalid credentials');
+            } else {
                 throw new Error('Network response was not ok');
             }
-            return response.text();
-        })
-        .then((data) => {
-            return data;
-        })
-        .catch((error) => {
-            console.error('Login error', error);
-            throw error;
-        });
+        }
+        return response.text();
+    })
+    .then((data) => {
+        return data;
+    })
+    .catch((error) => {
+        console.error('Login error', error);
+        throw error;
+    });
 };
 
 const LoginForm = () => {
@@ -32,7 +36,6 @@ const LoginForm = () => {
     const [isSuccessSnackbar, setIsSuccessSnackbar] = useState(false);
 
     const onSubmit = (e) => {
-        console.log('submitted');
         e.preventDefault();
         setSendButtonDisabled(true);
         const formData = new FormData(e.target);
@@ -46,14 +49,7 @@ const LoginForm = () => {
 
         loginWithUser(userEmail, userPassword)
             .then((result) => {
-                if (result === 'Invalid credentials.') {
-                    setSnackbarOpen(true); 
-                    setSnackbarMessage(
-                        'Invalid credentials. Please check your email and password.'
-                    );
-                    setSendButtonDisabled(false);
-                } else {
-                    console.log(result);
+                
 
                     Cookies.set('jwtToken', result, { expires: 7 });
                     setSnackbarOpen(true);
@@ -65,13 +61,14 @@ const LoginForm = () => {
                         navigate('/');
                         window.location.reload();
                     }, 3000); 
-                }
+                
             })
             .catch((err) => {
                 setSnackbarOpen(true); 
                 setSnackbarMessage(
-                    'An error occurred during login. Please try again.'
+                     err.message
                 );
+                setSendButtonDisabled(false);
                 console.error('Login error', err);
             });
     };
