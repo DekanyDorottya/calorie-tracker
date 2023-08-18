@@ -4,6 +4,7 @@ import Notification from './Notification';
 import { Box } from '@mui/material';
 import Cookies from 'js-cookie';
 import DailyBarchart from './DailyBarchart';
+import { Add } from '@mui/icons-material';
 
 const CalorieForm = () => {
     const [calories, setCalories] = useState(0);
@@ -11,8 +12,8 @@ const CalorieForm = () => {
     const [open, setOpen] = useState(false);
     const [dailyCalorieInfos, setDailyCalorieInfos] = useState([
         {
-            requiedCalorie: 2000,
-            dailyCalorieConsumption: 1500,
+            requiedCalorie: 0,
+            dailyCalorieConsumption: 0,
         },
     ]);
     const [duration, setDuration] = useState('daily');
@@ -25,7 +26,6 @@ const CalorieForm = () => {
         setFoodType(event.target.value);
     };
 
-    //Notify parts
     const handleClick = () => {
         setOpen(true);
     };
@@ -38,6 +38,8 @@ const CalorieForm = () => {
         setOpen(false);
     };
 
+    
+
     const fetchDailyCalories = () => {
         return fetch(`/analyze?duration=${duration}`, {
             method: 'GET',
@@ -47,19 +49,7 @@ const CalorieForm = () => {
         }).then((res) => res.json());
     };
 
-    /* useEffect(() => {
-        fetchDailyCalories().then((listedMeals) => {
-            setDailyCalorieInfos(listedMeals);
-            console.log(listedMeals);
-        });
-    }, []); */
-
-    const handleRefresh = () => {
-        fetchDailyCalories().then((listedMeals) => {
-            setDailyCalorieInfos(listedMeals);
-            console.log(listedMeals);
-        });
-    };
+    
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -79,7 +69,10 @@ const CalorieForm = () => {
             if (!response.ok) {
                 throw new Error('Failed to post calories.');
             }
-
+            fetchDailyCalories().then((listedMeals) => {
+                setDailyCalorieInfos(listedMeals);
+                console.log(listedMeals);
+            });
             const data = await response.json();
             console.log(data);
         } catch (error) {
@@ -89,7 +82,7 @@ const CalorieForm = () => {
 
     return (
         <>
-            <Box flex={5} p={{ xs: 0, md: 2 }}>
+            <Box  flex={5} p={{ xs: 0, md: 2, alignItems: 'center'}}>
                 <form className='calorie-form' onSubmit={handleSubmit}>
                     <label htmlFor='calories'>Enter Calories:</label>
                     <input
@@ -125,14 +118,6 @@ const CalorieForm = () => {
                         message='Posted a meal'
                     />
                 </form>
-                <Button
-                    variant='contained'
-                    type='submit'
-                    className='submit-button'
-                    onClick={handleRefresh}
-                >
-                    refresh
-                </Button>
             </Box>
             <DailyBarchart listedMeals={dailyCalorieInfos} />
         </>

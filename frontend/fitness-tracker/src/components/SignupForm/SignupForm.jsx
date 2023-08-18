@@ -10,8 +10,8 @@ import './SignupForm.css';
 import { Box } from '@mui/material';
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
-//const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const PWD_REGEX = /^([a-z])/;
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+//const PWD_REGEX = /^([a-z])/;
 const REGISTER_URL = '/register';
 
 const createNewUser = (tempObj) => {
@@ -96,29 +96,29 @@ const SignupForm = () => {
                     setErrMsg('This email address has already taken!');
                 } else {
                     setSuccess(true);
-                    //clear state and controlled inputs
-                    //need value attrib on inputs for this
+                    
                     setUser('');
                     setPwd('');
                     setMatchPwd('');
+                    setTimeout(() => {
+                        navigate('/login');
+                    }, 2000);
                 }
             })
             .catch((err) => {
-                // handle error
             });
     };
 
     return (
         <>
-            {success ? (
-                <section>
-                    <h1>
-                        You have sucessfully registered! Please check your email
-                        and login!
-                    </h1>
-                </section>
-            ) : (
-                <Box flex={9} p={{ xs: 0, md: 2 }}>
+            <Box flex={9} p={{ xs: 0, md: 2 }}>
+                {success ? (
+                    <section>
+                        {/* 
+                            loading
+                        */}
+                    </section>
+                ) : (
                     <section>
                         <p
                             ref={errRef}
@@ -278,8 +278,8 @@ const SignupForm = () => {
                             </button>
                         </form>
                     </section>
-                </Box>
-            )}
+                )}
+            </Box>
         </>
     );
 };
