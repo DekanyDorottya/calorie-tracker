@@ -1,40 +1,29 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Button from '@mui/material/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Cookies from 'js-cookie';
 import jwt from 'jwt-decode';
-import { Mail, Notifications, Pets } from '@mui/icons-material';
 import {
     PlaylistAdd,
     Article,
-    Checklist,
     Home,
-    ModeNight,
-    Settings,
-    ControlPoint,
+    
 } from '@mui/icons-material';
 import {
     AppBar,
     Avatar,
-    Badge,
     Box,
-    InputBase,
-    Menu,
-    MenuItem,
     styled,
     Toolbar,
     Typography,
 } from '@mui/material';
 import { useState } from 'react';
 import {
-    List,
     ListItem,
     ListItemButton,
     ListItemIcon,
     ListItemText,
-    Switch,
 } from '@mui/material';
 const StyledToolbar = styled(Toolbar)({
     display: 'flex',

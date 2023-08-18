@@ -1,13 +1,9 @@
 import { useEffect, useState } from 'react';
-import { LinePlot } from '@mui/x-charts/LineChart';
-import { ChartContainer } from '@mui/x-charts/ChartContainer';
-
 import { BarChart } from '@mui/x-charts/BarChart';
 import './CalorieDailyList.css';
 import { Box, Stack, Skeleton } from '@mui/material';
 import Cookies from 'js-cookie';
-import { Opacity } from '@mui/icons-material';
-import Combining from './Combining';
+
 export default function Analyze() {
     const [listedMeals, setListedMeals] = useState([
         { caloriesIn: 3000, caloriesOut: 400, optimalCalories: 2000 },
@@ -32,12 +28,7 @@ export default function Analyze() {
         return fetch('/dailyCalorie', requestOptions).then((res) => res.json());
     };
 
-    /* useEffect(() => {
-        fetchMeals().then((listedMeals) => {
-            setListedMeals(listedMeals);
-            console.log(listedMeals);
-        });
-    }, []); */
+
 
     const caloriesIns = listedMeals.map((data) => data.caloriesIn);
     const caloriesOutList = listedMeals.map((data) => data.caloriesOut);

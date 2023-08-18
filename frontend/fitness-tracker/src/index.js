@@ -15,7 +15,6 @@ import SignupForm from './components/SignupForm';
 import Profile from './components/Profile';
 import Analyze from './components/Analyze';
 
-//import reportWebVitals from './reportWebVitals';
 
 const router = createBrowserRouter([
   {

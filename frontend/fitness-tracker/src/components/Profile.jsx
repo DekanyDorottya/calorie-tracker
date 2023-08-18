@@ -33,7 +33,6 @@ export default function Profile() {
         setHeight(event.target.value);
     };
 
-    //Notify parts
     const handleClick = () => {
         setOpen(true);
     };

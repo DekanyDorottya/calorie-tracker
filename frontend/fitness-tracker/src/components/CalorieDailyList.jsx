@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { BarChart } from '@mui/x-charts/BarChart';
 import './CalorieDailyList.css';
-import { Box, Stack, Skeleton } from '@mui/material';
+import { Box } from '@mui/material';
 import Cookies from 'js-cookie';
 
 export default function CalorieDailyList() {

@@ -26,7 +26,6 @@ const CalorieForm = () => {
         setFoodType(event.target.value);
     };
 
-    //Notify parts
     const handleClick = () => {
         setOpen(true);
     };
@@ -51,13 +50,6 @@ const CalorieForm = () => {
     };
 
     
-
-    const handleRefresh = () => {
-        fetchDailyCalories().then((listedMeals) => {
-            setDailyCalorieInfos(listedMeals);
-            console.log(listedMeals);
-        });
-    };
 
     const handleSubmit = async (event) => {
         event.preventDefault();

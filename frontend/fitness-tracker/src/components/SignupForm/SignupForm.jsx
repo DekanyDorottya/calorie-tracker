@@ -10,8 +10,8 @@ import './SignupForm.css';
 import { Box } from '@mui/material';
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
-//const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const PWD_REGEX = /^([a-z])/;
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+//const PWD_REGEX = /^([a-z])/;
 const REGISTER_URL = '/register';
 
 const createNewUser = (tempObj) => {
@@ -96,8 +96,7 @@ const SignupForm = () => {
                     setErrMsg('This email address has already taken!');
                 } else {
                     setSuccess(true);
-                    //clear state and controlled inputs
-                    //need value attrib on inputs for this
+                    
                     setUser('');
                     setPwd('');
                     setMatchPwd('');
@@ -107,7 +106,6 @@ const SignupForm = () => {
                 }
             })
             .catch((err) => {
-                // handle error
             });
     };
 
@@ -116,18 +114,9 @@ const SignupForm = () => {
             <Box flex={9} p={{ xs: 0, md: 2 }}>
                 {success ? (
                     <section>
-                        {/* <Box
-                            justifyContent='center'
-                            alignItems='center'
-                            flex={90}
-                            p={{ xs: 0, md: 2 }}
-                        >
-                            <img
-                                src='https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExbjg3NXM0bGY2aTk5eHM4cGRvZXAwbm53MWprMGE2anNhbGxhdzNxMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/5AtXMjjrTMwvK/giphy.gif'
-                                alt='Your Image'
-                                className='imageSignup'
-                            />
-                        </Box> */}
+                        {/* 
+                            loading
+                        */}
                     </section>
                 ) : (
                     <section>
