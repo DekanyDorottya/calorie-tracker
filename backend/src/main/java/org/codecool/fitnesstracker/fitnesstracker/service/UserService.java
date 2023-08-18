@@ -7,8 +7,8 @@ import org.codecool.fitnesstracker.fitnesstracker.controller.dto.NewUserDTO;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.UserDTO;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.UserInfoDTO;
 import org.codecool.fitnesstracker.fitnesstracker.dao.model.User;
+import org.codecool.fitnesstracker.fitnesstracker.exceptions.InvalidCredentialsException;
 import org.codecool.fitnesstracker.fitnesstracker.repositories.UserRepository;
-import org.codecool.fitnesstracker.fitnesstracker.exceptions.EmailNotFoundException;
 import org.codecool.fitnesstracker.fitnesstracker.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -67,7 +67,7 @@ public class UserService {
     public UserDTO authenticateUser(String email, String password) {
         Optional<User> optionalUser = userRepository.findUserByEmailAndPassword(email, password);
         if(optionalUser.isEmpty()) {
-            throw new EmailNotFoundException("Invalid password");
+            throw new InvalidCredentialsException("Invalid credentials");
         }
 
         return new UserDTO(optionalUser.get().getUsername(), optionalUser.get().getEmail(), optionalUser.get().getPassword(), optionalUser.get().getRegistrationTime());

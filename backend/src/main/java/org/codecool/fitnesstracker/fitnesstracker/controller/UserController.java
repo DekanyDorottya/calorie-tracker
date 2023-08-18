@@ -38,14 +38,8 @@ public class UserController {
     @GetMapping("/login")
     public String loginUser(@RequestParam String email, @RequestParam String password) {
         System.out.println(email + " " + password);
-        UserDTO user = userService.authenticateUser(email, password);
-
-        if (user != null) {
-            String jwtToken = userService.generateJwtToken(email);
-            return jwtToken;
-        } else {
-            return "Invalid credentials.";
-        }
+        userService.authenticateUser(email, password);
+        return userService.generateJwtToken(email);
     }
 
     @PutMapping("/info")
