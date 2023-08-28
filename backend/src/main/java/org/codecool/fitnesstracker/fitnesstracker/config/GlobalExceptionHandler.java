@@ -1,6 +1,5 @@
 package org.codecool.fitnesstracker.fitnesstracker.config;
 
-import org.codecool.fitnesstracker.fitnesstracker.dao.model.User;
 import org.codecool.fitnesstracker.fitnesstracker.exceptions.EmailNotFoundException;
 import org.codecool.fitnesstracker.fitnesstracker.exceptions.InvalidCredentialsException;
 import org.codecool.fitnesstracker.fitnesstracker.exceptions.UserNotFoundException;

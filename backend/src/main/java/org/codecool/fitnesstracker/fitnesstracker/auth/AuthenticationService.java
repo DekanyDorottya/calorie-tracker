@@ -7,6 +7,9 @@ import org.codecool.fitnesstracker.fitnesstracker.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +22,11 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     public AuthenticationResponse register(RegisterRequest request) {
         var user = User.builder()
-                .firstName(request.getFirstname())
-                .lastName(request.getLastname())
+                .username(request.getUsername())
                 .email(request.getEmail())
                 .password((passwordEncoder.encode(request.getPassword()))).role(Role.USER).build();
         repository.save(user);
+        new org.springframework.security.core.userdetails.User(user.getUsername(),user.getPassword(),null);
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder().token(jwtToken).build();
     }
@@ -37,5 +40,15 @@ public class AuthenticationService {
         var user = repository.findByEmail(request.getEmail()).orElseThrow(); // catch and handle the exception
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder().token(jwtToken).build();
+    }
+
+    public User getAuthenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            return repository.findByEmail(userDetails.getUsername())
+                    .orElseThrow(); // TODO custom exception
+        }
+        return null; // No authenticated user
     }
 }
