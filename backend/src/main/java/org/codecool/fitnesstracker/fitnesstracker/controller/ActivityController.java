@@ -24,7 +24,7 @@ public class ActivityController {
     @GetMapping("/all")
     public List<ActivityDTO> getAllActivities( @RequestHeader("Authorization") String authorizationHeader) {
         String token = authorizationHeader.replace("Bearer ", "");
-        return activityService.getAllActivities(token);
+        return activityService.getAllActivities();
     }
 
     @PostMapping("/")
@@ -32,7 +32,7 @@ public class ActivityController {
                                                          @RequestHeader("Authorization") String authorizationHeader) {
         String token = authorizationHeader.replace("Bearer ", "");
         System.out.println("Activity request arrived");
-        activityService.addNewActivity(activity, token);
+        activityService.addNewActivity(activity);
         return new ResponseEntity<>(activity, HttpStatus.CREATED);
     }
 

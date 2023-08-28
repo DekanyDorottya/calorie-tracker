@@ -26,8 +26,13 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .password((passwordEncoder.encode(request.getPassword()))).role(Role.USER).build();
         repository.save(user);
-        new org.springframework.security.core.userdetails.User(user.getUsername(),user.getPassword(),null);
-        var jwtToken = jwtService.generateToken(user);
+        org.springframework.security.core.userdetails.UserDetails newUserDetail = org.springframework.security.core.userdetails.User
+                .withUsername(user.getUsername())
+                .password(user.getPassword())
+                .authorities(Role.USER.name())
+                .build();
+        //new org.springframework.security.core.userdetails.User(user.getUsername(),user.getPassword(),);
+        var jwtToken = jwtService.generateToken(newUserDetail);
         return AuthenticationResponse.builder().token(jwtToken).build();
     }
 

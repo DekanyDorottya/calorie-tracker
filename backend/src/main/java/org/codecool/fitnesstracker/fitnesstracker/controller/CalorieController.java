@@ -25,7 +25,7 @@ public class CalorieController {
             @RequestHeader("Authorization") String authorizationHeader) {
         System.out.println("get request arrived");
         String token = authorizationHeader.replace("Bearer ", "");
-        return calorieService.getAllCalories(token);
+        return calorieService.getAllCalories();
     }
 
     @PostMapping("/")
@@ -34,7 +34,7 @@ public class CalorieController {
             @RequestHeader("Authorization") String authorizationHeader) {
         System.out.println("request arrived");
         String token = authorizationHeader.replace("Bearer ", "");
-        calorieService.addNewMeal(meal, token);
+        calorieService.addNewMeal(meal);
         return new ResponseEntity<>(meal, HttpStatus.CREATED);
     }
 }
