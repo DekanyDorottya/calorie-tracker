@@ -22,9 +22,10 @@ public class ActivityController {
     }
 
     @GetMapping("/all")
-    public List<ActivityDTO> getAllActivities( @RequestHeader("Authorization") String authorizationHeader) {
-        String token = authorizationHeader.replace("Bearer ", "");
-        return activityService.getAllActivities();
+    public void getAllActivities( @RequestHeader("Authorization") String authorizationHeader) {
+        //String token = authorizationHeader.replace("Bearer ", "");
+        //return activityService.getAllActivities();
+        System.out.println("All activities");
     }
 
     @PostMapping("/")
