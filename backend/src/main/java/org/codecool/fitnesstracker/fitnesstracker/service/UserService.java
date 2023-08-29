@@ -6,9 +6,9 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.NewUserDTO;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.UserDTO;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.UserInfoDTO;
-import org.codecool.fitnesstracker.fitnesstracker.dao.model.User;
+import org.codecool.fitnesstracker.fitnesstracker.user.User;
 import org.codecool.fitnesstracker.fitnesstracker.exceptions.InvalidCredentialsException;
-import org.codecool.fitnesstracker.fitnesstracker.repositories.UserRepository;
+import org.codecool.fitnesstracker.fitnesstracker.user.UserRepository;
 import org.codecool.fitnesstracker.fitnesstracker.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,15 +40,15 @@ public class UserService {
         return users;
     }
 
-    public boolean addNewUser(NewUserDTO newUser) {
+    /*public boolean addNewUser(NewUserDTO newUser) {
         LocalDateTime localDateTime = LocalDateTime.now();
-        Optional<User> optionalUser = userRepository.findUserByEmail(newUser.email());
+        Optional<User> optionalUser = userRepository.findByEmail(newUser.email());
         if(optionalUser.isPresent()) {
             return false;
         }
         userRepository.save(new User(newUser.userName(), newUser.email(), newUser.password(), localDateTime));
         return true;
-    }
+    }*/
 
     public String generateJwtToken(String email) {
         LocalDateTime now = LocalDateTime.now();
@@ -78,7 +78,7 @@ public class UserService {
     }
 
     public User findUserByEmail(String userEmail) {
-        Optional<User> optionalUser = userRepository.findUserByEmail(userEmail);
+        Optional<User> optionalUser = userRepository.findByEmail(userEmail);
         if(optionalUser.isEmpty()) {
             throw new UserNotFoundException("User with this email does not exist" + userEmail);
         }

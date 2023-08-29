@@ -3,7 +3,7 @@ package org.codecool.fitnesstracker.fitnesstracker.controller;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.NewUserDTO;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.UserDTO;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.UserInfoDTO;
-import org.codecool.fitnesstracker.fitnesstracker.dao.model.User;
+import org.codecool.fitnesstracker.fitnesstracker.user.User;
 import org.codecool.fitnesstracker.fitnesstracker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

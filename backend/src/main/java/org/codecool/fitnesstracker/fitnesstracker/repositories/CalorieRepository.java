@@ -2,7 +2,7 @@ package org.codecool.fitnesstracker.fitnesstracker.repositories;
 
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.CalorieForAnalyticsDTO;
 import org.codecool.fitnesstracker.fitnesstracker.dao.model.Calorie;
-import org.codecool.fitnesstracker.fitnesstracker.dao.model.User;
+import org.codecool.fitnesstracker.fitnesstracker.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
