@@ -32,11 +32,11 @@ public class SecurityConfiguration {
                         auth
                                 .requestMatchers("/api/v1/auth/**")
                                 .permitAll()
-                                /*.requestMatchers(GET,"/activities/all").permitAll()*/
+                                .requestMatchers(GET,"/activities/all").permitAll() // role-al nem működik
 
-                                /*.requestMatchers(POST,"/activities/")
-                                .hasRole(Role.USER.name())
-                                .hasRole(Role.USER.name()).*/
+
+                                .requestMatchers(POST,"/activities/").permitAll()
+                                /*.hasRole(Role.USER.name()).*/
                                 .anyRequest()
                                 .authenticated()
                 )
