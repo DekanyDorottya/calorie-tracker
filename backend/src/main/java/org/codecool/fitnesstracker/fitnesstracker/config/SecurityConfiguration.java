@@ -2,6 +2,7 @@ package org.codecool.fitnesstracker.fitnesstracker.config;
 
 import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
+import org.codecool.fitnesstracker.fitnesstracker.user.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -11,6 +12,9 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
 
 @Configuration
 @EnableWebSecurity
@@ -22,15 +26,19 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth ->
                         auth
-                        .requestMatchers("/api/v1/auth/**")
-                        .permitAll()
-                        .anyRequest()
-                        .authenticated()
+                                .requestMatchers("/api/v1/auth/**")
+                                .permitAll()
+                                /*.requestMatchers(GET,"/activities/all").permitAll()*/
+
+                                /*.requestMatchers(POST,"/activities/")
+                                .hasRole(Role.USER.name())
+                                .hasRole(Role.USER.name()).*/
+                                .anyRequest()
+                                .authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
@@ -38,4 +46,5 @@ public class SecurityConfiguration {
 
         return http.build();
     }
+
 }

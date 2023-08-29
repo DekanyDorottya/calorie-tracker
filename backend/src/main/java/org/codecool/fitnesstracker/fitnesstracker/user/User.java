@@ -46,6 +46,10 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
     private List<Activity> activities = new ArrayList<>();
+
+    public User(String s, String email, String password, LocalDateTime localDateTime) {
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));

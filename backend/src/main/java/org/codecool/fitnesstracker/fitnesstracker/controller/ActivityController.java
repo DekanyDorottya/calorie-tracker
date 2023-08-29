@@ -22,9 +22,11 @@ public class ActivityController {
     }
 
     @GetMapping("/all")
-    public List<ActivityDTO> getAllActivities( @RequestHeader("Authorization") String authorizationHeader) {
+    public ResponseEntity<List<ActivityDTO>> getAllActivities( @RequestHeader("Authorization") String authorizationHeader) {
         String token = authorizationHeader.replace("Bearer ", "");
-        return activityService.getAllActivities(token);
+        System.out.println(" get all Activity request arrived");
+
+        return ResponseEntity.ok(activityService.getAllActivities(token));
     }
 
     @PostMapping("/")
@@ -34,6 +36,10 @@ public class ActivityController {
         System.out.println("Activity request arrived");
         activityService.addNewActivity(activity, token);
         return new ResponseEntity<>(activity, HttpStatus.CREATED);
+    }
+    @GetMapping
+    public ResponseEntity<String> sayHello(){
+        return ResponseEntity.ok("Hello from secured endpoint");
     }
 
 }

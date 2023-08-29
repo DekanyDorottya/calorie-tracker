@@ -40,7 +40,7 @@ public class UserService {
         return users;
     }
 
-    /*public boolean addNewUser(NewUserDTO newUser) {
+    public boolean addNewUser(NewUserDTO newUser) {
         LocalDateTime localDateTime = LocalDateTime.now();
         Optional<User> optionalUser = userRepository.findByEmail(newUser.email());
         if(optionalUser.isPresent()) {
@@ -48,7 +48,7 @@ public class UserService {
         }
         userRepository.save(new User(newUser.userName(), newUser.email(), newUser.password(), localDateTime));
         return true;
-    }*/
+    }
 
     public String generateJwtToken(String email) {
         LocalDateTime now = LocalDateTime.now();

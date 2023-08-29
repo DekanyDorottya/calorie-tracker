@@ -3,6 +3,7 @@ package org.codecool.fitnesstracker.fitnesstracker.dao.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.codecool.fitnesstracker.fitnesstracker.user.User;
 import org.springframework.web.bind.annotation.Mapping;
 
 import java.time.LocalDateTime;

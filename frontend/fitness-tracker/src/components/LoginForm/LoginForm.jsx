@@ -8,8 +8,39 @@ import MuiAlert from '@mui/material/Alert';
 import { Box } from '@mui/material';
 
 const loginWithUser = (userEmail, userPassword) => {
-    return fetch(`/users/login?email=${userEmail}&password=${userPassword}`)
+    return fetch(`   /users/login?email=${userEmail}&password=${userPassword}`)
     .then((response) => {
+        if (!response.ok) {
+            if (response.status === 401) {
+                throw new Error('Invalid credentials');
+            } else {
+                throw new Error('Network response was not ok');
+            }
+        }
+        return response.text();
+    })
+    .then((data) => {
+        return data;
+    })
+    .catch((error) => {
+        console.error('Login error', error);
+        throw error;
+    });
+};
+
+
+
+const loginAUTH = (userEmail, userPassword) => {
+    return fetch('/api/v1/auth/authenticate', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            "email": userEmail,
+            "password": userPassword,
+        }),
+    }).then((response) => {
         if (!response.ok) {
             if (response.status === 401) {
                 throw new Error('Invalid credentials');
@@ -47,7 +78,7 @@ const LoginForm = () => {
         setSnackbarMessage('');
         setIsSuccessSnackbar(false);
 
-        loginWithUser(userEmail, userPassword)
+        loginAUTH(userEmail, userPassword)
             .then((result) => {
                 
 
