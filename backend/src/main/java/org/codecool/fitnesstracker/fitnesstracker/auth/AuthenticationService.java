@@ -47,13 +47,4 @@ public class AuthenticationService {
         return AuthenticationResponse.builder().token(jwtToken).build();
     }
 
-    public User getAuthenticatedUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            return repository.findByEmail(userDetails.getUsername())
-                    .orElseThrow(); // TODO custom exception
-        }
-        return null; // No authenticated user
-    }
 }

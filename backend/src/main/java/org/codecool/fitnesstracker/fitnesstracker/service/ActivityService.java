@@ -24,13 +24,12 @@ public class ActivityService {
         this.userService = userService;
     }
 
-    public List<ActivityDTO> getAllActivities() {
-        //String userEmail = userService.getEmailFromJwtToken(jwtToken);
-//        List<Activity> activityList = activityRepository.findByUserEmail(userEmail);
+    public List<ActivityDTO> getAllActivities(String userEmail) {
+        List<Activity> activityList = activityRepository.findByUserEmail(userEmail);
         List<ActivityDTO> activityDTOS = new ArrayList<>();
-//        for (Activity activity : activityList) {
-//            activityDTOS.add(new ActivityDTO(activity.getActivityType(), activity.getCalories(), activity.getActivityDateTime()));
-//        }
+        for (Activity activity : activityList) {
+            activityDTOS.add(new ActivityDTO(activity.getActivityType(), activity.getCalories(), activity.getActivityDateTime()));
+        }
         return activityDTOS;
     }
 
