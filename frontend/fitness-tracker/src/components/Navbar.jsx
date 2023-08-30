@@ -71,21 +71,12 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                         height: 60,
                     }}
                 >
-                    <Link
-                        component='span'
-                        variant='button'
-                        color='text.primary'
-                        href='#'
-                    >
-                        <LinkRouter to={'/'}>
-                            <ListItemButton component='a'>
-                                <ListItemIcon>
-                                    <Home />
-                                </ListItemIcon>
-                                <ListItemText primary='Homepage' />
-                            </ListItemButton>
-                        </LinkRouter>
-                    </Link>
+                    <ListItemButton button component={LinkRouter} to='/'>
+                        <ListItemIcon>
+                            <Home />
+                        </ListItemIcon>
+                        <ListItemText primary='Homepage' />
+                    </ListItemButton>
                 </ListItem>
                 <ListItem
                     disablePadding
@@ -96,21 +87,12 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                         height: 60,
                     }}
                 >
-                    <Link
-                        component='span'
-                        variant='button'
-                        color='text.primary'
-                        href='#'
-                    >
-                        <LinkRouter to={'/about'}>
-                            <ListItemButton component='address'>
-                                <ListItemIcon>
-                                    <Article />
-                                </ListItemIcon>
-                                <ListItemText primary='About' />
-                            </ListItemButton>
-                        </LinkRouter>
-                    </Link>
+                    <ListItemButton button component={LinkRouter} to='/about'>
+                        <ListItemIcon>
+                            <Article />
+                        </ListItemIcon>
+                        <ListItemText primary='About' />
+                    </ListItemButton>
                 </ListItem>
 
                 <div className='mb-2'>
@@ -125,9 +107,12 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                                 <DropdownButton
                                     id={`dropdown-button-profile`}
                                     variant='primary'
-                                    title={jwt(Cookies.get('jwtToken')).email}
+                                    title={jwt(Cookies.get('jwtToken')).sub}
                                 >
-                                    <Dropdown.Item as={LinkRouter} to='/profile'>
+                                    <Dropdown.Item
+                                        as={LinkRouter}
+                                        to='/profile'
+                                    >
                                         Profile
                                     </Dropdown.Item>
                                     <Dropdown.Item
