@@ -13,8 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpMethod.*;
 
 @Configuration
 @EnableWebSecurity
@@ -33,7 +32,11 @@ public class SecurityConfiguration {
                                 .requestMatchers("/api/v1/auth/**")
                                 .permitAll()
                                 .requestMatchers(POST,"/activities/").hasRole(Role.USER.name())
-                                .requestMatchers(GET,"/activities/all").hasRole(Role.USER.name())
+                                .requestMatchers(GET,"/activities/").hasRole(Role.USER.name())
+                                .requestMatchers(POST,"/calories/").hasRole(Role.USER.name())
+                                .requestMatchers(GET,"/calories/").hasRole(Role.USER.name())
+                                .requestMatchers(GET,"/analyze/").hasRole(Role.USER.name())
+                                .requestMatchers(PUT,"/user/").hasRole(Role.USER.name())
                                 .anyRequest()
                                 .authenticated()
 

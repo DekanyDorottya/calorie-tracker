@@ -9,12 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("users")
+@RequestMapping("user")
 public class UserController {
 
     public final UserService userService;
@@ -29,24 +31,10 @@ public class UserController {
         return userService.getAllUsers();
     }
 
- /*   @PostMapping("/")
-    public boolean addNewUser(@RequestBody NewUserDTO user) {
-        System.out.println("new user registration");
-        return userService.addNewUser(user);
-    }
-
-    @GetMapping("/login")
-    public String loginUser(@RequestParam String email, @RequestParam String password) {
-        System.out.println(email + " " + password);
-        userService.authenticateUser(email, password);
-        return userService.generateJwtToken(email);
-    }*/
-
-    @PutMapping("/info") //TODO megkérdezni hogy jól csináljuk e
-    public void getUserInfo(@RequestHeader("Authorization") String authorizationHeader,
+    @PutMapping()
+    public void getUserInfo(@CurrentSecurityContext(expression = "authentication") Authentication authentication,
                             @RequestBody UserInfoDTO userInfo
                            )  {
-        String token = authorizationHeader.replace("Bearer ", "");
-        userService.addUserInfo(userInfo);
+        userService.addUserInfo(userInfo, authentication.getName());
     }
 }
