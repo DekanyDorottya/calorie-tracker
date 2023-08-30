@@ -48,7 +48,7 @@ const loginAUTH = (userEmail, userPassword) => {
                 throw new Error('Network response was not ok');
             }
         }
-        return response.text();
+        return response.json();
     })
     .then((data) => {
         return data;
@@ -82,7 +82,7 @@ const LoginForm = () => {
             .then((result) => {
                 
 
-                    Cookies.set('jwtToken', result, { expires: 7 });
+                    Cookies.set('jwtToken', result.token, { expires: 7 });
                     setSnackbarOpen(true);
                     setSnackbarMessage('Login successful.');
                     setIsSuccessSnackbar(true);
