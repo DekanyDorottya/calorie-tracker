@@ -92,16 +92,11 @@ public class UserService {
 
 
     @Transactional
-    public void addUserInfo(UserInfoDTO userInfo) {
-        /*User authenticatedUser = authenticationService.getAuthenticatedUser();
-        if (authenticatedUser != null) {
-            authenticatedUser.setGender(userInfo.gender());
-            authenticatedUser.setHeight(userInfo.height());
-            authenticatedUser.setWeight(userInfo.weight());
-            authenticatedUser.setBirthDate(userInfo.birthDate());
-            userRepository.save(authenticatedUser);
-        } else {
-            // Handle unauthenticated user
-        }*/
+    public void addUserInfo(UserInfoDTO userInfo, String userEmail) {
+        User user = findUserByEmail(userEmail);
+        user.setGender(userInfo.gender());
+        user.setHeight(userInfo.height());
+        user.setWeight(userInfo.weight());
+        user.setBirthDate(userInfo.birthDate());
     }
 }

@@ -31,19 +31,15 @@ public class AnalyzeService {
         durations.add(new DailyAnalytics());
     }
 
-    public List<AnalyticDailyDTO> listAnalyticForPeriod(String duration){
-//        String userEmail = userService.getEmailFromJwtToken(jwtToken);
-//        User user = userService.findUserByEmail(userEmail);
-//        int userBaseLineCalorieRequirement = getUserBaseLineCalorieRequirement(user);
-//        return durations.stream()
-//                .filter(analyticDuration -> analyticDuration.getDuration()
-//                .equals(duration))
-//                .findFirst()
-//                .orElseThrow(() -> new NoSuchElementException(duration))
-//                .getAnalytics(calorieService, userBaseLineCalorieRequirement, user);
-        List<AnalyticDailyDTO> analyticDailyDTOS = new ArrayList<>();
-        return analyticDailyDTOS;
-
+    public List<AnalyticDailyDTO> listAnalyticForPeriod(String duration, String userEmail){
+        User user = userService.findUserByEmail(userEmail);
+        int userBaseLineCalorieRequirement = getUserBaseLineCalorieRequirement(user);
+        return durations.stream()
+                .filter(analyticDuration -> analyticDuration.getDuration()
+                .equals(duration))
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException(duration))
+                .getAnalytics(calorieService, userBaseLineCalorieRequirement, user);
     }
 
     private int getUserBaseLineCalorieRequirement(User user) {

@@ -23,7 +23,7 @@ public class ActivityController {
         this.activityService = activityService;
     }
 
-    @GetMapping("/all")
+    @GetMapping("/")
 
     public List<ActivityDTO> getAllActivities(@CurrentSecurityContext(expression = "authentication")
                                  Authentication authentication) {
@@ -33,10 +33,9 @@ public class ActivityController {
 
     @PostMapping("/")
     public ResponseEntity<NewActivityDTO> addNewActivity(@RequestBody NewActivityDTO activity,
-                                                         @RequestHeader("Authorization") String authorizationHeader) {
-        String token = authorizationHeader.replace("Bearer ", "");
-        System.out.println("Activity request arrived");
-        activityService.addNewActivity(activity);
+                                                         @CurrentSecurityContext(expression = "authentication")
+                                                         Authentication authentication) {
+        activityService.addNewActivity(activity, authentication.getName());
         return new ResponseEntity<>(activity, HttpStatus.CREATED);
     }
     @GetMapping

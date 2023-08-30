@@ -26,25 +26,21 @@ public class CalorieService {
         this.userService = userService;
     }
 
-    public List<CalorieDTO> getAllCalories() {
-//        String userEmail = userService.getEmailFromJwtToken(jwtToken);
-//        List<Calorie> calorieList = calorieRepository.findByUserEmail(userEmail);
-//        List<CalorieDTO> calorieDTOS = new ArrayList<>();
-//
-//        for (Calorie calorie : calorieList) {
-//            calorieDTOS.add(new CalorieDTO(calorie.getFoodType(),calorie.getCalories(), calorie.getMealDateTime()));
-//        }
-//        return calorieDTOS;
-        return null;
+    public List<CalorieDTO> getAllCalories(String userEmail) {
+        List<Calorie> calorieList = calorieRepository.findByUserEmail(userEmail);
+        List<CalorieDTO> calorieDTOS = new ArrayList<>();
+        for (Calorie calorie : calorieList) {
+            calorieDTOS.add(new CalorieDTO(calorie.getFoodType(),calorie.getCalories(), calorie.getMealDateTime()));
+        }
+        return calorieDTOS;
     }
 
-    public void addNewMeal(NewCalorieDTO meal) {
-//        LocalDateTime localDateTime = LocalDateTime.now();
-//        String userEmail = userService.getEmailFromJwtToken(jwtToken);
-//        User user = userService.findUserByEmail(userEmail);
-//        CalorieDTO calorieDTO = new CalorieDTO(meal.foodType(), meal.calories(), localDateTime);
-//        Calorie newCalorie = new Calorie(calorieDTO.foodType(), calorieDTO.calories(), localDateTime, user);
-//        calorieRepository.save(newCalorie);
+    public void addNewMeal(NewCalorieDTO meal, String userEmail) {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        User user = userService.findUserByEmail(userEmail);
+        CalorieDTO calorieDTO = new CalorieDTO(meal.foodType(), meal.calories(), localDateTime);
+        Calorie newCalorie = new Calorie(calorieDTO.foodType(), calorieDTO.calories(), localDateTime, user);
+        calorieRepository.save(newCalorie);
         System.out.println("added new meal");
     }
 

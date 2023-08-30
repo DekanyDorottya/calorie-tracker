@@ -6,6 +6,8 @@ import org.codecool.fitnesstracker.fitnesstracker.service.CalorieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,21 +22,17 @@ public class CalorieController {
         this.calorieService = calorieService;
     }
 
-    @GetMapping("/all")
-    public List<CalorieDTO> getAllCalories(
-            @RequestHeader("Authorization") String authorizationHeader) {
-        System.out.println("get request arrived");
-        String token = authorizationHeader.replace("Bearer ", "");
-        return calorieService.getAllCalories();
+    @GetMapping("/")
+    public List<CalorieDTO> getAllCalories(@CurrentSecurityContext(expression = "authentication")
+                                           Authentication authentication) {
+        return calorieService.getAllCalories(authentication.getName());
     }
 
     @PostMapping("/")
     public ResponseEntity<NewCalorieDTO> addNewMeal(
             @RequestBody NewCalorieDTO meal,
-            @RequestHeader("Authorization") String authorizationHeader) {
-        System.out.println("request arrived");
-        String token = authorizationHeader.replace("Bearer ", "");
-        calorieService.addNewMeal(meal);
+            @CurrentSecurityContext(expression = "authentication") Authentication authentication) {
+        calorieService.addNewMeal(meal, authentication.getName());
         return new ResponseEntity<>(meal, HttpStatus.CREATED);
     }
 }

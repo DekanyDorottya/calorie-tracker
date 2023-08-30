@@ -19,7 +19,7 @@ export default function CalorieDailyList() {
     };
 
     const fetchMeals = () => {
-        return fetch('/calories/all', requestOptions).then((res) => res.json());
+        return fetch('/calories/', requestOptions).then((res) => res.json());
     };
 
     useEffect(() => {
