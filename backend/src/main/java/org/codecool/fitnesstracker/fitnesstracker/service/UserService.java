@@ -3,13 +3,15 @@ package org.codecool.fitnesstracker.fitnesstracker.service;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.codecool.fitnesstracker.fitnesstracker.auth.AuthenticationService;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.NewUserDTO;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.UserDTO;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.UserInfoDTO;
-import org.codecool.fitnesstracker.fitnesstracker.dao.model.User;
+import org.codecool.fitnesstracker.fitnesstracker.user.User;
 import org.codecool.fitnesstracker.fitnesstracker.exceptions.InvalidCredentialsException;
-import org.codecool.fitnesstracker.fitnesstracker.repositories.UserRepository;
+import org.codecool.fitnesstracker.fitnesstracker.user.UserRepository;
 import org.codecool.fitnesstracker.fitnesstracker.exceptions.UserNotFoundException;
+import org.codecool.fitnesstracker.fitnesstracker.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -25,9 +27,12 @@ import java.util.Optional;
 public class UserService {
 
     UserRepository userRepository;
+    private final AuthenticationService authenticationService;
+
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, AuthenticationService authenticationService) {
         this.userRepository = userRepository;
+        this.authenticationService = authenticationService;
     }
 
     List<UserDTO> users = new ArrayList<>();
@@ -42,7 +47,7 @@ public class UserService {
 
     public boolean addNewUser(NewUserDTO newUser) {
         LocalDateTime localDateTime = LocalDateTime.now();
-        Optional<User> optionalUser = userRepository.findUserByEmail(newUser.email());
+        Optional<User> optionalUser = userRepository.findByEmail(newUser.email());
         if(optionalUser.isPresent()) {
             return false;
         }
@@ -78,20 +83,25 @@ public class UserService {
     }
 
     public User findUserByEmail(String userEmail) {
-        Optional<User> optionalUser = userRepository.findUserByEmail(userEmail);
+        Optional<User> optionalUser = userRepository.findByEmail(userEmail);
         if(optionalUser.isEmpty()) {
             throw new UserNotFoundException("User with this email does not exist" + userEmail);
         }
         return optionalUser.get();
     }
 
+
     @Transactional
-    public void addUserInfo(String jwtToken, UserInfoDTO userInfo) {
-        String userEmail = getEmailFromJwtToken(jwtToken);
-        User user = findUserByEmail(userEmail);
-        user.setGender(userInfo.gender());
-        user.setHeight(userInfo.height());
-        user.setWeight(userInfo.weight());
-        user.setBirthDate(userInfo.birthDate());
+    public void addUserInfo(UserInfoDTO userInfo) {
+        /*User authenticatedUser = authenticationService.getAuthenticatedUser();
+        if (authenticatedUser != null) {
+            authenticatedUser.setGender(userInfo.gender());
+            authenticatedUser.setHeight(userInfo.height());
+            authenticatedUser.setWeight(userInfo.weight());
+            authenticatedUser.setBirthDate(userInfo.birthDate());
+            userRepository.save(authenticatedUser);
+        } else {
+            // Handle unauthenticated user
+        }*/
     }
 }

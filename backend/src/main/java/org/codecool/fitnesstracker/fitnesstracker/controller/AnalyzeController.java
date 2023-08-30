@@ -24,6 +24,6 @@ public class AnalyzeController {
     public ResponseEntity<List<AnalyticDailyDTO>> getAnalytics(@RequestParam String duration,
                                                                @RequestHeader("Authorization") String authorizationHeader){
         String token = authorizationHeader.replace("Bearer ", "");
-        return new ResponseEntity<>(analyzeService.listAnalyticForPeriod(token, duration), HttpStatus.FOUND);
+        return new ResponseEntity<>(analyzeService.listAnalyticForPeriod(duration), HttpStatus.FOUND);
     }
 }

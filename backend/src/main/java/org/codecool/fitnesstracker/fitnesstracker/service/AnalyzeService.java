@@ -3,7 +3,7 @@ package org.codecool.fitnesstracker.fitnesstracker.service;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.AnalyticDailyDTO;
 import org.codecool.fitnesstracker.fitnesstracker.dao.model.Activity;
 import org.codecool.fitnesstracker.fitnesstracker.dao.model.Calorie;
-import org.codecool.fitnesstracker.fitnesstracker.dao.model.User;
+import org.codecool.fitnesstracker.fitnesstracker.user.User;
 import org.codecool.fitnesstracker.fitnesstracker.service.analytics.AnalyticDuration;
 import org.codecool.fitnesstracker.fitnesstracker.service.analytics.DailyAnalytics;
 import org.codecool.fitnesstracker.fitnesstracker.service.analytics.WeeklyAnalytics;
@@ -12,10 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.HashSet;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class AnalyzeService {
@@ -34,16 +31,18 @@ public class AnalyzeService {
         durations.add(new DailyAnalytics());
     }
 
-    public List<AnalyticDailyDTO> listAnalyticForPeriod(String jwtToken, String duration){
-        String userEmail = userService.getEmailFromJwtToken(jwtToken);
-        User user = userService.findUserByEmail(userEmail);
-        int userBaseLineCalorieRequirement = getUserBaseLineCalorieRequirement(user);
-        return durations.stream()
-                .filter(analyticDuration -> analyticDuration.getDuration()
-                .equals(duration))
-                .findFirst()
-                .orElseThrow(() -> new NoSuchElementException(duration))
-                .getAnalytics(calorieService, userBaseLineCalorieRequirement, user);
+    public List<AnalyticDailyDTO> listAnalyticForPeriod(String duration){
+//        String userEmail = userService.getEmailFromJwtToken(jwtToken);
+//        User user = userService.findUserByEmail(userEmail);
+//        int userBaseLineCalorieRequirement = getUserBaseLineCalorieRequirement(user);
+//        return durations.stream()
+//                .filter(analyticDuration -> analyticDuration.getDuration()
+//                .equals(duration))
+//                .findFirst()
+//                .orElseThrow(() -> new NoSuchElementException(duration))
+//                .getAnalytics(calorieService, userBaseLineCalorieRequirement, user);
+        List<AnalyticDailyDTO> analyticDailyDTOS = new ArrayList<>();
+        return analyticDailyDTOS;
 
     }
 

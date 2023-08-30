@@ -8,7 +8,7 @@ import MuiAlert from '@mui/material/Alert';
 import { Box } from '@mui/material';
 
 const loginWithUser = (userEmail, userPassword) => {
-    return fetch(`/users/login?email=${userEmail}&password=${userPassword}`)
+    return fetch(`   /users/login?email=${userEmail}&password=${userPassword}`)
     .then((response) => {
         if (!response.ok) {
             if (response.status === 401) {
@@ -18,6 +18,37 @@ const loginWithUser = (userEmail, userPassword) => {
             }
         }
         return response.text();
+    })
+    .then((data) => {
+        return data;
+    })
+    .catch((error) => {
+        console.error('Login error', error);
+        throw error;
+    });
+};
+
+
+
+const loginAUTH = (userEmail, userPassword) => {
+    return fetch('/api/v1/auth/authenticate', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            "email": userEmail,
+            "password": userPassword,
+        }),
+    }).then((response) => {
+        if (!response.ok) {
+            if (response.status === 401) {
+                throw new Error('Invalid credentials');
+            } else {
+                throw new Error('Network response was not ok');
+            }
+        }
+        return response.json();
     })
     .then((data) => {
         return data;
@@ -47,11 +78,11 @@ const LoginForm = () => {
         setSnackbarMessage('');
         setIsSuccessSnackbar(false);
 
-        loginWithUser(userEmail, userPassword)
+        loginAUTH(userEmail, userPassword)
             .then((result) => {
                 
 
-                    Cookies.set('jwtToken', result, { expires: 7 });
+                    Cookies.set('jwtToken', result.token, { expires: 7 });
                     setSnackbarOpen(true);
                     setSnackbarMessage('Login successful.');
                     setIsSuccessSnackbar(true);

@@ -2,6 +2,7 @@ package org.codecool.fitnesstracker.fitnesstracker.dao.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.codecool.fitnesstracker.fitnesstracker.user.User;
 
 import java.time.LocalDateTime;
 

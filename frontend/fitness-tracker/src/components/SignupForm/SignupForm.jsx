@@ -10,18 +10,19 @@ import './SignupForm.css';
 import { Box } from '@mui/material';
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
-const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-//const PWD_REGEX = /^([a-z])/;
+//const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+const PWD_REGEX = /^([a-z])/;
 const REGISTER_URL = '/register';
 
 const createNewUser = (tempObj) => {
-    return fetch('/users/', {
+    return fetch('/api/v1/auth/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(tempObj),
-    }).then((res) => res.json());
+    }).then((res) => {                 console.log(tempObj);
+        res.json()});
 };
 
 const SignupForm = () => {
@@ -79,9 +80,9 @@ const SignupForm = () => {
         setSendButtonDisabled(true);
 
         const tempObj = {
-            userName: user,
-            email: email,
-            password: pwd,
+            "username": user,
+            "email": email,
+            "password": pwd,
         };
 
         createNewUser(tempObj)

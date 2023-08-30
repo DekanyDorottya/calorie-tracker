@@ -42,12 +42,13 @@ const ActivityForm = () => {
                     Authorization: `Bearer ${jwtToken}`,
                 },
                 body: JSON.stringify({
-                    activity: activity,
-                    calories: calories,
+                    "activity": activity,
+                    "calories": calories,
                 }),
             });
 
             if (!response.ok) {
+                console.log(jwtToken);
                 throw new Error('Failed to post activity.');
             }
 
