@@ -23,7 +23,7 @@ public class ActivityController {
         this.activityService = activityService;
     }
 
-    @GetMapping("/all")
+    @GetMapping("/")
 
     public List<ActivityDTO> getAllActivities(@CurrentSecurityContext(expression = "authentication")
                                  Authentication authentication) {

@@ -19,7 +19,7 @@ export default function ActivityDailyList() {
     };
 
     const fetchMeals = () => {
-        return fetch('/activities/all', requestOptions).then((res) => res.json());
+        return fetch('/activities/', requestOptions).then((res) => res.json());
     };
 
     useEffect(() => {
