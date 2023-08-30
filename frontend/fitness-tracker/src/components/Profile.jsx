@@ -48,7 +48,7 @@ export default function Profile() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await fetch(`/users/info`, {
+            const response = await fetch(`/user`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -66,8 +66,7 @@ export default function Profile() {
                 throw new Error('Failed to post calories.');
             }
 
-            const data = await response.json();
-            console.log(data);
+            //const data = await response.json();
         } catch (error) {
             console.error('Error posting infos:', error);
         }
