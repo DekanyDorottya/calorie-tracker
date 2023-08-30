@@ -29,7 +29,7 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @PostMapping("/")
+ /*   @PostMapping("/")
     public boolean addNewUser(@RequestBody NewUserDTO user) {
         System.out.println("new user registration");
         return userService.addNewUser(user);
@@ -40,13 +40,13 @@ public class UserController {
         System.out.println(email + " " + password);
         userService.authenticateUser(email, password);
         return userService.generateJwtToken(email);
-    }
+    }*/
 
-    @PutMapping("/info")
+    @PutMapping("/info") //TODO megkérdezni hogy jól csináljuk e
     public void getUserInfo(@RequestHeader("Authorization") String authorizationHeader,
                             @RequestBody UserInfoDTO userInfo
                            )  {
         String token = authorizationHeader.replace("Bearer ", "");
-        userService.addUserInfo(token, userInfo);
+        userService.addUserInfo(userInfo);
     }
 }

@@ -1,6 +1,7 @@
 package org.codecool.fitnesstracker.fitnesstracker.user;
 
 import org.codecool.fitnesstracker.fitnesstracker.user.Role;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,9 +29,8 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue
 
-    private Integer id;
-    private String firstName;
-    private String lastName;
+    private Long id;
+    private String username;
     private String email;
     private String password;
     @Enumerated(EnumType.STRING)
@@ -41,18 +41,12 @@ public class User implements UserDetails {
     private LocalDate birthDate;
     private int height;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
-    private List<Calorie> calories = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
-    private List<Activity> activities = new ArrayList<>();
-
     public User(String s, String email, String password, LocalDateTime localDateTime) {
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
+        return List.of(new SimpleGrantedAuthority("ROLE_"+role.name()));
     }
 
     @Override
@@ -84,4 +78,13 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
+
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
+    private List<Calorie> calories = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
+    private List<Activity> activities = new ArrayList<>();
 }

@@ -36,6 +36,7 @@ public class SecurityConfiguration {
                                 .requestMatchers(GET,"/activities/all").hasRole(Role.USER.name())
                                 .anyRequest()
                                 .authenticated()
+
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
@@ -43,5 +44,4 @@ public class SecurityConfiguration {
 
         return http.build();
     }
-
 }

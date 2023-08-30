@@ -24,9 +24,9 @@ public class ActivityService {
         this.userService = userService;
     }
 
-    public List<ActivityDTO> getAllActivities(String jwtToken) {
-        //String userEmail = userService.getEmailFromJwtToken(jwtToken);
-        List<Activity> activityList = activityRepository.findByUserEmail("test@gmail.com");
+
+    public List<ActivityDTO> getAllActivities(String userEmail) {
+        List<Activity> activityList = activityRepository.findByUserEmail(userEmail);
         List<ActivityDTO> activityDTOS = new ArrayList<>();
         for (Activity activity : activityList) {
             activityDTOS.add(new ActivityDTO(activity.getActivityType(), activity.getCalories(), activity.getActivityDateTime()));
@@ -34,12 +34,14 @@ public class ActivityService {
         return activityDTOS;
     }
 
-    public void addNewActivity(NewActivityDTO activity, String jwtToken) {
+    public void addNewActivity(NewActivityDTO activity) {
         LocalDateTime localDateTime = LocalDateTime.now();
-        //String userEmail = userService.getEmailFromJwtToken(jwtToken);
-        User user = userService.findUserByEmail("test@gmail.com");
-        ActivityDTO addedActivity = new ActivityDTO(activity.activity(), activity.calories(), localDateTime);
-        Activity newActivity = new Activity(addedActivity.activity(), addedActivity.calories(), localDateTime, user);
-        activityRepository.save(newActivity);
+
+        System.out.println("adctivity added");
+//        String userEmail = userService.getEmailFromJwtToken(jwtToken);
+//        User user = userService.findUserByEmail(userEmail);
+//        ActivityDTO addedActivity = new ActivityDTO(activity.activity(), activity.calories(), localDateTime);
+//        Activity newActivity = new Activity(addedActivity.activity(), addedActivity.calories(), localDateTime, user);
+//        activityRepository.save(newActivity);
     }
 }
