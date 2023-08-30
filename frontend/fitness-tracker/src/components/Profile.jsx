@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import './CalorieForm.css';
 import Snackbar from '@mui/material/Snackbar';
@@ -12,8 +12,9 @@ export default function Profile() {
     const [weight, setWeight] = useState(0);
     const [birthDate, setBirthDate] = useState(0);
     const [height, setHeight] = useState(0);
-    const [duration, setDuration] = useState("week");
+    const [duration, setDuration] = useState('week');
     const [open, setOpen] = useState(false);
+    const [userProfileInfos, setUserProfileInfos] = useState({});
 
     const jwtToken = Cookies.get('jwtToken');
 
@@ -45,6 +46,23 @@ export default function Profile() {
         setOpen(false);
     };
 
+    const fetchUserProfile = () => {
+        return fetch(`/user`, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${jwtToken}`,
+            },
+        }).then((res) => res.json());
+    };
+
+
+    ///////////////// még endpointot kell csinálni 
+    useEffect(() => {
+        /* fetchUserProfile().then((userProfileInfos) => {
+            setUserProfileInfos(userProfileInfos);
+        }); */
+    }, []);
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
@@ -65,8 +83,6 @@ export default function Profile() {
             if (!response.ok) {
                 throw new Error('Failed to post calories.');
             }
-
-            //const data = await response.json();
         } catch (error) {
             console.error('Error posting infos:', error);
         }
@@ -75,8 +91,7 @@ export default function Profile() {
     return (
         <Box flex={9} p={{ xs: 0, md: 2 }}>
             <form className='calorie-form' onSubmit={handleSubmit}>
-                
-            <label htmlFor='gender'>Select gender:</label>
+                <label htmlFor='gender'>Select gender:</label>
                 <select
                     id='gender'
                     value={gender}
@@ -91,6 +106,9 @@ export default function Profile() {
                 <label htmlFor='weight'>Enter weight:</label>
 
                 <input
+                    defaultValue={
+                        userProfileInfos ? userProfileInfos.weight : null
+                    }
                     type='number'
                     id='weight'
                     value={weight}
@@ -100,6 +118,9 @@ export default function Profile() {
                 <label htmlFor='birthDate'>Enter Birth Date:</label>
 
                 <input
+                    defaultValue={
+                        userProfileInfos ? userProfileInfos.birthDate : null
+                    }
                     type='date'
                     id='birthDate'
                     value={birthDate}
@@ -109,6 +130,9 @@ export default function Profile() {
                 <label htmlFor='height'>Enter height:</label>
 
                 <input
+                    defaultValue={
+                        userProfileInfos ? userProfileInfos.height : null
+                    }
                     type='number'
                     id='height'
                     value={height}
