@@ -46,6 +46,7 @@ public class JwtService {
     }
     public  boolean isTokenValid(String  token, UserDetails userDetails){
         final String username= extractUsername(token);
+        // FIXME: If token is expired than `parseClaimsJws' will throw `ExpiredJwtException'
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
 
