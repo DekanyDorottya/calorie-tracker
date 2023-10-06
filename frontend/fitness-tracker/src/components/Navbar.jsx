@@ -71,7 +71,7 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                         height: 60,
                     }}
                 >
-                    <ListItemButton button component={LinkRouter} to='/'>
+                    <ListItemButton component={LinkRouter} to='/'>
                         <ListItemIcon>
                             <Home />
                         </ListItemIcon>
@@ -87,7 +87,7 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                         height: 60,
                     }}
                 >
-                    <ListItemButton button component={LinkRouter} to='/about'>
+                    <ListItemButton component={LinkRouter} to='/about'>
                         <ListItemIcon>
                             <Article />
                         </ListItemIcon>
