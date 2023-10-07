@@ -24,6 +24,10 @@ public enum Role {
         this.authorities = authorities;
     }
 
+    public Set<Authorities> getAuthorities() {
+        return authorities;
+    }
+
 
 
     // example for mapping authorities to roles.

@@ -2,6 +2,7 @@ package org.codecool.fitnesstracker.fitnesstracker.config;
 
 import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
+import org.codecool.fitnesstracker.fitnesstracker.user.Authorities;
 import org.codecool.fitnesstracker.fitnesstracker.user.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,7 +32,7 @@ public class SecurityConfiguration {
                         auth
                                 .requestMatchers("/api/v1/auth/**")
                                 .permitAll()
-                                .requestMatchers(POST,"/activities/").hasRole(Role.USER.name())
+                                .requestMatchers(POST,"/activities/").hasAuthority(Authorities.SET_ACTIVITIES.name())
                                 .requestMatchers(GET,"/activities/").hasRole(Role.USER.name())
                                 .requestMatchers(POST,"/calories/").hasRole(Role.USER.name())
                                 .requestMatchers(GET,"/calories/").hasRole(Role.USER.name())
