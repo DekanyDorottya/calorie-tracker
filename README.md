@@ -10,6 +10,7 @@ The Fitness Tracker Application is a web-based platform that allows users to tra
     - [Installation](#installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
+- [License](#license)
 
 ## Features
 
@@ -95,3 +96,7 @@ Contributions are welcome! If you find any issues or want to enhance the applica
 3. Commit your changes: git commit -m 'Add feature'
 4. Push to the branch: git push origin feature-name
 5. Create a pull request.
+
+### License
+
+This project is licensed under the [MIT License](LICENSE).
