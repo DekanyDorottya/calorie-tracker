@@ -24,32 +24,61 @@ The Fitness Tracker Application is a web-based platform that allows users to tra
 
 ### Prerequisites
 
-- Java JDK 11 or higher
-- Spring Boot
-- Database (e.g., MySQL, PostgreSQL)
-- Node.js and npm (for the frontend)
+- Docker
 
 ### Installation
 
-1. Clone the repository:
+1. Pull the image from Dockerhub in a new directory:
 
    ```sh
-   git clone https://github.com/your-username/fitness-tracker.git
-   cd fitness-tracker
+   docker pull arondocker100/fitnesstracker
+   
 
-2. Configure the Backend:
-- Set up your database configuration in application.properties.
-- Run the Spring Boot application using your IDE or Gradle/Maven.
+2. Create a new docker compose file and save it with this content:
 
-3. Configure the Frontend:
-- Navigate to the frontend directory: cd frontend
-- Install dependencies: npm install
-- Start the frontend: npm start
+    ```docker
+    version: '3.2'
 
-### Configuration
-- Database Configuration: Open src/main/resources/application.properties and update the database settings.
+    services:
+    backend:
+        image: arondocker100/fitnesstracker
+        ports:
+        - "8080:8080"
+        depends_on:
+        - postgresdb
+        environment:
+        - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresdb:5432/postgres
+        - SPRING_DATASOURCE_USERNAME=postgres
+        - SPRING_DATASOURCE_PASSWORD=postgres
+        - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+        networks:
+        - backend-network
 
-- JWT Configuration: Update JWT-related settings in the configuration files.
+    postgresdb:
+        image: postgres:13.1-alpine
+        container_name: postgresdb
+        environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
+        - POSTGRES_DB=postgres
+        volumes:
+        - db-data:/var/lib/postgresql/data
+        ports:
+        - "5432:5432"
+        networks:
+        - backend-network
+
+    networks:
+    backend-network:
+
+    volumes:
+    db-data:
+
+3. Run the compose file in bash terminal
+
+    ```sh
+    docker-compose -f docker-compose-app.yml up
+
 
 ### Usage
 1. Register or log in to the application.
