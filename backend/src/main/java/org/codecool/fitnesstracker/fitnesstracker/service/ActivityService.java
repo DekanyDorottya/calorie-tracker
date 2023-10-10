@@ -37,8 +37,8 @@ public class ActivityService {
     public void addNewActivity(NewActivityDTO activity, String userEmail) {
         LocalDateTime localDateTime = LocalDateTime.now();
         User user = userService.findUserByEmail(userEmail);
-        ActivityDTO addedActivity = new ActivityDTO(activity.activity(), activity.calories(), localDateTime);
-        Activity newActivity = new Activity(addedActivity.activity(), addedActivity.calories(), localDateTime, user);
+        ActivityDTO addedActivity = new ActivityDTO(activity.activityType(), activity.calories(), localDateTime);
+        Activity newActivity = new Activity(addedActivity.activityType(), addedActivity.calories(), localDateTime, user);
         activityRepository.save(newActivity);
     }
 }
