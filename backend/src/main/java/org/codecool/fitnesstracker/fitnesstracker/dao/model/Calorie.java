@@ -16,9 +16,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Calorie {
 
-    public Calorie(String foodType, int calories, LocalDateTime mealDateTime, User user) {
+    public Calorie(String foodType, int consumption, LocalDateTime mealDateTime, User user) {
         this.foodType = foodType;
-        this.calories = calories;
+        this.consumption = consumption;
         this.mealDateTime = mealDateTime;
         this.user = user;
     }
@@ -28,7 +28,7 @@ public class Calorie {
     private Long id;
 
     private String foodType;
-    private int calories;
+    private int consumption;
     private LocalDateTime mealDateTime;
 
     @ManyToOne
