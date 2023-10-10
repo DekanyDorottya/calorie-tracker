@@ -16,8 +16,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Calorie {
 
-    public Calorie(String foodType, int consumption, LocalDateTime mealDateTime, User user) {
-        this.foodType = foodType;
+    public Calorie(CalorieType calorieType, int consumption, LocalDateTime mealDateTime, User user) {
+        this.calorieType = calorieType;
         this.consumption = consumption;
         this.mealDateTime = mealDateTime;
         this.user = user;
@@ -27,13 +27,17 @@ public class Calorie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String foodType;
+
     private int consumption;
     private LocalDateTime mealDateTime;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "foodType_id")
+    private CalorieType calorieType;
 
 
 
