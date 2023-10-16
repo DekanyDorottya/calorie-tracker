@@ -1,6 +1,7 @@
 package org.codecool.fitnesstracker.fitnesstracker.service;
 
 import org.codecool.fitnesstracker.fitnesstracker.dao.model.FoodType;
+import org.codecool.fitnesstracker.fitnesstracker.data.FoodTypeResult;
 import org.codecool.fitnesstracker.fitnesstracker.data.FoodTypeTotal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,9 +12,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -68,5 +67,32 @@ public class SpoonApiService {
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
+    }
+
+    private Optional<List<FoodTypeResult>> getListOfFoodTypeIds(String foodType) {
+
+        try {
+            URI uri;
+            uri = new URI(spoonUrl+foodType);
+            HttpHeaders headers = new HttpHeaders();
+            headers.set(apiKeyName, apiKeyValue);
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+            HttpEntity<String> request = new HttpEntity<>(headers);
+            ResponseEntity<FoodTypeTotal> responseEntity = restTemplate.exchange(
+                    uri, HttpMethod.GET, request, FoodTypeTotal.class);
+
+            if(responseEntity.getStatusCode() == HttpStatus.OK && responseEntity.getBody() != null) {
+                FoodTypeTotal foodTypeTotal = responseEntity.getBody();
+                List<FoodTypeResult> foodTypeResults = foodTypeTotal.results();
+                return Optional.of(foodTypeResults);
+            } else {
+                return Optional.empty();
+            }
+            } catch (URISyntaxException e) {
+            e.printStackTrace();
+            return Optional.empty();
+            }
+
     }
 }
