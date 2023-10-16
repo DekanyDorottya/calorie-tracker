@@ -12,7 +12,7 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CalorieType {
+public class FoodType {
 
 
 
@@ -26,7 +26,7 @@ public class CalorieType {
     private int carbohydrate;
     private int fat;
 
-    @OneToMany(mappedBy = "calorieType", cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "foodType", cascade = CascadeType.MERGE)
     private Set<Calorie> calorie = new HashSet<>();
 
 

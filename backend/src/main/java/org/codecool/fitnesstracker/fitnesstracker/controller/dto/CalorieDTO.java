@@ -1,8 +1,8 @@
 package org.codecool.fitnesstracker.fitnesstracker.controller.dto;
 
-import org.codecool.fitnesstracker.fitnesstracker.dao.model.CalorieType;
+import org.codecool.fitnesstracker.fitnesstracker.dao.model.FoodType;
 
 import java.time.LocalDateTime;
 
-public record CalorieDTO(CalorieType calorieType, int consumption, LocalDateTime mealDateTime) {
+public record CalorieDTO(FoodType foodType, int consumption, LocalDateTime mealDateTime) {
 }

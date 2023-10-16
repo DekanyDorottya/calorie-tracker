@@ -30,7 +30,7 @@ public class CalorieService {
         List<Calorie> calorieList = calorieRepository.findByUserEmail(userEmail);
         List<CalorieDTO> calorieDTOS = new ArrayList<>();
         for (Calorie calorie : calorieList) {
-            calorieDTOS.add(new CalorieDTO(calorie.getCalorieType(),calorie.getConsumption(), calorie.getMealDateTime()));
+            calorieDTOS.add(new CalorieDTO(calorie.getFoodType(),calorie.getConsumption(), calorie.getMealDateTime()));
         }
         return calorieDTOS;
     }
@@ -38,8 +38,8 @@ public class CalorieService {
     public void addNewMeal(NewCalorieDTO meal, String userEmail) {
         LocalDateTime localDateTime = LocalDateTime.now();
         User user = userService.findUserByEmail(userEmail);
-        CalorieDTO calorieDTO = new CalorieDTO(meal.calorieType(), meal.consumption(), localDateTime);
-        Calorie newCalorie = new Calorie(calorieDTO.calorieType(), calorieDTO.consumption(), localDateTime, user);
+        CalorieDTO calorieDTO = new CalorieDTO(meal.foodType(), meal.consumption(), localDateTime);
+        Calorie newCalorie = new Calorie(calorieDTO.foodType(), calorieDTO.consumption(), localDateTime, user);
         calorieRepository.save(newCalorie);
         System.out.println("added new meal");
     }
