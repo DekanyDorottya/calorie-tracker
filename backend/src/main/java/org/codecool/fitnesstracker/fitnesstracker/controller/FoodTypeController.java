@@ -14,6 +14,10 @@ import java.util.List;
 public class FoodTypeController {
     public final FoodTypeService foodTypeService;
 
+    public FoodTypeController(FoodTypeService foodTypeService) {
+        this.foodTypeService = foodTypeService;
+    }
+
     @GetMapping("/search")
     public List<FoodTypeDTO> getAllFoodType (@RequestParam String foodType) {
         return foodTypeService.getSearchedFoodType(foodType);
