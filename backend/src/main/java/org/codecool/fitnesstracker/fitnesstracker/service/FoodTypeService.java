@@ -25,8 +25,10 @@ public class FoodTypeService {
     public List<FoodTypeDTO> getSearchedFoodType(String foodType) {
         List<FoodType> foodTypeList;
         foodTypeList = foodTypeRepository.findCalorieTypeByFoodTypeIsLikeIgnoreCase(foodType + PERCENTAGE_SYMBOL);
-        if(foodTypeList == null) {
-            foodTypeList = spoonApiService.getSearchedFoodTypeFromApi(foodType);
+        System.out.println(foodTypeList);
+        if(foodTypeList.size() == 0) {
+            //foodTypeList = spoonApiService.getSearchedFoodTypeFromApi(foodType);
+            spoonApiService.getSearchedFoodTypeFromApi(foodType);
         }
 
         List<FoodTypeDTO> foodTypeDTOS = new ArrayList<>();
