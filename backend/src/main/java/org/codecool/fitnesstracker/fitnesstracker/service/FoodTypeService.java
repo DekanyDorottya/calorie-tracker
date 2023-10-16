@@ -14,14 +14,20 @@ public class FoodTypeService {
 
     public static final char PERCENTAGE_SYMBOL = '%';
     FoodTypeRepository foodTypeRepository;
+    SpoonApiService spoonApiService;
 
     @Autowired
-    public FoodTypeService(FoodTypeRepository foodTypeRepository) {
+    public FoodTypeService(FoodTypeRepository foodTypeRepository, SpoonApiService spoonApiService) {
         this.foodTypeRepository = foodTypeRepository;
+        this.spoonApiService = spoonApiService;
     }
 
     public List<FoodTypeDTO> getSearchedFoodType(String foodType) {
-        List<FoodType> foodTypeList = foodTypeRepository.findCalorieTypeByFoodTypeIsLikeIgnoreCase(foodType + PERCENTAGE_SYMBOL);
+        List<FoodType> foodTypeList;
+        foodTypeList = foodTypeRepository.findCalorieTypeByFoodTypeIsLikeIgnoreCase(foodType + PERCENTAGE_SYMBOL);
+        if(foodTypeList == null) {
+            foodTypeList = spoonApiService.getSearchedFoodTypeFromApi(foodType);
+        }
 
         List<FoodTypeDTO> foodTypeDTOS = new ArrayList<>();
         for(FoodType calorieType : foodTypeList) {
