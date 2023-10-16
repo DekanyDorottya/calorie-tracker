@@ -30,7 +30,7 @@ public class SecurityConfiguration {
                 .csrf(CsrfConfigurer::disable)
                 .authorizeHttpRequests(auth ->
                         auth
-                                .requestMatchers("/api/v1/auth/**")
+                                .requestMatchers("/api/v1/auth/**", "/foodtype/**")
                                 .permitAll()
                                 .requestMatchers(POST,"/activities/").hasAuthority(Authorities.SET_ACTIVITIES.name())
                                 .requestMatchers(GET,"/activities/").hasAuthority(Authorities.GET_ACTIVITIES.name())
