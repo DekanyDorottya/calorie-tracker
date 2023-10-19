@@ -48,7 +48,10 @@ public class SpoonApiService {
         Optional <List<FoodTypeInfo>> foodTypeInfos;
         if (searchedIngredientsById.isPresent()) {
             for (FoodTypeResult foodTypeResult : searchedIngredientsById.get()) {
-                System.out.println(getListOfIngredientInfo(foodTypeResult.id()));
+                System.out.println(getListOfIngredientInfo(foodTypeResult.id()).nutrition().nutrients().get(17));
+                System.out.println(getListOfIngredientInfo(foodTypeResult.id()).nutrition().nutrients().get(26));
+                System.out.println(getListOfIngredientInfo(foodTypeResult.id()).nutrition().nutrients().get(27));
+                System.out.println(getListOfIngredientInfo(foodTypeResult.id()).nutrition().nutrients().get(28));
                 //getListOfIngredientInfo(foodTypeResult.id())
             }
 
