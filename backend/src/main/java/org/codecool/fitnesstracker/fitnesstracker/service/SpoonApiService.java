@@ -1,12 +1,10 @@
 package org.codecool.fitnesstracker.fitnesstracker.service;
 
-import org.codecool.fitnesstracker.fitnesstracker.dao.model.FoodType;
 import org.codecool.fitnesstracker.fitnesstracker.data.FoodTypeInfo;
-import org.codecool.fitnesstracker.fitnesstracker.data.FoodTypeResult;
-import org.codecool.fitnesstracker.fitnesstracker.data.FoodTypeTotal;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.codecool.fitnesstracker.fitnesstracker.data.FoodTypeTotalHitsByName;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -16,12 +14,12 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class SpoonApiService {
 
-    private static final String URL_INGREDIENT_SEARCH = "search?query=";
+    private static final String URL_AUTOCOMPLETE_QUERY = "autocomplete?query=";
+    private static final String AUTOCOMPLETE_PARAMETERS = "&number=5&metaInformation=true";
     private static final String URL_INGREDIENT_INFORMATION = "/information?amount=100&unit=grams";
 
     @Value("${spoonapi.url}")
@@ -39,13 +37,13 @@ public class SpoonApiService {
     }
 
     public Optional<List<FoodTypeInfo>> getSearchedFoodTypeFromApi(String foodType) {
-        Optional <List<FoodTypeResult>> searchedIngredientsById = getListOfFoodTypeIds(foodType);
+        Optional <List<FoodTypeTotalHitsByName>> searchedIngredientsById = getListOfFoodTypeIds(foodType);
 
         Optional <List<FoodTypeInfo>> foodTypeInfos;
         List<FoodTypeInfo> foodTypeInfoList = new ArrayList<>();
         if (searchedIngredientsById.isPresent()) {
-            for (FoodTypeResult foodTypeResult : searchedIngredientsById.get()) {
-                foodTypeInfoList.add(getListOfIngredientInfo(foodTypeResult.id()));
+            for (FoodTypeTotalHitsByName foodTypeTotalHitsByName : searchedIngredientsById.get()) {
+                foodTypeInfoList.add(getListOfIngredientInfo(foodTypeTotalHitsByName.id()));
             }
             foodTypeInfos = Optional.of(foodTypeInfoList);
 
@@ -56,24 +54,24 @@ public class SpoonApiService {
 
     }
 
-    private Optional<List<FoodTypeResult>> getListOfFoodTypeIds(String foodType) {
+    private Optional<List<FoodTypeTotalHitsByName>> getListOfFoodTypeIds(String foodType) {
 
         try {
             String encodedQueryParamValue = URLEncoder.encode(foodType, "UTF-8");
             URI uri;
-            uri = new URI(spoonUrl+URL_INGREDIENT_SEARCH+encodedQueryParamValue);
+            uri = new URI(spoonUrl+URL_AUTOCOMPLETE_QUERY+encodedQueryParamValue+AUTOCOMPLETE_PARAMETERS);
             HttpHeaders headers = new HttpHeaders();
             headers.set(apiKeyName, apiKeyValue);
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
             HttpEntity<String> request = new HttpEntity<>(headers);
-            ResponseEntity<FoodTypeTotal> responseEntity = restTemplate.exchange(
-                    uri, HttpMethod.GET, request, FoodTypeTotal.class);
+            ResponseEntity<List<FoodTypeTotalHitsByName>> responseEntity = restTemplate.exchange(
+                    uri, HttpMethod.GET, request, new ParameterizedTypeReference<>() {
+                    });
 
-            if(responseEntity.getStatusCode() == HttpStatus.OK && responseEntity.getBody() != null && responseEntity.getBody().totalResults() > 0) {
-                FoodTypeTotal foodTypeTotal = responseEntity.getBody();
-                List<FoodTypeResult> foodTypeResults = foodTypeTotal.results();
-                return Optional.of(foodTypeResults);
+            if(responseEntity.getStatusCode() == HttpStatus.OK && responseEntity.getBody() != null && responseEntity.getBody().size() > 0) {
+                List<FoodTypeTotalHitsByName> foodTypeTotalHitsByName = responseEntity.getBody();
+                return Optional.of(foodTypeTotalHitsByName);
             } else {
                 return Optional.empty();
             }
@@ -84,7 +82,7 @@ public class SpoonApiService {
 
     }
 
-    private FoodTypeInfo getListOfIngredientInfo(int id) {
+    private FoodTypeInfo getListOfIngredientInfo(long id) {
         FoodTypeInfo foodTypeInfo = null;
         try {
             URI uri;
