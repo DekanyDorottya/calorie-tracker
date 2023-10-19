@@ -38,25 +38,22 @@ public class SpoonApiService {
         this.restTemplate = restTemplateBuilder.build();
     }
 
-    public void getSearchedFoodTypeFromApi(String foodType) {
-        System.out.println("belement");
+    public Optional<List<FoodTypeInfo>> getSearchedFoodTypeFromApi(String foodType) {
         Optional <List<FoodTypeResult>> searchedIngredientsById = getListOfFoodTypeIds(foodType);
 
-//        String apiUrl = "https://api.spoonacular.com/food/ingredients/search?query="+foodType;
-//
-//        String response = restTemplate.getForObject(apiUrl, String.class, apiKey);
         Optional <List<FoodTypeInfo>> foodTypeInfos;
+        List<FoodTypeInfo> foodTypeInfoList = new ArrayList<>();
         if (searchedIngredientsById.isPresent()) {
             for (FoodTypeResult foodTypeResult : searchedIngredientsById.get()) {
-                System.out.println(getListOfIngredientInfo(foodTypeResult.id()).nutrition().nutrients().get(17));
-                System.out.println(getListOfIngredientInfo(foodTypeResult.id()).nutrition().nutrients().get(26));
-                System.out.println(getListOfIngredientInfo(foodTypeResult.id()).nutrition().nutrients().get(27));
-                System.out.println(getListOfIngredientInfo(foodTypeResult.id()).nutrition().nutrients().get(28));
-                //getListOfIngredientInfo(foodTypeResult.id())
+                foodTypeInfoList.add(getListOfIngredientInfo(foodTypeResult.id()));
             }
+            foodTypeInfos = Optional.of(foodTypeInfoList);
 
-
+        } else {
+            return Optional.empty();
         }
+        return foodTypeInfos;
+
     }
 
     private Optional<List<FoodTypeResult>> getListOfFoodTypeIds(String foodType) {
@@ -73,7 +70,7 @@ public class SpoonApiService {
             ResponseEntity<FoodTypeTotal> responseEntity = restTemplate.exchange(
                     uri, HttpMethod.GET, request, FoodTypeTotal.class);
 
-            if(responseEntity.getStatusCode() == HttpStatus.OK && responseEntity.getBody() != null) {
+            if(responseEntity.getStatusCode() == HttpStatus.OK && responseEntity.getBody() != null && responseEntity.getBody().totalResults() > 0) {
                 FoodTypeTotal foodTypeTotal = responseEntity.getBody();
                 List<FoodTypeResult> foodTypeResults = foodTypeTotal.results();
                 return Optional.of(foodTypeResults);
