@@ -2,16 +2,20 @@ package org.codecool.fitnesstracker.fitnesstracker.service;
 
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.FoodTypeDTO;
 import org.codecool.fitnesstracker.fitnesstracker.dao.model.FoodType;
+import org.codecool.fitnesstracker.fitnesstracker.data.FoodTypeInfo;
+import org.codecool.fitnesstracker.fitnesstracker.exceptions.NoSuchFoodTypeException;
 import org.codecool.fitnesstracker.fitnesstracker.repositories.FoodTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class FoodTypeService {
-
     public static final char PERCENTAGE_SYMBOL = '%';
     FoodTypeRepository foodTypeRepository;
     SpoonApiService spoonApiService;
@@ -21,19 +25,41 @@ public class FoodTypeService {
         this.foodTypeRepository = foodTypeRepository;
         this.spoonApiService = spoonApiService;
     }
-
+    @Transactional
     public List<FoodTypeDTO> getSearchedFoodType(String foodType) {
+        List<FoodTypeDTO> foodTypeDTOS = new ArrayList<>();
         List<FoodType> foodTypeList;
         foodTypeList = foodTypeRepository.findCalorieTypeByFoodTypeIsLikeIgnoreCase(foodType + PERCENTAGE_SYMBOL);
-        System.out.println(foodTypeList);
         if(foodTypeList.size() == 0) {
-            //foodTypeList = spoonApiService.getSearchedFoodTypeFromApi(foodType);
-            spoonApiService.getSearchedFoodTypeFromApi(foodType);
+            Optional<List<FoodTypeInfo>> optionalFoodTypeInfos = spoonApiService.getSearchedFoodTypeFromApi(foodType);
+            if(optionalFoodTypeInfos.isEmpty()) {
+                throw new NoSuchFoodTypeException("There is no result with this foodType");
+            } else {
+                foodTypeDTOS = optionalFoodTypeInfos.get().stream().map(foodTypeInfos -> new FoodTypeDTO(foodTypeInfos.name(),
+                        foodTypeInfos.nutrition().nutrients().get(17).amount(),
+                        foodTypeInfos.nutrition().nutrients().get(26).amount(),
+                        foodTypeInfos.nutrition().nutrients().get(27).amount(),
+                        foodTypeInfos.nutrition().nutrients().get(28).amount()
+                        ))
+                        .collect(Collectors.toList());
+
+                for (FoodTypeDTO foodTypeDTO : foodTypeDTOS) {
+                    FoodType foodTypeEntity = new FoodType(
+                            foodTypeDTO.name(),
+                            foodTypeDTO.calorie(),
+                            foodTypeDTO.protein(),
+                            foodTypeDTO.carbohydrate(),
+                            foodTypeDTO.fat()
+                    );
+
+                    foodTypeRepository.save(foodTypeEntity);
+                }
+
+            }
         }
 
-        List<FoodTypeDTO> foodTypeDTOS = new ArrayList<>();
         for(FoodType calorieType : foodTypeList) {
-            foodTypeDTOS.add(new FoodTypeDTO(calorieType.getCalories(), calorieType.getProtein(), calorieType.getCarbohydrate(), calorieType.getFat()));
+            foodTypeDTOS.add(new FoodTypeDTO(calorieType.getFoodType(),  calorieType.getCalories(), calorieType.getProtein(), calorieType.getCarbohydrate(), calorieType.getFat()));
         }
         return foodTypeDTOS;
     }
