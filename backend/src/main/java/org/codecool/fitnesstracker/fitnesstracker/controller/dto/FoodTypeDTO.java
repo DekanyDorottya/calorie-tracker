@@ -1,4 +1,4 @@
 package org.codecool.fitnesstracker.fitnesstracker.controller.dto;
 
-public record FoodTypeDTO(String name, double calorie, double protein, double carbohydrate, double fat) {
+public record FoodTypeDTO(String name, double calorie, double protein, double carbohydrate, double fat, long apiId) {
 }

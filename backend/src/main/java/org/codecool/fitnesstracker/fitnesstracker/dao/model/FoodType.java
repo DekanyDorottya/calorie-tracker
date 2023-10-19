@@ -25,13 +25,15 @@ public class FoodType {
     private double protein;
     private double carbohydrate;
     private double fat;
+    private long apiId;
 
-    public FoodType(String foodType, double calories, double protein, double carbohydrate, double fat) {
+    public FoodType(String foodType, double calories, double protein, double carbohydrate, double fat, long apiId) {
         this.foodType = foodType;
         this.calories = calories;
         this.protein = protein;
         this.carbohydrate = carbohydrate;
         this.fat = fat;
+        this.apiId = apiId;
     }
 
     @OneToMany(mappedBy = "foodType", cascade = CascadeType.MERGE)

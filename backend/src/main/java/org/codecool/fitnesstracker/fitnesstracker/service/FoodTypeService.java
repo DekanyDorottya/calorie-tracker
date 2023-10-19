@@ -39,7 +39,8 @@ public class FoodTypeService {
                         foodTypeInfos.nutrition().nutrients().get(17).amount(),
                         foodTypeInfos.nutrition().nutrients().get(26).amount(),
                         foodTypeInfos.nutrition().nutrients().get(27).amount(),
-                        foodTypeInfos.nutrition().nutrients().get(28).amount()
+                        foodTypeInfos.nutrition().nutrients().get(28).amount(),
+                        foodTypeInfos.id()
                         ))
                         .collect(Collectors.toList());
 
@@ -49,7 +50,8 @@ public class FoodTypeService {
                             foodTypeDTO.calorie(),
                             foodTypeDTO.protein(),
                             foodTypeDTO.carbohydrate(),
-                            foodTypeDTO.fat()
+                            foodTypeDTO.fat(),
+                            foodTypeDTO.apiId()
                     );
 
                     foodTypeRepository.save(foodTypeEntity);
@@ -59,7 +61,7 @@ public class FoodTypeService {
         }
 
         for(FoodType calorieType : foodTypeList) {
-            foodTypeDTOS.add(new FoodTypeDTO(calorieType.getFoodType(),  calorieType.getCalories(), calorieType.getProtein(), calorieType.getCarbohydrate(), calorieType.getFat()));
+            foodTypeDTOS.add(new FoodTypeDTO(calorieType.getFoodType(),  calorieType.getCalories(), calorieType.getProtein(), calorieType.getCarbohydrate(), calorieType.getFat(), calorieType.getApiId()));
         }
         return foodTypeDTOS;
     }
