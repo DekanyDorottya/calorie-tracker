@@ -21,10 +21,18 @@ public class FoodType {
     private Long id;
 
     private String foodType;
-    private int calories;
-    private int protein;
-    private int carbohydrate;
-    private int fat;
+    private double calories;
+    private double protein;
+    private double carbohydrate;
+    private double fat;
+
+    public FoodType(String foodType, double calories, double protein, double carbohydrate, double fat) {
+        this.foodType = foodType;
+        this.calories = calories;
+        this.protein = protein;
+        this.carbohydrate = carbohydrate;
+        this.fat = fat;
+    }
 
     @OneToMany(mappedBy = "foodType", cascade = CascadeType.MERGE)
     private Set<Calorie> calorie = new HashSet<>();
