@@ -1,0 +1,21 @@
+
+
+.calorie-form label {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.gram-input,
+.food-input {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.submit-button {
+    width: 100%;
+    background-color: #007BFF;
+    color: white;
+}
