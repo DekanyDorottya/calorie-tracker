@@ -37,9 +37,9 @@ public class FoodTypeService {
             } else {
                 foodTypeDTOS = optionalFoodTypeInfos.get().stream().map(foodTypeInfos -> new FoodTypeDTO(foodTypeInfos.name(),
                         foodTypeInfos.nutrition().nutrients().get(17).amount(),
-                        foodTypeInfos.nutrition().nutrients().get(26).amount(),
                         foodTypeInfos.nutrition().nutrients().get(27).amount(),
-                        foodTypeInfos.nutrition().nutrients().get(28).amount(),
+                        foodTypeInfos.nutrition().nutrients().get(26).amount(),
+                        foodTypeInfos.nutrition().nutrients().get(25).amount(),
                         foodTypeInfos.id()
                         ))
                         .collect(Collectors.toList());
