@@ -8,4 +8,5 @@ import java.util.List;
 @Repository
 public interface FoodTypeRepository extends JpaRepository<FoodType, Long> {
     List<FoodType> findCalorieTypeByFoodTypeIsLikeIgnoreCase(String foodType);
+    FoodType findFoodTypeByApiId(long apiId);
 }
