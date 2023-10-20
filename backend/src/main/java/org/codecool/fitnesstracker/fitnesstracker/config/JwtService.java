@@ -49,7 +49,7 @@ public class JwtService {
             Map<String, Object> extractClaims, UserDetails userDetails
     ) {
 
-        return Jwts.builder().setClaims(extractClaims).setSubject(userDetails.getUsername()).setIssuedAt(new Date(System.currentTimeMillis())).setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24)).signWith(getSignInKey(), SignatureAlgorithm.HS512).compact();
+        return Jwts.builder().setClaims(extractClaims).setSubject(userDetails.getUsername()).setIssuedAt(new Date(System.currentTimeMillis())).setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24)).signWith(getSignInKey(), SignatureAlgorithm.HS512).compact();
     }
     public  boolean isTokenValid(String  token, UserDetails userDetails){
         String username = null;
