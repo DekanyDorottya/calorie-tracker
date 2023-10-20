@@ -22,7 +22,7 @@ public class AnalyzeController {
         this.analyzeService = analyzeService;
     }
 
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<List<AnalyticDailyDTO>> getAnalytics(@RequestParam String duration,
                                                                @CurrentSecurityContext(expression = "authentication") Authentication authentication){
         return new ResponseEntity<>(analyzeService.listAnalyticForPeriod(duration, authentication.getName()), HttpStatus.FOUND);
