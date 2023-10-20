@@ -27,7 +27,7 @@ const Sidebar = ({ mode, setMode, isLoggedIn, handleLogout }) => {
                     {isLoggedIn && (
                         <List>
                             <ListItem disablePadding>
-                                <ListItemButton button component={LinkRouter} to='/calorie'>
+                                <ListItemButton component={LinkRouter} to='/calorie'>
                                     <ListItemIcon>
                                         <ControlPoint />
                                     </ListItemIcon>
@@ -35,7 +35,7 @@ const Sidebar = ({ mode, setMode, isLoggedIn, handleLogout }) => {
                                 </ListItemButton>
                             </ListItem>
                             <ListItem disablePadding>
-                                <ListItemButton button component={LinkRouter} to='/yourDailyCalorie'
+                                <ListItemButton component={LinkRouter} to='/yourDailyCalorie'
                                     
                                 >
                                     <ListItemIcon>
@@ -46,7 +46,7 @@ const Sidebar = ({ mode, setMode, isLoggedIn, handleLogout }) => {
                             </ListItem>
                             <ListItem disablePadding>
                                 
-                                <ListItemButton button component={LinkRouter} to='/activity' >
+                                <ListItemButton component={LinkRouter} to='/activity' >
                                     <ListItemIcon>
                                         <ControlPoint />
                                     </ListItemIcon>
@@ -54,8 +54,7 @@ const Sidebar = ({ mode, setMode, isLoggedIn, handleLogout }) => {
                                 </ListItemButton>
                             </ListItem>
                             <ListItem disablePadding>
-                                <ListItemButton
-                                button component={LinkRouter} to='/yourDailyActivity'
+                                <ListItemButton component={LinkRouter} to='/yourDailyActivity'
                                     
                                 >
                                     <ListItemIcon>
@@ -65,8 +64,7 @@ const Sidebar = ({ mode, setMode, isLoggedIn, handleLogout }) => {
                                 </ListItemButton>
                             </ListItem>
                             <ListItem disablePadding>
-                                <ListItemButton
-                                    button component={LinkRouter} to='/analyze'
+                                <ListItemButton component={LinkRouter} to='/analyze'
                                 >
                                     <ListItemIcon>
                                         <Settings />
@@ -75,8 +73,7 @@ const Sidebar = ({ mode, setMode, isLoggedIn, handleLogout }) => {
                                 </ListItemButton>
                             </ListItem>
                             <ListItem disablePadding>
-                                <ListItemButton
-                                    button component={LinkRouter} to="/profile"
+                                <ListItemButton component={LinkRouter} to="/profile"
                                 >
                                     <ListItemIcon>
                                         <AccountBox />
