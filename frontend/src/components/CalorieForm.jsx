@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './CalorieForm.css'
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Notification from './Notification';
@@ -98,12 +99,14 @@ const CalorieForm = () => {
     return (
         <>
             <Box  flex={5} p={{ xs: 0, md: 2, alignItems: 'center'}}>
-                { !isSearched ? (
+                { isSearched ? (
                     <>
                      <TextField id="outlined-search" label="Search food" type="search" />
                      
                      </>
                 ) : (
+                    <>
+                <TextField id="outlined-search" label="Search food" type="search" />
                 <form className='calorie-form' onSubmit={handleSubmit}>
                     <label htmlFor='grams'>Enter Grams:</label>
                     <input
@@ -139,6 +142,7 @@ const CalorieForm = () => {
                         message='Posted a meal'
                     />
                 </form>
+                    </>
                 )}
             </Box>
             {dailybarchart ? <DailyBarchart listedMeals={dailyCalorieInfos} /> : null}
