@@ -26,7 +26,7 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @PutMapping()
+    @PutMapping("/")
     public void getUserInfo(@CurrentSecurityContext(expression = "authentication") Authentication authentication,
                             @RequestBody UserInfoDTO userInfo
     ) {

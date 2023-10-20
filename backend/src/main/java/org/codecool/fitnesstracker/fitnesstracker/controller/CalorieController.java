@@ -2,6 +2,7 @@ package org.codecool.fitnesstracker.fitnesstracker.controller;
 
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.CalorieDTO;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.NewCalorieDTO;
+import org.codecool.fitnesstracker.fitnesstracker.controller.dto.ReceivedNewCalorieDTO;
 import org.codecool.fitnesstracker.fitnesstracker.service.CalorieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,8 +30,8 @@ public class CalorieController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<NewCalorieDTO> addNewMeal(
-            @RequestBody NewCalorieDTO meal,
+    public ResponseEntity<ReceivedNewCalorieDTO> addNewMeal(
+            @RequestBody ReceivedNewCalorieDTO meal,
             @CurrentSecurityContext(expression = "authentication") Authentication authentication) {
         calorieService.addNewMeal(meal, authentication.getName());
         return new ResponseEntity<>(meal, HttpStatus.CREATED);

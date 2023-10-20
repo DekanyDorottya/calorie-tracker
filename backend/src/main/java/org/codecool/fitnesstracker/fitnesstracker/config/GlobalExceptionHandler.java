@@ -1,5 +1,6 @@
 package org.codecool.fitnesstracker.fitnesstracker.config;
 
+import org.codecool.fitnesstracker.fitnesstracker.exceptions.NoSuchFoodTypeException;
 import org.codecool.fitnesstracker.fitnesstracker.user.User;
 
 import org.codecool.fitnesstracker.fitnesstracker.exceptions.EmailNotFoundException;
@@ -25,5 +26,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(InvalidCredentialsException.class)
     public ResponseEntity<String> handleInvalidCredentialsException(InvalidCredentialsException ex) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(NoSuchFoodTypeException.class)
+    public ResponseEntity<String> handleNoSuchFoodTypeException(NoSuchFoodTypeException ex) {
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(ex.getMessage());
     }
 }

@@ -4,7 +4,6 @@ package org.codecool.fitnesstracker.fitnesstracker.dao.model;
 import jakarta.persistence.*;
 import lombok.*;
 import org.codecool.fitnesstracker.fitnesstracker.user.User;
-import org.springframework.web.bind.annotation.Mapping;
 
 import java.time.LocalDateTime;
 
@@ -16,8 +15,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Calorie {
 
-    public Calorie(CalorieType calorieType, int consumption, LocalDateTime mealDateTime, User user) {
-        this.calorieType = calorieType;
+    public Calorie(FoodType foodType, int consumption, LocalDateTime mealDateTime, User user) {
+        this.foodType = foodType;
         this.consumption = consumption;
         this.mealDateTime = mealDateTime;
         this.user = user;
@@ -37,7 +36,7 @@ public class Calorie {
 
     @ManyToOne
     @JoinColumn(name = "foodType_id")
-    private CalorieType calorieType;
+    private FoodType foodType;
 
 
 

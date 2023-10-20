@@ -2,9 +2,11 @@ package org.codecool.fitnesstracker.fitnesstracker.service;
 
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.CalorieDTO;
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.CalorieForAnalyticsDTO;
-import org.codecool.fitnesstracker.fitnesstracker.controller.dto.NewCalorieDTO;
+import org.codecool.fitnesstracker.fitnesstracker.controller.dto.ReceivedNewCalorieDTO;
 import org.codecool.fitnesstracker.fitnesstracker.dao.model.Calorie;
+import org.codecool.fitnesstracker.fitnesstracker.dao.model.FoodType;
 import org.codecool.fitnesstracker.fitnesstracker.repositories.CalorieRepository;
+import org.codecool.fitnesstracker.fitnesstracker.repositories.FoodTypeRepository;
 import org.codecool.fitnesstracker.fitnesstracker.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,29 +19,36 @@ import java.util.List;
 
 @Service
 public class CalorieService {
+    public static final int ONE_GRAM = 100;
     private final CalorieRepository calorieRepository;
+    private final FoodTypeRepository foodTypeRepository;
     private final UserService userService;
 
     @Autowired
-    public CalorieService(CalorieRepository calorieRepository, UserService userService) {
+    public CalorieService(CalorieRepository calorieRepository, UserService userService, FoodTypeRepository foodTypeRepository) {
         this.calorieRepository = calorieRepository;
         this.userService = userService;
+        this.foodTypeRepository = foodTypeRepository;
     }
 
     public List<CalorieDTO> getAllCalories(String userEmail) {
         List<Calorie> calorieList = calorieRepository.findByUserEmail(userEmail);
         List<CalorieDTO> calorieDTOS = new ArrayList<>();
         for (Calorie calorie : calorieList) {
-            calorieDTOS.add(new CalorieDTO(calorie.getCalorieType(),calorie.getConsumption(), calorie.getMealDateTime()));
+            double allCalories = calorie.getConsumption() * calorie.getFoodType().getCalories()/ ONE_GRAM;
+            double allCarbohydrate = calorie.getConsumption() * calorie.getFoodType().getCarbohydrate()/ ONE_GRAM;
+            double allProtein = calorie.getConsumption() * calorie.getFoodType().getProtein()/ ONE_GRAM;
+            double allFat = calorie.getConsumption() * calorie.getFoodType().getFat()/ ONE_GRAM;
+            calorieDTOS.add(new CalorieDTO(calorie.getFoodType().getFoodType(), allCalories, allCarbohydrate, allProtein, allFat, calorie.getConsumption(), calorie.getMealDateTime()));
         }
         return calorieDTOS;
     }
 
-    public void addNewMeal(NewCalorieDTO meal, String userEmail) {
+    public void addNewMeal(ReceivedNewCalorieDTO meal, String userEmail) {
         LocalDateTime localDateTime = LocalDateTime.now();
         User user = userService.findUserByEmail(userEmail);
-        CalorieDTO calorieDTO = new CalorieDTO(meal.calorieType(), meal.consumption(), localDateTime);
-        Calorie newCalorie = new Calorie(calorieDTO.calorieType(), calorieDTO.consumption(), localDateTime, user);
+        FoodType foodType = foodTypeRepository.findFoodTypeByApiId(meal.apiId());
+        Calorie newCalorie = new Calorie(foodType, meal.consumption(), localDateTime, user);
         calorieRepository.save(newCalorie);
         System.out.println("added new meal");
     }

@@ -46,7 +46,7 @@ const CalorieForm = () => {
     
 
     const fetchDailyCalories = () => {
-        return fetch(`/analyze?duration=${duration}`, {
+        return fetch(`/analyze/?duration=${duration}`, {
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${jwtToken}`,

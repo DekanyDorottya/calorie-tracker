@@ -47,7 +47,7 @@ export default function Profile() {
     };
 
     const fetchUserProfile = () => {
-        return fetch(`/user`, {
+        return fetch(`/user/`, {
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${jwtToken}`,
@@ -66,7 +66,7 @@ export default function Profile() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await fetch(`/user`, {
+            const response = await fetch(`/user/`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
