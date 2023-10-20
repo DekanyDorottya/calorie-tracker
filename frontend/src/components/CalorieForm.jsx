@@ -58,11 +58,10 @@ const CalorieForm = () => {
     };
 
     const showDailyBarChart = () => {
-        console.log(window.innerWidth)
         if(window.innerWidth <= 960) {
-            setDailyCalorieInfos(false);
+            setDailybarchart(false);
         } else {
-            setDailyCalorieInfos(true);
+            setDailybarchart(true);
         }
     }
 
@@ -88,7 +87,6 @@ const CalorieForm = () => {
             }
             fetchDailyCalories().then((listedMeals) => {
                 setDailyCalorieInfos(listedMeals);
-                console.log(listedMeals);
             });
             const data = await response.json();
             console.log(data);
