@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 import Notification from './Notification';
 import { Box } from '@mui/material';
 import Cookies from 'js-cookie';
@@ -7,9 +8,11 @@ import DailyBarchart from './DailyBarchart';
 import { Add } from '@mui/icons-material';
 
 const CalorieForm = () => {
-    const [calories, setCalories] = useState(0);
+    const [grams, setGrams] = useState(0);
     const [foodType, setFoodType] = useState('');
     const [open, setOpen] = useState(false);
+    const [dailybarchart, setDailybarchart] = useState(true);
+    const [isSearched, setIsSearched] = useState(false);
     const [dailyCalorieInfos, setDailyCalorieInfos] = useState([
         {
             requiedCalorie: 0,
@@ -20,7 +23,7 @@ const CalorieForm = () => {
     const jwtToken = Cookies.get('jwtToken');
 
     const handleCaloriesChange = (event) => {
-        setCalories(event.target.value);
+        setGrams(event.target.value);
     };
     const handleFoodTypeChange = (event) => {
         setFoodType(event.target.value);
@@ -54,7 +57,16 @@ const CalorieForm = () => {
         }).then((res) => res.json());
     };
 
-    
+    const showDailyBarChart = () => {
+        console.log(window.innerWidth)
+        if(window.innerWidth <= 960) {
+            setDailyCalorieInfos(false);
+        } else {
+            setDailyCalorieInfos(true);
+        }
+    }
+
+    window.addEventListener('resize', showDailyBarChart);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -67,7 +79,7 @@ const CalorieForm = () => {
                 },
                 body: JSON.stringify({
                     foodType: foodType,
-                    calories: calories,
+                    grams: grams,
                 }),
             });
 
@@ -88,14 +100,20 @@ const CalorieForm = () => {
     return (
         <>
             <Box  flex={5} p={{ xs: 0, md: 2, alignItems: 'center'}}>
+                { !isSearched ? (
+                    <>
+                     <TextField id="outlined-search" label="Search food" type="search" />
+                     
+                     </>
+                ) : (
                 <form className='calorie-form' onSubmit={handleSubmit}>
-                    <label htmlFor='calories'>Enter Calories:</label>
+                    <label htmlFor='grams'>Enter Grams:</label>
                     <input
                         type='number'
-                        id='calories'
-                        value={calories}
+                        id='grams'
+                        value={grams}
                         onChange={handleCaloriesChange}
-                        className='calorie-input'
+                        className='gram-input'
                     />
 
                     <label htmlFor='foodType'>Enter food:</label>
@@ -123,8 +141,9 @@ const CalorieForm = () => {
                         message='Posted a meal'
                     />
                 </form>
+                )}
             </Box>
-            <DailyBarchart listedMeals={dailyCalorieInfos} />
+            {dailybarchart ? <DailyBarchart listedMeals={dailyCalorieInfos} /> : null}
         </>
     );
 };
