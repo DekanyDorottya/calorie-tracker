@@ -90,7 +90,7 @@ export default function Profile() {
 
     return (
         <Box flex={9} p={{ xs: 0, md: 2 }}>
-            <form className='calorie-form' onSubmit={handleSubmit}>
+            <form className='profile-form' onSubmit={handleSubmit}>
                 <label htmlFor='gender'>Select gender:</label>
                 <select
                     id='gender'
