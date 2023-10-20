@@ -61,7 +61,7 @@ const ActivityForm = () => {
 
     return (
         <Box flex={9} p={{ xs: 0, md: 2 }}>
-            <form className='calorie-form' onSubmit={handleSubmit}>
+            <form className='activity-form' onSubmit={handleSubmit}>
                 <label htmlFor='calories'>Enter Calories:</label>
                 <input
                     type='number'
