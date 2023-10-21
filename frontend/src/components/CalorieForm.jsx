@@ -1,153 +1,212 @@
-import React, { useState, useEffect } from 'react';
-import './CalorieForm.css'
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Notification from './Notification';
-import { Box } from '@mui/material';
-import Cookies from 'js-cookie';
-import DailyBarchart from './DailyBarchart';
-import { Add } from '@mui/icons-material';
+import React, { useState, useEffect } from "react";
+import "./CalorieForm.css";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Notification from "./Notification";
+import { Box } from "@mui/material";
+import Cookies from "js-cookie";
+import DailyBarchart from "./DailyBarchart";
+import { Add } from "@mui/icons-material";
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import SearchIcon from '@mui/icons-material/Search';
 
 const CalorieForm = () => {
-    const [grams, setGrams] = useState(0);
-    const [foodType, setFoodType] = useState('');
-    const [open, setOpen] = useState(false);
-    const [dailybarchart, setDailybarchart] = useState(true);
-    const [isSearched, setIsSearched] = useState(false);
-    const [dailyCalorieInfos, setDailyCalorieInfos] = useState([
-        {
-            requiedCalorie: 0,
-            dailyCalorieConsumption: 0,
-        },
-    ]);
-    const [duration, setDuration] = useState('daily');
-    const jwtToken = Cookies.get('jwtToken');
+  const [grams, setGrams] = useState(0);
+  const [foodType, setFoodType] = useState("");
+  const [open, setOpen] = useState(false);
+  const [dailybarchart, setDailybarchart] = useState(true);
+  const [searchedFood, setSearchedFood] = useState("");
+  const [isSearched, setIsSearched] = useState(false);
+  const [foundFoodTypes, setFoundFoodTypes] = useState();
+  const [dailyCalorieInfos, setDailyCalorieInfos] = useState([
+    {
+      requiedCalorie: 0,
+      dailyCalorieConsumption: 0,
+    },
+  ]);
+  const [duration, setDuration] = useState("daily");
+  const jwtToken = Cookies.get("jwtToken");
 
-    const handleCaloriesChange = (event) => {
-        setGrams(event.target.value);
-    };
-    const handleFoodTypeChange = (event) => {
-        setFoodType(event.target.value);
-    };
+  const handleCaloriesChange = (event) => {
+    setGrams(event.target.value);
+  };
+  const handleFoodTypeChange = (event) => {
+    setFoodType(event.target.value);
+  };
 
-    const handleClick = () => {
-        setOpen(true);
-    };
+  const handleClick = () => {
+    setOpen(true);
+  };
 
-    const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-
-        setOpen(false);
-    };
-
-    useEffect(() => {
-        fetchDailyCalories().then((listedMeals) => {
-            setDailyCalorieInfos(listedMeals);
-        })
-    }, [])
-    
-
-    const fetchDailyCalories = () => {
-        return fetch(`/analyze/?duration=${duration}`, {
-            method: 'GET',
-            headers: {
-                Authorization: `Bearer ${jwtToken}`,
-            },
-        }).then((res) => res.json());
-    };
-
-    const showDailyBarChart = () => {
-        if(window.innerWidth <= 960) {
-            setDailybarchart(false);
-        } else {
-            setDailybarchart(true);
-        }
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
     }
 
-    window.addEventListener('resize', showDailyBarChart);
+    setOpen(false);
+  };
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        try {
-            const response = await fetch('/calories/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${jwtToken}`,
-                },
-                body: JSON.stringify({
-                    foodType: foodType,
-                    grams: grams,
-                }),
-            });
+  useEffect(() => {
+    fetchDailyCalories().then((listedMeals) => {
+      setDailyCalorieInfos(listedMeals);
+    });
+  }, []);
 
-            if (!response.ok) {
-                throw new Error('Failed to post calories.');
-            }
-            fetchDailyCalories().then((listedMeals) => {
-                setDailyCalorieInfos(listedMeals);
-            });
-            const data = await response.json();
-            console.log(data);
-        } catch (error) {
-            console.error('Error posting calories:', error);
-        }
-    };
+  const fetchDailyCalories = () => {
+    return fetch(`/analyze/?duration=${duration}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+    }).then((res) => res.json());
+  };
 
-    return (
-        <>
-            <Box  flex={5} p={{ xs: 0, md: 2, alignItems: 'center'}}>
-                { isSearched ? (
-                    <>
-                     <TextField id="outlined-search" label="Search food" type="search" />
-                     
-                     </>
-                ) : (
-                    <>
-                <TextField id="outlined-search" label="Search food" type="search" />
-                <form className='calorie-form' onSubmit={handleSubmit}>
-                    <label htmlFor='grams'>Enter Grams:</label>
-                    <input
-                        type='number'
-                        id='grams'
-                        value={grams}
-                        onChange={handleCaloriesChange}
-                        className='gram-input'
-                    />
+  const showDailyBarChart = () => {
+    if (window.innerWidth <= 960) {
+      setDailybarchart(false);
+    } else {
+      setDailybarchart(true);
+    }
+  };
 
-                    <label htmlFor='foodType'>Enter food:</label>
+  const fetchFoodType = () => {
+    return fetch(`/foodtype/search?&foodType=${searchedFood}`, {
+        method: "GET",
+        headers: {
+            Authorization: `Bearer ${jwtToken}`
+        },
+    }).then((res) => res.json());
+  }
 
-                    <input
-                        type='text'
-                        id='foodType'
-                        value={foodType}
-                        onChange={handleFoodTypeChange}
-                        className='food-input'
-                    />
+  const handleSearchClick = () => {
+    fetchFoodType().then((listedFoodTypes) => {
+        setFoundFoodTypes(listedFoodTypes);
+        console.log(listedFoodTypes);
+    })
+  }
 
-                    <Button
-                        variant='contained'
-                        type='submit'
-                        className='submit-button'
-                        onClick={handleClick}
-                    >
-                        Post Calories
-                    </Button>
 
-                    <Notification
-                        open={open}
-                        onClose={handleClose}
-                        message='Posted a meal'
-                    />
-                </form>
-                    </>
-                )}
-            </Box>
-            {dailybarchart ? <DailyBarchart listedMeals={dailyCalorieInfos} /> : null}
-        </>
-    );
+  window.addEventListener("resize", showDailyBarChart);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await fetch("/calories/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${jwtToken}`,
+        },
+        body: JSON.stringify({
+          foodType: foodType,
+          grams: grams,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to post calories.");
+      }
+      fetchDailyCalories().then((listedMeals) => {
+        setDailyCalorieInfos(listedMeals);
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error("Error posting calories:", error);
+    }
+  };
+
+  return (
+    <>
+      <Box flex={5} p={{ xs: 0, md: 2, alignItems: "center" }}>
+        {!isSearched ? (
+          <>
+            <TextField 
+                id="outlined-search" 
+                label="Search food" 
+                type="search" 
+                fullWidth 
+                value={searchedFood} 
+                onChange={(event) => setSearchedFood(event.target.value)}
+                InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton onClick={handleSearchClick}>
+                          <SearchIcon />
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                
+                />
+          </>
+        ) : (
+          <>
+            <TextField
+              id="outlined-search"
+              label="Search food"
+              type="search"
+              fullWidth
+              value={searchedFood}
+              onChange={setSearchedFood}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={handleSearchClick}>
+                      <SearchIcon />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <form className="calorie-form" onSubmit={handleSubmit}>
+              <label htmlFor="grams">Amount:</label>
+              <input
+                type="number"
+                id="grams"
+                value={grams}
+                onChange={handleCaloriesChange}
+                className="gram-input"
+                fullWidth
+              />
+              <Button
+                variant="contained"
+                type="submit"
+                className="submit-button"
+                onClick={handleClick}
+                fullWidth
+              >
+                Post Calories
+              </Button>
+              <Notification
+                open={open}
+                onClose={handleClose}
+                message="Posted a meal"
+              />
+            </form>
+          </>
+        )}
+        <List>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemText primary="Trash" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton component="a" href="#simple-list">
+              <ListItemText primary="Spam" />
+            </ListItemButton>
+          </ListItem>
+        </List>
+      </Box>
+      {dailybarchart ? <DailyBarchart listedMeals={dailyCalorieInfos} /> : null}
+    </>
+  );
 };
 
 export default CalorieForm;
