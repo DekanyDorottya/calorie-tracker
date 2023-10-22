@@ -19,11 +19,11 @@ import TableRow from '@mui/material/TableRow';
 
 const CalorieForm = () => {
   const [grams, setGrams] = useState(0);
-  const [foodType, setFoodType] = useState("");
+  const [foodType, setFoodType] = useState();
   const [open, setOpen] = useState(false);
   const [dailybarchart, setDailybarchart] = useState(true);
   const [searchedFood, setSearchedFood] = useState("");
-  const [isSearched, setIsSearched] = useState(false);
+  const [isSearched, setIsSearched] = useState(true);
   const [foundFoodTypes, setFoundFoodTypes] = useState([]);
   const [dailyCalorieInfos, setDailyCalorieInfos] = useState([
     {
@@ -36,9 +36,6 @@ const CalorieForm = () => {
 
   const handleCaloriesChange = (event) => {
     setGrams(event.target.value);
-  };
-  const handleFoodTypeChange = (event) => {
-    setFoodType(event.target.value);
   };
 
   const handleClick = () => {
@@ -87,9 +84,15 @@ const CalorieForm = () => {
 
   const handleSearchClick = () => {
     fetchFoodType().then((listedFoodTypes) => {
+        setIsSearched(true)
         setFoundFoodTypes(listedFoodTypes);
         console.log(listedFoodTypes);
     })
+  }
+
+  const handleSelectFoodType = (selectedFoodType) => {
+    setFoodType(selectedFoodType);
+    setIsSearched(false);
   }
 
 
@@ -126,7 +129,7 @@ const CalorieForm = () => {
   return (
     <>
       <Box flex={5} p={{ xs: 0, md: 2, alignItems: "center" }}>
-        {!isSearched ? (
+        {isSearched ? (
           <>
             <TextField 
                 id="outlined-search" 
@@ -146,6 +149,30 @@ const CalorieForm = () => {
                   }}
                 
                 />
+                <Table>
+{foundFoodTypes.length !== 0 ? (
+  <TableHead>
+    <TableRow>
+      <TableCell>Food Type (100g serving)</TableCell>
+      <TableCell>Calorie</TableCell>
+      <TableCell>Carbohydrate</TableCell>
+      <TableCell>Fat</TableCell>
+      <TableCell>Protein</TableCell>
+    </TableRow>
+  </TableHead>
+) : null}
+  <TableBody>
+    {foundFoodTypes.map((foodtype) => (
+      <TableRow sx={{  cursor: 'pointer' }} key={foodtype.apiId} onClick={() => handleSelectFoodType(foodtype)}>
+        <TableCell>{foodtype.name}</TableCell>
+        <TableCell>{foodtype.calorie}</TableCell>
+        <TableCell>{foodtype.carbohydrate}</TableCell>
+        <TableCell>{foodtype.fat}</TableCell>
+        <TableCell>{foodtype.protein}</TableCell>
+      </TableRow>
+    ))}
+  </TableBody>
+</Table>
           </>
         ) : (
           <>
@@ -155,11 +182,11 @@ const CalorieForm = () => {
               type="search"
               fullWidth
               value={searchedFood}
-              onChange={setSearchedFood}
+              onChange={(event) => setSearchedFood(event.target.value)}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
-                    <IconButton onClick={(event) => setSearchedFood(event.target.value)}>
+                    <IconButton onClick={handleSearchClick}>
                       <SearchIcon />
                     </IconButton>
                   </InputAdornment>
@@ -194,30 +221,7 @@ const CalorieForm = () => {
           </>
         )}
         
-<Table>
-{foundFoodTypes.length !== 0 ? (
-  <TableHead>
-    <TableRow>
-      <TableCell>Food Type (100g serving)</TableCell>
-      <TableCell>Calorie</TableCell>
-      <TableCell>Carbohydrate</TableCell>
-      <TableCell>Fat</TableCell>
-      <TableCell>Protein</TableCell>
-    </TableRow>
-  </TableHead>
-) : null}
-  <TableBody>
-    {foundFoodTypes.map((foodtype) => (
-      <TableRow sx={{  cursor: 'pointer' }} key={foodtype.apiId}>
-        <TableCell>{foodtype.name}</TableCell>
-        <TableCell>{foodtype.calorie}</TableCell>
-        <TableCell>{foodtype.carbohydrate}</TableCell>
-        <TableCell>{foodtype.fat}</TableCell>
-        <TableCell>{foodtype.protein}</TableCell>
-      </TableRow>
-    ))}
-  </TableBody>
-</Table>
+
       </Box>
       {dailybarchart ? <DailyBarchart listedMeals={dailyCalorieInfos} /> : null}
     </>
