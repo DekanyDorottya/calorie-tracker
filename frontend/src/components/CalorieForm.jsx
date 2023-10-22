@@ -7,13 +7,15 @@ import { Box } from "@mui/material";
 import Cookies from "js-cookie";
 import DailyBarchart from "./DailyBarchart";
 import { Add } from "@mui/icons-material";
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
 
 const CalorieForm = () => {
   const [grams, setGrams] = useState(0);
@@ -22,7 +24,7 @@ const CalorieForm = () => {
   const [dailybarchart, setDailybarchart] = useState(true);
   const [searchedFood, setSearchedFood] = useState("");
   const [isSearched, setIsSearched] = useState(false);
-  const [foundFoodTypes, setFoundFoodTypes] = useState();
+  const [foundFoodTypes, setFoundFoodTypes] = useState([]);
   const [dailyCalorieInfos, setDailyCalorieInfos] = useState([
     {
       requiedCalorie: 0,
@@ -157,7 +159,7 @@ const CalorieForm = () => {
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
-                    <IconButton onClick={handleSearchClick}>
+                    <IconButton onClick={(event) => setSearchedFood(event.target.value)}>
                       <SearchIcon />
                     </IconButton>
                   </InputAdornment>
@@ -191,18 +193,31 @@ const CalorieForm = () => {
             </form>
           </>
         )}
-        <List>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemText primary="Trash" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton component="a" href="#simple-list">
-              <ListItemText primary="Spam" />
-            </ListItemButton>
-          </ListItem>
-        </List>
+        
+<Table>
+{foundFoodTypes.length !== 0 ? (
+  <TableHead>
+    <TableRow>
+      <TableCell>Food Type (100g serving)</TableCell>
+      <TableCell>Calorie</TableCell>
+      <TableCell>Carbohydrate</TableCell>
+      <TableCell>Fat</TableCell>
+      <TableCell>Protein</TableCell>
+    </TableRow>
+  </TableHead>
+) : null}
+  <TableBody>
+    {foundFoodTypes.map((foodtype) => (
+      <TableRow sx={{  cursor: 'pointer' }} key={foodtype.apiId}>
+        <TableCell>{foodtype.name}</TableCell>
+        <TableCell>{foodtype.calorie}</TableCell>
+        <TableCell>{foodtype.carbohydrate}</TableCell>
+        <TableCell>{foodtype.fat}</TableCell>
+        <TableCell>{foodtype.protein}</TableCell>
+      </TableRow>
+    ))}
+  </TableBody>
+</Table>
       </Box>
       {dailybarchart ? <DailyBarchart listedMeals={dailyCalorieInfos} /> : null}
     </>
