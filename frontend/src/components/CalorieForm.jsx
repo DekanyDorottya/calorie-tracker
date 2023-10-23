@@ -240,7 +240,7 @@ const CalorieForm = () => {
                       },
                     ]}
                     width={325}
-                    height={200}
+                    height={160}
                     slotProps={{
                       legend: {
                         position: {
