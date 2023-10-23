@@ -204,7 +204,7 @@ const CalorieForm = () => {
               <label htmlFor="grams">Amount:</label>
               <TextField
                 type="number"
-                style={{ width: "250px" }}
+                style={{ width: "345px" }}
                 id="outlined-basic"
                 label="Amount"
                 variant="outlined"
@@ -228,31 +228,38 @@ const CalorieForm = () => {
                     {foodType.name}
                   </Typography>
                   <PieChart
-                    legend={{
-                      direction: "row",
-                      position: { vertical: "bottom", horizontal: "middle" },
-                      padding: 0,
-                      itemGap: 0,
-                    }}
                     series={[
                       {
                         data: [
-                          { id: 0, value: foodType.carbohydrate, label: "Carbs" },
-                          { id: 1, value: foodType.protein, label: "Protein" },
-                          { id: 2, value: foodType.fat, label: "Fat" },
+                          { id: 0, value: foodType.carbohydrate, label: `Carbs:${foodType.carbohydrate}` },
+                          { id: 1, value: foodType.protein, label: `Protein:${foodType.protein}` },
+                          { id: 2, value: foodType.fat, label: `Fat:${foodType.fat}` },
                         ],
                         outerRadius: 70,
+                        cx: 80,
                       },
                     ]}
-                    width={400}
+                    width={325}
                     height={200}
+                    slotProps={{
+                      legend: {
+                        position: {
+                          vertical: 'middle',
+                          horizontal: 'right',
+                        },
+                        itemMarkWidth: 20,
+                        itemMarkHeight: 2,
+                        markGap: 5,
+                        itemGap: 10,
+                      }
+                    }}
                   />
                 </CardContent>
               </Card>
               <Button
                 variant="contained"
                 type="submit"
-                style={{ maxWidth: "250px" }}
+                style={{ width: "325" }}
                 onClick={handleClick}
                 fullWidth
               >
