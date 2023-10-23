@@ -15,7 +15,8 @@ public enum Role {
             SET_ACTIVITIES,
             GET_ACTIVITIES,
             GET_ANALYZE,
-            CHANGE_USER))),
+            CHANGE_USER,
+            GET_FOODTYPE))),
     ADMIN(new HashSet<>(Set.of(BAN_USER)));
 
     private final Set<Authorities> authorities;
