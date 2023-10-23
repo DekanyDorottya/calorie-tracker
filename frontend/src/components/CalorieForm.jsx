@@ -112,8 +112,8 @@ const CalorieForm = () => {
           Authorization: `Bearer ${jwtToken}`,
         },
         body: JSON.stringify({
-          foodType: foodType,
-          grams: grams,
+          apiId: foodType.apiId,
+          consumption: grams,
         }),
       });
 
