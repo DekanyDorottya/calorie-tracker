@@ -29,8 +29,8 @@ export default function CalorieDailyList() {
         });
     }, []);
 
-    const xAxisLabels = listedMeals.map((data) => data.foodType);
-    const caloriesData = listedMeals.map((data) => data.calories);
+    const xAxisLabels = listedMeals.map((data) => data.FoodType);
+    const caloriesData = listedMeals.map((data) => data.calorie);
 
     return (
         <Box flex={9} p={{ xs: 0, md: 2 }}>
@@ -47,8 +47,8 @@ export default function CalorieDailyList() {
                             <tbody>
                                 {listedMeals.map((data, index) => (
                                     <tr key={index}>
-                                        <td>{data.foodType}</td>
-                                        <td>{data.calories}</td>
+                                        <td>{data.FoodType}</td>
+                                        <td>{data.calorie}</td>
                                     </tr>
                                 ))}
                             </tbody>
