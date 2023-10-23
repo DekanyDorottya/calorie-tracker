@@ -259,9 +259,9 @@ const CalorieForm = () => {
               <Button
                 variant="contained"
                 type="submit"
-                style={{ width: "325" }}
+                style={{  minWidth: '345px' }}
                 onClick={handleClick}
-                fullWidth
+                
               >
                 Post Calories
               </Button>
