@@ -36,10 +36,10 @@ public class FoodTypeService {
                 throw new NoSuchFoodTypeException("There is no result with this foodType");
             } else {
                 foodTypeDTOS = optionalFoodTypeInfos.get().stream().map(foodTypeInfos -> new FoodTypeDTO(foodTypeInfos.name(),
-                        foodTypeInfos.nutrition().nutrients().get(17).amount(),
-                        foodTypeInfos.nutrition().nutrients().get(27).amount(),
-                        foodTypeInfos.nutrition().nutrients().get(26).amount(),
-                        foodTypeInfos.nutrition().nutrients().get(25).amount(),
+                        foodTypeInfos.nutrition().nutrients().stream().filter(nutrients -> nutrients.name().equals("Calories")).findFirst().map(FoodTypeInfo.Nutrition.Nutrients::amount).orElse(0d),
+                        foodTypeInfos.nutrition().nutrients().stream().filter(nutrients -> nutrients.name().equals("Protein")).findFirst().map(FoodTypeInfo.Nutrition.Nutrients::amount).orElse(0d),
+                        foodTypeInfos.nutrition().nutrients().stream().filter(nutrients -> nutrients.name().equals("Carbohydrates")).findFirst().map(FoodTypeInfo.Nutrition.Nutrients::amount).orElse(0d),
+                        foodTypeInfos.nutrition().nutrients().stream().filter(nutrients -> nutrients.name().equals("Fat")).findFirst().map(FoodTypeInfo.Nutrition.Nutrients::amount).orElse(0d),
                         foodTypeInfos.id()
                         ))
                         .collect(Collectors.toList());

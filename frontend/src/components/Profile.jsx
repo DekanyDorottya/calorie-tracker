@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
-import './CalorieForm.css';
+import './Profile.css';
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
@@ -90,17 +90,17 @@ export default function Profile() {
 
     return (
         <Box flex={9} p={{ xs: 0, md: 2 }}>
-            <form className='calorie-form' onSubmit={handleSubmit}>
+            <form className='profile-form' onSubmit={handleSubmit}>
                 <label htmlFor='gender'>Select gender:</label>
                 <select
                     id='gender'
                     value={gender}
                     onChange={handleGenderChange}
-                    className='calorie-input'
+                    className='gram-input'
                 >
                     <option value=''>Select</option>
-                    <option value='Women'>Women</option>
-                    <option value='Men'>Men</option>
+                    <option value='Woman'>Woman</option>
+                    <option value='Man'>Man</option>
                 </select>
 
                 <label htmlFor='weight'>Enter weight:</label>
