@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Activity {
 
-    public Activity(ActivityType activityType, int calories, LocalDateTime activityDateTime, User user) {
+    public Activity(String activityType, int calories, LocalDateTime activityDateTime, User user) {
         this.activityType = activityType;
         this.calories = calories;
         this.activityDateTime = activityDateTime;
@@ -25,12 +25,10 @@ public class Activity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String activityType;
     private int calories;
     private LocalDateTime activityDateTime;
 
     @ManyToOne
     private User user;
-
-    @ManyToOne
-    private ActivityType activityType;
 }
