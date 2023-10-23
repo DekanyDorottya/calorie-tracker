@@ -16,6 +16,11 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import { PieChart } from "@mui/x-charts/PieChart";
 
 const CalorieForm = () => {
   const [grams, setGrams] = useState(0);
@@ -199,7 +204,7 @@ const CalorieForm = () => {
               <label htmlFor="grams">Amount:</label>
               <TextField
                 type="number"
-                style={{width: '250px'}}
+                style={{ width: "250px" }}
                 id="outlined-basic"
                 label="Amount"
                 variant="outlined"
@@ -207,13 +212,47 @@ const CalorieForm = () => {
                 value={grams}
                 sx={{ mb: 2 }}
                 InputProps={{
-                  startAdornment: <InputAdornment position="start">g</InputAdornment>,
+                  startAdornment: (
+                    <InputAdornment position="start">g</InputAdornment>
+                  ),
                 }}
               />
+              <Card sx={{ maxWidth: 345, mb: 2 }}>
+                <CardMedia
+                  sx={{ height: 140 }}
+                  image="https://media.istockphoto.com/id/1191979640/hu/fot%C3%B3/friss-z%C3%B6lds%C3%A9gek-%C3%A9s-gy%C3%BCm%C3%B6lcs%C3%B6k-sz%C3%ADnes-gy%C3%BCm%C3%B6lcs%C3%B6k-%C3%A9s-z%C3%B6lds%C3%A9gek-tiszta-%C3%A9tkez%C3%A9s-z%C3%B6lds%C3%A9gek-%C3%A9s.jpg?s=1024x1024&w=is&k=20&c=1qbShF6KITFNK-3FTa0t2GgNaSE3za6SLKjhiG9Qrqs="
+                  title="food"
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="div">
+                    {foodType.name}
+                  </Typography>
+                  <PieChart
+                    legend={{
+                      direction: "row",
+                      position: { vertical: "bottom", horizontal: "middle" },
+                      padding: 0,
+                      itemGap: 0,
+                    }}
+                    series={[
+                      {
+                        data: [
+                          { id: 0, value: foodType.carbohydrate, label: "Carbs" },
+                          { id: 1, value: foodType.protein, label: "Protein" },
+                          { id: 2, value: foodType.fat, label: "Fat" },
+                        ],
+                        outerRadius: 70,
+                      },
+                    ]}
+                    width={400}
+                    height={200}
+                  />
+                </CardContent>
+              </Card>
               <Button
                 variant="contained"
                 type="submit"
-                style={{maxWidth: '250px'}}
+                style={{ maxWidth: "250px" }}
                 onClick={handleClick}
                 fullWidth
               >
