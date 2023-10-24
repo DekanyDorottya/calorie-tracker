@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import './ActivityForm.css';
 
-import Notification from '../Notification';
+import Notification from '../Notification/Notification';
 import { Box, Stack, Skeleton } from '@mui/material';
 import Cookies from 'js-cookie';
 

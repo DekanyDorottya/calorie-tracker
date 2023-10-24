@@ -4,7 +4,7 @@ import './Profile.css';
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import Notification from './Notification';
+import Notification from '../../components/Notification/Notification';
 import { Box, Stack, Skeleton } from '@mui/material';
 import Cookies from 'js-cookie';
 export default function Profile() {

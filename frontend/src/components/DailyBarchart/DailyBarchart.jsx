@@ -1,6 +1,6 @@
 import React from 'react';
 import { BarChart } from '@mui/x-charts/BarChart';
-import './CalorieDailyList.css';
+import '../../Pages/CalorieDaily/CalorieDailyList.css';
 import { Box } from '@mui/material';
 import './DailyBarchart.css';
 
