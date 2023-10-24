@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import videoBg from '../assets/videos/aboutVideo.mp4';
+import videoBg from '../../assets/videos/aboutVideo.mp4';
 
 import "./About.css";
 

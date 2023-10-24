@@ -4,9 +4,9 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Cookies from 'js-cookie';
 import jwt from 'jwt-decode';
-import Navbar from './components/Navbar';
-import Sidebar from './components/Sidebar';
-import Rightbar from './components/Rightbar';
+import Navbar from './components/Navbar/Navbar';
+import Sidebar from './components/Sidebar/Sidebar';
+import Rightbar from './components/Rightbar/Rightbar';
 
 import { Box, createTheme, Stack, ThemeProvider } from '@mui/material';
 

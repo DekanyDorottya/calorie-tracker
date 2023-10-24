@@ -5,8 +5,8 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { BarChart } from '@mui/x-charts/BarChart';
-import './CalorieDailyList.css';
-import './DailyBarchart.css';
+import '../../Pages/CalorieDaily/CalorieDailyList.css';
+import '../DailyBarchart/DailyBarchart.css';
 
 const Rightbar = () => {
     return (
