@@ -43,9 +43,18 @@ public class UserService {
         return users;
     }
 
+    public UserInfoDTO getUserInfo(String userEmail) {
+        Optional<User> optionalUser = userRepository.findByEmail(userEmail);
+        if (optionalUser.isEmpty()) {
+            throw new UserNotFoundException("User with this email does not exist" + userEmail);
+        }
+        UserInfoDTO userInfoDTO = new UserInfoDTO(optionalUser.get().getGender(), optionalUser.get().getWeight(), optionalUser.get().getHeight(), optionalUser.get().getBirthDate());
+        return userInfoDTO;
+    }
+
     public User findUserByEmail(String userEmail) {
         Optional<User> optionalUser = userRepository.findByEmail(userEmail);
-        if(optionalUser.isEmpty()) {
+        if (optionalUser.isEmpty()) {
             throw new UserNotFoundException("User with this email does not exist" + userEmail);
         }
         return optionalUser.get();
