@@ -5,6 +5,7 @@ import org.codecool.fitnesstracker.fitnesstracker.controller.dto.CalorieForAnaly
 import org.codecool.fitnesstracker.fitnesstracker.controller.dto.ReceivedNewCalorieDTO;
 import org.codecool.fitnesstracker.fitnesstracker.dao.model.Calorie;
 import org.codecool.fitnesstracker.fitnesstracker.dao.model.FoodType;
+import org.codecool.fitnesstracker.fitnesstracker.exceptions.ZeroInputException;
 import org.codecool.fitnesstracker.fitnesstracker.repositories.CalorieRepository;
 import org.codecool.fitnesstracker.fitnesstracker.repositories.FoodTypeRepository;
 import org.codecool.fitnesstracker.fitnesstracker.user.User;
@@ -45,6 +46,9 @@ public class CalorieService {
     }
 
     public void addNewMeal(ReceivedNewCalorieDTO meal, String userEmail) {
+        if(meal.consumption() <= 0) {
+            throw new ZeroInputException("Input must be a positive integer!");
+        }
         LocalDateTime localDateTime = LocalDateTime.now();
         User user = userService.findUserByEmail(userEmail);
         FoodType foodType = foodTypeRepository.findFoodTypeByApiId(meal.apiId());
