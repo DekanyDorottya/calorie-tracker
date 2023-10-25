@@ -38,6 +38,8 @@ const CalorieForm = () => {
   ]);
   const [duration, setDuration] = useState("daily");
   const jwtToken = Cookies.get("jwtToken");
+  const [snackbarError, setSnackbarError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
 
   const handleCaloriesChange = (event) => {
     setGrams(event.target.value);
@@ -103,7 +105,14 @@ const CalorieForm = () => {
   window.addEventListener("resize", showDailyBarChart);
 
   const handleSubmit = async (event) => {
+    setSuccessMessage(null);
+    setSnackbarError(null);
     event.preventDefault();
+    if (grams <= 0) {
+      setOpen(true);
+      setSnackbarError("Amount must be greater than zero");
+      return;
+    }
     try {
       const response = await fetch("/calories/", {
         method: "POST",
@@ -118,8 +127,12 @@ const CalorieForm = () => {
       });
 
       if (!response.ok) {
+        setOpen(true);
+        setSnackbarError("Failed to post calories.");
         throw new Error("Failed to post calories.");
       }
+      setOpen(true);
+      setSuccessMessage("Posted meal")
       fetchDailyCalories().then((listedMeals) => {
         setDailyCalorieInfos(listedMeals);
       });
@@ -260,15 +273,14 @@ const CalorieForm = () => {
                 variant="contained"
                 type="submit"
                 style={{  minWidth: '345px' }}
-                onClick={handleClick}
-                
               >
                 Post Calories
               </Button>
               <Notification
-                open={open}
+                snackbarOpen={open}
                 onClose={handleClose}
-                message="Posted a meal"
+                successMassage={successMessage}
+                snackbarError={snackbarError}
               />
             </form>
           </>
