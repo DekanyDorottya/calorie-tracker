@@ -60,9 +60,15 @@ export default function Profile() {
 
     ///////////////// még endpointot kell csinálni 
     useEffect(() => {
-        /* fetchUserProfile().then((userProfileInfos) => {
+        fetchUserProfile().then((userProfileInfos) => {
             setUserProfileInfos(userProfileInfos);
-        }); */
+            if (userProfileInfos) {
+                setGender(userProfileInfos.gender);
+                setWeight(userProfileInfos.weight);
+                setBirthDate(userProfileInfos.birthDate);
+                setHeight(userProfileInfos.height);
+            }
+        });
     }, []);
 
     const handleSubmit = async (event) => {
@@ -134,9 +140,6 @@ export default function Profile() {
                 <label htmlFor='weight'>Enter weight:</label>
 
                 <input
-                    defaultValue={
-                        userProfileInfos ? userProfileInfos.weight : null
-                    }
                     type='number'
                     id='weight'
                     value={weight}
@@ -146,9 +149,6 @@ export default function Profile() {
                 <label htmlFor='birthDate'>Enter Birth Date:</label>
 
                 <input
-                    defaultValue={
-                        userProfileInfos ? userProfileInfos.birthDate : null
-                    }
                     type='date'
                     id='birthDate'
                     value={birthDate}
@@ -158,9 +158,6 @@ export default function Profile() {
                 <label htmlFor='height'>Enter height:</label>
 
                 <input
-                    defaultValue={
-                        userProfileInfos ? userProfileInfos.height : null
-                    }
                     type='number'
                     id='height'
                     value={height}
