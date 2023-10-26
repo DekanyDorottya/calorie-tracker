@@ -15,6 +15,8 @@ export default function Profile() {
     const [duration, setDuration] = useState('week');
     const [open, setOpen] = useState(false);
     const [userProfileInfos, setUserProfileInfos] = useState({});
+    const [snackbarError, setSnackbarError] = useState(null);
+    const [successMessage, setSuccessMessage] = useState(null);
 
     const jwtToken = Cookies.get('jwtToken');
 
@@ -64,7 +66,29 @@ export default function Profile() {
     }, []);
 
     const handleSubmit = async (event) => {
+        setSuccessMessage(null);
+        setSnackbarError(null);
         event.preventDefault();
+        if (!gender) {
+            setOpen(true);
+            setSnackbarError("Please select your gender");
+            return;
+          }
+          if (weight <=0) {
+            setOpen(true);
+            setSnackbarError("Please enter your weight");
+            return;
+          }
+          if (!birthDate) {
+            setOpen(true);
+            setSnackbarError("Please enter your birthdate");
+            return;
+          }
+          if (height <=0) {
+            setOpen(true);
+            setSnackbarError("Please enter your height");
+            return;
+          }
         try {
             const response = await fetch(`/user/`, {
                 method: 'PUT',
@@ -81,8 +105,12 @@ export default function Profile() {
             });
 
             if (!response.ok) {
-                throw new Error('Failed to post calories.');
+                setOpen(true);
+                setSnackbarError("Failed to update your profile.");
+                throw new Error('Failed to post profile detail.');
             }
+            setOpen(true);
+            setSuccessMessage("Profile has been updated")
         } catch (error) {
             console.error('Error posting infos:', error);
         }
@@ -96,7 +124,7 @@ export default function Profile() {
                     id='gender'
                     value={gender}
                     onChange={handleGenderChange}
-                    className='gram-input'
+                    className='gender-input'
                 >
                     <option value=''>Select</option>
                     <option value='Woman'>Woman</option>
@@ -113,7 +141,7 @@ export default function Profile() {
                     id='weight'
                     value={weight}
                     onChange={handleWeightChange}
-                    className='food-input'
+                    className='profile-input'
                 />
                 <label htmlFor='birthDate'>Enter Birth Date:</label>
 
@@ -125,7 +153,7 @@ export default function Profile() {
                     id='birthDate'
                     value={birthDate}
                     onChange={handleBirthDateChange}
-                    className='food-input'
+                    className='profile-input'
                 />
                 <label htmlFor='height'>Enter height:</label>
 
@@ -137,7 +165,7 @@ export default function Profile() {
                     id='height'
                     value={height}
                     onChange={handleHeightChange}
-                    className='food-input'
+                    className='profile-input'
                 />
 
                 <Button
@@ -150,9 +178,10 @@ export default function Profile() {
                 </Button>
 
                 <Notification
-                    open={open}
+                    snackbarOpen={open}
                     onClose={handleClose}
-                    message='Updated Profile'
+                    successMassage={successMessage}
+                    snackbarError={snackbarError}
                 />
             </form>
         </Box>
