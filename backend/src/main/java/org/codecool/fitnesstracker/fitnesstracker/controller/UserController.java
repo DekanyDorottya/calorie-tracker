@@ -21,13 +21,15 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/all")
-    public List<UserDTO> getAllUsers() {
-        return userService.getAllUsers();
+    @GetMapping("/")
+    public UserInfoDTO getUserInfo(
+            @CurrentSecurityContext(expression = "authentication") Authentication authentication
+    ) {
+        return userService.getUserInfo(authentication.getName());
     }
 
     @PutMapping("/")
-    public void getUserInfo(@CurrentSecurityContext(expression = "authentication") Authentication authentication,
+    public void changeUserInfo(@CurrentSecurityContext(expression = "authentication") Authentication authentication,
                             @RequestBody UserInfoDTO userInfo
     ) {
         userService.addUserInfo(userInfo, authentication.getName());
