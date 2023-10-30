@@ -94,7 +94,7 @@ const LoginForm = () => {
                         } else {
                             navigate('/profile');
                         }
-                        //window.location.reload();
+                        window.location.reload();
                     }, 3000); 
                 
             })
