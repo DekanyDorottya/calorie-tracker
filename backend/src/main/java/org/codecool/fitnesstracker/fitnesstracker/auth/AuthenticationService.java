@@ -45,7 +45,9 @@ public class AuthenticationService {
         );
         var user = repository.findByEmail(request.getEmail()).orElseThrow(); // catch and handle the exception
         var jwtToken = jwtService.generateToken(user);
-        return AuthenticationResponse.builder().token(jwtToken).build();
+        boolean hasSavedProfile = user.getHeight() != 0;
+        System.out.println(user.getHeight());
+        return AuthenticationResponse.builder().token(jwtToken).hasSavedProfile(hasSavedProfile).build();
     }
 
 }
