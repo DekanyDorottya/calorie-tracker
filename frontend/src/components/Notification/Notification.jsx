@@ -15,8 +15,6 @@ const Notification = ({
   successMassage,
   snackbarError,
 }) => {
-  console.log(successMassage);
-  console.log(snackbarError);
   const action = (
     <>
       <Button color="secondary" size="small" onClick={onClose}>

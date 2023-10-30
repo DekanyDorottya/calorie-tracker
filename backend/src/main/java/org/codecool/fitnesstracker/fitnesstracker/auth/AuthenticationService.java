@@ -24,12 +24,12 @@ public class AuthenticationService {
     public AuthenticationResponse register(RegisterRequest request) {
         var user = User.builder()
 
-                .username(request.getUsername())
+                .username(request.getUserName())
                 .email(request.getEmail())
                 .password((passwordEncoder.encode(request.getPassword()))).role(Role.USER).build();
         repository.save(user);
         org.springframework.security.core.userdetails.UserDetails newUserDetail = org.springframework.security.core.userdetails.User
-                .withUsername(user.getUsername())
+                .withUsername(user.getUsername())//UserDetail could store only username and password
                 .password(user.getPassword())
                 .authorities(Role.USER.name())
                 .build();
@@ -45,8 +45,8 @@ public class AuthenticationService {
         );
         var user = repository.findByEmail(request.getEmail()).orElseThrow(); // catch and handle the exception
         var jwtToken = jwtService.generateToken(user);
-
-        return AuthenticationResponse.builder().token(jwtToken).build();
+        boolean hasSavedProfile = user.getHeight() != 0;
+        return AuthenticationResponse.builder().token(jwtToken).hasSavedProfile(hasSavedProfile).build();
     }
 
 }

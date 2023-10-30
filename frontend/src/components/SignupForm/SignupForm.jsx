@@ -80,7 +80,7 @@ const SignupForm = () => {
         setSendButtonDisabled(true);
 
         const tempObj = {
-            "username": user,
+            "userName": user,
             "email": email,
             "password": pwd,
         };

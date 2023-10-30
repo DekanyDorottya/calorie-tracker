@@ -89,8 +89,12 @@ const LoginForm = () => {
                     setTimeout(() => {
                         setSnackbarOpen(false);
                         setIsSuccessSnackbar(false);
-                        navigate('/profile');
-                        window.location.reload();
+                        if(result.hasSavedProfile) {
+                            navigate('/');
+                        } else {
+                            navigate('/profile');
+                        }
+                        //window.location.reload();
                     }, 3000); 
                 
             })
