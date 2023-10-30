@@ -58,7 +58,6 @@ export default function Profile() {
     };
 
 
-    ///////////////// még endpointot kell csinálni 
     useEffect(() => {
         fetchUserProfile().then((userProfileInfos) => {
             setUserProfileInfos(userProfileInfos);
@@ -117,6 +116,7 @@ export default function Profile() {
             }
             setOpen(true);
             setSuccessMessage("Profile has been updated")
+            
         } catch (error) {
             console.error('Error posting infos:', error);
         }
