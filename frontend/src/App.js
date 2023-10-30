@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Cookies from 'js-cookie';
@@ -12,18 +12,18 @@ import { Box, createTheme, Stack, ThemeProvider } from '@mui/material';
 
 const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+    const location = useLocation();
     useEffect(() => {
         const jwtToken = Cookies.get('jwtToken');
         setIsLoggedIn(!!jwtToken);
-    }, []);
+    }, [location]);
 
     const handleLogout = () => {
         Cookies.remove('jwtToken');
         setIsLoggedIn(false);
     };
     const [mode, setMode] = useState('light');
-
+    
     const darkTheme = createTheme({
         palette: {
             mode: mode,
