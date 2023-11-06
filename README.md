@@ -1,3 +1,5 @@
+<a name="readme-top"></a>
+
 # Fitness Tracker Application
 
 The Fitness Tracker Application is a web-based platform that allows users to track their daily activities and food consumption. Users can log in, record their activities, and keep track of the calories burned and consumed. This README provides an overview of the application's features, how to set it up, and its usage.
@@ -5,12 +7,16 @@ The Fitness Tracker Application is a web-based platform that allows users to tra
 ## Table of Contents
 
 - [Features](#features)
-- [Getting Started](#getting-started)
-    - [Prerequisites](#prerequisites)
-    - [Installation](#installation)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
 - [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
+
+
+## Screenshots
+
+![Alt text](frontend/public/pictures/screenshot1.png "pic1")
+![Alt text](frontend/public/pictures/screenshot2.png "pic2")
+
 
 ## Features
 
@@ -21,59 +27,44 @@ The Fitness Tracker Application is a web-based platform that allows users to tra
 - Analytics: Provides daily calorie consumption and activity analytics for users.
 - User Profile: Users can view and update their profile information.
 
-## Getting Started
+
+### Built With
+
+* [![React][React.js]][React-url]
+* [![JavaScript][JavaScript.img]][JavaScript-url]
+* [![Spring][Spring.img]][Spring-url]
+* [![SpringBoot][SpringBoot.img]][SpringBoot-url]
+* [![Postgres][Postgres.img]][Postgres-url]
 
 ### Prerequisites
-
-- Docker
+1. JAVA 17
+2. MAVEN
+3. POSTGRES SQL
+4. IDE - for backend, for example INTELLIJ IDEA
+6. Docker
 
 ### Installation
 
-1. Pull the image from Dockerhub in a new directory:
+1. Clone the repository:
+
+   ```bash
+   git clone git@github.com:DekanyDorottya/calorie-tracker.git
+   ```
+
+2. Change into the project directory:
+
+   ```bash
+   cd calorie-tracker
+   ```
+
+1. Pull the image from Dockerhub by using a bash terminal:
 
    ```sh
    docker pull arondocker100/fitnesstracker
-   
 
-2. Create a new docker compose file and save it with this content:
 
-    ```docker
-    version: '3.2'
+2. In the root directory of the repository you will find a compose file called docker-compose-app.yml. Copy this compose file into a new folder
 
-    services:
-    backend:
-        image: arondocker100/fitnesstracker
-        ports:
-        - "8080:8080"
-        depends_on:
-        - postgresdb
-        environment:
-        - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresdb:5432/postgres
-        - SPRING_DATASOURCE_USERNAME=postgres
-        - SPRING_DATASOURCE_PASSWORD=postgres
-        - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-        networks:
-        - backend-network
-
-    postgresdb:
-        image: postgres:13.1-alpine
-        container_name: postgresdb
-        environment:
-        - POSTGRES_USER=postgres
-        - POSTGRES_PASSWORD=postgres
-        - POSTGRES_DB=postgres
-        volumes:
-        - db-data:/var/lib/postgresql/data
-        ports:
-        - "5432:5432"
-        networks:
-        - backend-network
-
-    networks:
-    backend-network:
-
-    volumes:
-    db-data:
 
 3. Run the compose file in bash terminal
 
@@ -83,20 +74,23 @@ The Fitness Tracker Application is a web-based platform that allows users to tra
 
 ### Usage
 1. Register or log in to the application.
-2. Log your activities by providing activity type, calories burned, and date/time.
-3. Log your meals by providing food type, calories consumed, and date/time.
-4. View your daily analytics to track calorie consumption and activity.
-5. Update your user profile with additional information.
+2. Update your user profile with additional information.
+3. Log your activities by providing activity type, calories burned, and date/time.
+4. Log your meals by providing food type, calories consumed, and date/time.
+5. View your daily analytics to track calorie consumption and activity.
 
-### Contributing
-Contributions are welcome! If you find any issues or want to enhance the application, feel free to submit pull requests.
+<p align="right">(<a href="#readme-top">:top:</a>)</p>
 
-1. Fork the repository.
-2. Create a new branch for your feature/fix: git checkout -b feature-name
-3. Commit your changes: git commit -m 'Add feature'
-4. Push to the branch: git push origin feature-name
-5. Create a pull request.
 
-### License
-
-This project is licensed under the [MIT License](LICENSE).
+[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[React-url]: https://reactjs.org/
+[JavaScript.img]:     https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E
+[JavaScript-url]: https://www.javascript.com/
+[Spring.img]: https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white
+[Spring-url]: https://spring.io/
+[Postgres.img]: https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white
+[Postgres-url]: https://www.postgresql.org/
+[SpringBoot.img]: https://img.shields.io/badge/Spring_Boot-F2F4F9?style=for-the-badge&logo=spring-boot
+[SpringBoot-url]: https://spring.io/projects/spring-boot
+[Docker.img]: https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white
+[Docker-url]: https://www.docker.com/
